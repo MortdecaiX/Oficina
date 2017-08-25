@@ -1,0 +1,78 @@
+Arduino
+- Módulo Shield
+- C++
+- Sensor de presenca
+- Sensor de Proxima
+
+Protheus - Emular o dispositivo
+
+*Buscar a biblioteca pra definir qual SGBD utilizar
+Leitura realizada por biblioteca pronta
+
+Enviar verificação para o servidor
+
+Banco de dados no servidor
+
+Output leitura realizada com sucesso, sem sucesso/verificação não aceita
+
+
+
+
+
+
+
+
+
+Fase 1. Proposta de projetos - apresentação, defesa, discussão e planejamento.
+Duração: ~10 min (5-15).
+
+A apresentação do seu grupo deve responder as seguintes questões:
+
+1) Qual o problema que eu quero resolver (incluindo um contexto; usuário; etc)?
+2) Qual o objetivo geral / específicos da minha solução?
+3) Como eu pretendo resolver o problema (materiais; métodos; artefatos)?
+4) O que eu espero como resultado?
+5) Quais trabalhos relacionados ao seu (elencar pelo menos uns 3)?
+Buscar algum projeto que tenha reconhecimento de imagens
+Estacionamento do shops, parada da luz
+processamento de imagem
+
+6) ...
+
+Pode usar slides, vídeos, fotos, oratória, modelos se quiser. Use a criatividade e exponha claramente sua ideia.
+
+Nesta sexta-feira começaremos também a documentar (relatar) os projetos.
+Lembre-se, o trabalho é em grupo, mas as notas são individuais.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
