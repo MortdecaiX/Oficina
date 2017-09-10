@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace ParkingManagerServer.Controllers
 {
+
      class HomeController : Controller
     {
         public ActionResult Index()

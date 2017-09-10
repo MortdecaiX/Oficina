@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Hello">Hello World, Click Me!</string>
+    <string name="ApplicationName">ParkingManagerClient</string>
+    <string name="ParkingManagerServerURL">http://192.168.0.102/</string>
+    <string name="ObterVagasURL">api/VagaModels</string>
+</resources>
