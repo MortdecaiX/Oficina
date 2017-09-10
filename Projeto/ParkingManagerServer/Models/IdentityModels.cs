@@ -52,6 +52,11 @@ namespace ParkingManagerServer.Models
                 });
             // modelBuilder.Entity<VagaModel>().HasOptional<UsuarioModel>(v => v.Responsavel).WithRequired();
             modelBuilder.Entity<VagaModel>().HasOptional(i => i.Responsavel).WithOptionalDependent();
+            modelBuilder.Entity<EstacionamentoModel>().HasMany<PontoModel>(i => i.Pontos).WithRequired();
+            
+            modelBuilder.Entity<PontoModel>().HasMany(i => i.PontosConectados).WithOptional();
+            modelBuilder.Entity<PontoModel>().HasMany(i => i.VagasConectadas).WithOptional();
+
         }
 
         public System.Data.Entity.DbSet<ParkingManagerServer.Models.VeiculoModel> VeiculoModels { get; set; }
@@ -63,5 +68,9 @@ namespace ParkingManagerServer.Models
         public System.Data.Entity.DbSet<ParkingManagerServer.Models.OcupacaoModel> OcupacaoModels { get; set; }
 
         public System.Data.Entity.DbSet<ParkingManagerServer.Models.ReservaModel> ReservaModels { get; set; }
+
+        public System.Data.Entity.DbSet<ParkingManagerServer.Models.EstacionamentoModel> EstacionamentoModels { get; set; }
+        public System.Data.Entity.DbSet<ParkingManagerServer.Models.PontoModel> PontoModels { get; set; }
+
     }
 }

@@ -85,7 +85,6 @@ C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\Microso
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\System.Web.Http.Owin.xml
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.csprojResolveAssemblyReference.cache
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.dll
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.pdb
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\Microsoft.Extensions.DependencyInjection.Abstractions.dll
@@ -127,3 +126,9 @@ C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\zh-Hans
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\zh-Hant\Microsoft.Spatial.resources.dll
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.teste.resources
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.csproj.GenerateResource.Cache
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.pontos.resources
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.pontos_1.resources
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.pontos_2.resources
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.csprojResolveAssemblyReference.cache
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.pontos_3.resources
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.pontos_4.resources

@@ -267,7 +267,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EstacionamentoModelsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PontoModelsController.cs" />
     <Compile Include="Controllers\UsuarioModelsController.cs" />
     <Compile Include="Controllers\VagaModelsController.cs" />
     <Compile Include="Controllers\VeiculoModelsController.cs" />
@@ -278,11 +280,33 @@
     <Compile Include="Migrations\201709080049028_teste.Designer.cs">
       <DependentUpon>201709080049028_teste.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709101453205_pontos.cs" />
+    <Compile Include="Migrations\201709101453205_pontos.Designer.cs">
+      <DependentUpon>201709101453205_pontos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709101504399_pontos_1.cs" />
+    <Compile Include="Migrations\201709101504399_pontos_1.Designer.cs">
+      <DependentUpon>201709101504399_pontos_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709101527297_pontos_2.cs" />
+    <Compile Include="Migrations\201709101527297_pontos_2.Designer.cs">
+      <DependentUpon>201709101527297_pontos_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709101629483_pontos_3.cs" />
+    <Compile Include="Migrations\201709101629483_pontos_3.Designer.cs">
+      <DependentUpon>201709101629483_pontos_3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709101631061_pontos_4.cs" />
+    <Compile Include="Migrations\201709101631061_pontos_4.Designer.cs">
+      <DependentUpon>201709101631061_pontos_4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\EstacionamentoModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\OcupacaoModel.cs" />
+    <Compile Include="Models\PontoModel.cs" />
     <Compile Include="Models\PosicaoGeografica.cs" />
     <Compile Include="Models\ReservaModel.cs" />
     <Compile Include="Models\TipoVaga.cs" />
@@ -370,6 +394,21 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201709080049028_teste.resx">
       <DependentUpon>201709080049028_teste.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709101453205_pontos.resx">
+      <DependentUpon>201709101453205_pontos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709101504399_pontos_1.resx">
+      <DependentUpon>201709101504399_pontos_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709101527297_pontos_2.resx">
+      <DependentUpon>201709101527297_pontos_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709101629483_pontos_3.resx">
+      <DependentUpon>201709101629483_pontos_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709101631061_pontos_4.resx">
+      <DependentUpon>201709101631061_pontos_4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
