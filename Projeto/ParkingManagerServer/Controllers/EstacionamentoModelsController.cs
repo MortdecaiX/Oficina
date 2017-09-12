@@ -23,6 +23,44 @@ namespace ParkingManagerServer.Controllers
             return lista.AsQueryable();
         }
 
+        [AcceptVerbs("POST")]
+        [Route("api/EstacionamentoModel/{id}/AdicionarPonto")]
+        [ResponseType(typeof(int))]
+        public IHttpActionResult PostPontoModel(long id, PontoModel ponto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            EstacionamentoModel est =  db.EstacionamentoModels.Find(id);
+            if(est == null)
+            {
+                return BadRequest("Estacionamento não encontrado.");
+            }
+            est.Pontos.Add(ponto);
+
+            db.Entry(est).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EstacionamentoModelExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok(new { Id = ponto.Id });
+        }
+
         // GET: api/EstacionamentoModels/5
         [ResponseType(typeof(EstacionamentoModel))]
         public IHttpActionResult GetEstacionamentoModel(long id)

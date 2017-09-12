@@ -238,7 +238,10 @@ namespace ParkingManagerClient
 			public const int common_google_signin_btn_text_light_pressed = 2130837524;
 			
 			// aapt resource value: 0x7f020015
-			public const int Icon = 2130837525;
+			public const int dot = 2130837525;
+			
+			// aapt resource value: 0x7f020016
+			public const int Icon = 2130837526;
 			
 			static Drawable()
 			{
@@ -262,17 +265,26 @@ namespace ParkingManagerClient
 			// aapt resource value: 0x7f07000a
 			public const int auto = 2131165194;
 			
+			// aapt resource value: 0x7f070011
+			public const int button1 = 2131165201;
+			
+			// aapt resource value: 0x7f070012
+			public const int button2 = 2131165202;
+			
 			// aapt resource value: 0x7f07000b
 			public const int dark = 2131165195;
 			
-			// aapt resource value: 0x7f07000d
-			public const int googlemap = 2131165197;
+			// aapt resource value: 0x7f070013
+			public const int googlemap = 2131165203;
 			
 			// aapt resource value: 0x7f070000
 			public const int hybrid = 2131165184;
 			
 			// aapt resource value: 0x7f070007
 			public const int icon_only = 2131165191;
+			
+			// aapt resource value: 0x7f07000d
+			public const int layout_root = 2131165197;
 			
 			// aapt resource value: 0x7f07000c
 			public const int light = 2131165196;
@@ -283,6 +295,9 @@ namespace ParkingManagerClient
 			// aapt resource value: 0x7f070002
 			public const int normal = 2131165186;
 			
+			// aapt resource value: 0x7f07000f
+			public const int relativeLayout1 = 2131165199;
+			
 			// aapt resource value: 0x7f070003
 			public const int satellite = 2131165187;
 			
@@ -291,6 +306,12 @@ namespace ParkingManagerClient
 			
 			// aapt resource value: 0x7f070004
 			public const int terrain = 2131165188;
+			
+			// aapt resource value: 0x7f07000e
+			public const int textView1 = 2131165198;
+			
+			// aapt resource value: 0x7f070010
+			public const int toolbar1 = 2131165200;
 			
 			// aapt resource value: 0x7f070009
 			public const int wide = 2131165193;
@@ -325,7 +346,10 @@ namespace ParkingManagerClient
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Main = 2130903040;
+			public const int CustomPopUpDialog = 2130903040;
+			
+			// aapt resource value: 0x7f030001
+			public const int Main = 2130903041;
 			
 			static Layout()
 			{

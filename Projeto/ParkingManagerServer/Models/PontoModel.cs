@@ -18,10 +18,14 @@ namespace ParkingManagerServer.Models
             get
             {
                 List<long> conexoes = new List<long>();
-                foreach(var conexao in PontosConectados)
+                try
                 {
-                    conexoes.Add(conexao.Id);
+                    foreach (var conexao in PontosConectados)
+                    {
+                        conexoes.Add(conexao.Id);
+                    }
                 }
+                catch { }
                 return conexoes;
             }
         }

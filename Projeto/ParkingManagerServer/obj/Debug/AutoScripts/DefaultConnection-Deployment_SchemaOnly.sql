@@ -105,6 +105,30 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+CREATE TABLE [dbo].[EstacionamentoModels](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[Nome] [nvarchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[LocalizacaoImagem_Latitude] [float] NOT NULL,
+	[LocalizacaoImagem_Longitude] [float] NOT NULL,
+	[LocalizacaoImagem_Altitude] [float] NOT NULL,
+	[Localizacao_Latitude] [float] NOT NULL,
+	[Localizacao_Longitude] [float] NOT NULL,
+	[Localizacao_Altitude] [float] NOT NULL,
+	[Responsavel_Id] [bigint] NULL,
+	[ImagemBase64] [nvarchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ImagemAltura] [bigint] NOT NULL,
+	[ImagemLargura] [bigint] NOT NULL,
+ CONSTRAINT [PK_dbo.EstacionamentoModels] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+)
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 CREATE TABLE [dbo].[OcupacaoModels](
 	[Id] [bigint] IDENTITY(1,1) NOT NULL,
 	[DataEntrada] [datetime] NOT NULL,
@@ -112,6 +136,26 @@ CREATE TABLE [dbo].[OcupacaoModels](
 	[Usuario_Id] [bigint] NULL,
 	[Veiculo_Id] [bigint] NULL,
  CONSTRAINT [PK_dbo.OcupacaoModels] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+)
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PontoModels](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[Localizacao_Latitude] [float] NOT NULL,
+	[Localizacao_Longitude] [float] NOT NULL,
+	[Localizacao_Altitude] [float] NOT NULL,
+	[Entrada] [bit] NOT NULL,
+	[Saida] [bit] NOT NULL,
+	[PontoModel_Id] [bigint] NULL,
+	[EstacionamentoModel_Id] [bigint] NOT NULL,
+ CONSTRAINT [PK_dbo.PontoModels] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
@@ -184,6 +228,7 @@ CREATE TABLE [dbo].[VagaModels](
 	[Ocupacao_Id] [bigint] NULL,
 	[Reserva_Id] [bigint] NULL,
 	[Responsavel_Id] [bigint] NULL,
+	[PontoModel_Id] [bigint] NULL,
  CONSTRAINT [PK_dbo.VagaModels] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -255,6 +300,11 @@ CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex] ON [dbo].[AspNetUsers]
 	[UserName] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
+CREATE NONCLUSTERED INDEX [IX_Responsavel_Id] ON [dbo].[EstacionamentoModels]
+(
+	[Responsavel_Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
 CREATE NONCLUSTERED INDEX [IX_Usuario_Id] ON [dbo].[OcupacaoModels]
 (
 	[Usuario_Id] ASC
@@ -263,6 +313,16 @@ GO
 CREATE NONCLUSTERED INDEX [IX_Veiculo_Id] ON [dbo].[OcupacaoModels]
 (
 	[Veiculo_Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+CREATE NONCLUSTERED INDEX [IX_EstacionamentoModel_Id] ON [dbo].[PontoModels]
+(
+	[EstacionamentoModel_Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+CREATE NONCLUSTERED INDEX [IX_PontoModel_Id] ON [dbo].[PontoModels]
+(
+	[PontoModel_Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE NONCLUSTERED INDEX [IX_Usuario_Id] ON [dbo].[ReservaModels]
@@ -290,6 +350,11 @@ CREATE NONCLUSTERED INDEX [IX_Ocupacao_Id] ON [dbo].[VagaModels]
 	[Ocupacao_Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
+CREATE NONCLUSTERED INDEX [IX_PontoModel_Id] ON [dbo].[VagaModels]
+(
+	[PontoModel_Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
 CREATE NONCLUSTERED INDEX [IX_Reserva_Id] ON [dbo].[VagaModels]
 (
 	[Reserva_Id] ASC
@@ -299,6 +364,10 @@ CREATE NONCLUSTERED INDEX [IX_Responsavel_Id] ON [dbo].[VagaModels]
 (
 	[Responsavel_Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+ALTER TABLE [dbo].[EstacionamentoModels] ADD  DEFAULT ((0)) FOR [ImagemAltura]
+GO
+ALTER TABLE [dbo].[EstacionamentoModels] ADD  DEFAULT ((0)) FOR [ImagemLargura]
 GO
 ALTER TABLE [dbo].[AspNetUserClaims]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
 REFERENCES [dbo].[AspNetUsers] ([Id])
@@ -324,6 +393,11 @@ ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId]
 GO
+ALTER TABLE [dbo].[EstacionamentoModels]  WITH CHECK ADD  CONSTRAINT [FK_dbo.EstacionamentoModels_dbo.UsuarioModels_Responsavel_Id] FOREIGN KEY([Responsavel_Id])
+REFERENCES [dbo].[UsuarioModels] ([Id])
+GO
+ALTER TABLE [dbo].[EstacionamentoModels] CHECK CONSTRAINT [FK_dbo.EstacionamentoModels_dbo.UsuarioModels_Responsavel_Id]
+GO
 ALTER TABLE [dbo].[OcupacaoModels]  WITH CHECK ADD  CONSTRAINT [FK_dbo.OcupacaoModels_dbo.UsuarioModels_Usuario_Id] FOREIGN KEY([Usuario_Id])
 REFERENCES [dbo].[UsuarioModels] ([Id])
 GO
@@ -333,6 +407,17 @@ ALTER TABLE [dbo].[OcupacaoModels]  WITH CHECK ADD  CONSTRAINT [FK_dbo.OcupacaoM
 REFERENCES [dbo].[VeiculoModels] ([Id])
 GO
 ALTER TABLE [dbo].[OcupacaoModels] CHECK CONSTRAINT [FK_dbo.OcupacaoModels_dbo.VeiculoModels_Veiculo_Id]
+GO
+ALTER TABLE [dbo].[PontoModels]  WITH CHECK ADD  CONSTRAINT [FK_dbo.PontoModels_dbo.EstacionamentoModels_EstacionamentoModel_Id] FOREIGN KEY([EstacionamentoModel_Id])
+REFERENCES [dbo].[EstacionamentoModels] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[PontoModels] CHECK CONSTRAINT [FK_dbo.PontoModels_dbo.EstacionamentoModels_EstacionamentoModel_Id]
+GO
+ALTER TABLE [dbo].[PontoModels]  WITH CHECK ADD  CONSTRAINT [FK_dbo.PontoModels_dbo.PontoModels_PontoModel_Id] FOREIGN KEY([PontoModel_Id])
+REFERENCES [dbo].[PontoModels] ([Id])
+GO
+ALTER TABLE [dbo].[PontoModels] CHECK CONSTRAINT [FK_dbo.PontoModels_dbo.PontoModels_PontoModel_Id]
 GO
 ALTER TABLE [dbo].[ReservaModels]  WITH CHECK ADD  CONSTRAINT [FK_dbo.ReservaModels_dbo.UsuarioModels_Usuario_Id] FOREIGN KEY([Usuario_Id])
 REFERENCES [dbo].[UsuarioModels] ([Id])
@@ -360,6 +445,11 @@ ALTER TABLE [dbo].[VagaModels]  WITH CHECK ADD  CONSTRAINT [FK_dbo.VagaModels_db
 REFERENCES [dbo].[OcupacaoModels] ([Id])
 GO
 ALTER TABLE [dbo].[VagaModels] CHECK CONSTRAINT [FK_dbo.VagaModels_dbo.OcupacaoModels_Ocupacao_Id]
+GO
+ALTER TABLE [dbo].[VagaModels]  WITH CHECK ADD  CONSTRAINT [FK_dbo.VagaModels_dbo.PontoModels_PontoModel_Id] FOREIGN KEY([PontoModel_Id])
+REFERENCES [dbo].[PontoModels] ([Id])
+GO
+ALTER TABLE [dbo].[VagaModels] CHECK CONSTRAINT [FK_dbo.VagaModels_dbo.PontoModels_PontoModel_Id]
 GO
 ALTER TABLE [dbo].[VagaModels]  WITH CHECK ADD  CONSTRAINT [FK_dbo.VagaModels_dbo.ReservaModels_Reserva_Id] FOREIGN KEY([Reserva_Id])
 REFERENCES [dbo].[ReservaModels] ([Id])
