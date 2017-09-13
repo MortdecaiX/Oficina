@@ -297,6 +297,8 @@ containing a value of this type.
         public static final int common_google_signin_btn_text_light_pressed=0x7f020014;
         public static final int dot=0x7f020015;
         public static final int icon=0x7f020016;
+        public static final int parking_sign=0x7f020017;
+        public static final int red_dot=0x7f020018;
     }
     public static final class id {
         public static final int adjust_height=0x7f070005;
@@ -304,8 +306,9 @@ containing a value of this type.
         public static final int auto=0x7f07000a;
         public static final int button1=0x7f070011;
         public static final int button2=0x7f070012;
+        public static final int button3=0x7f070014;
         public static final int dark=0x7f07000b;
-        public static final int googlemap=0x7f070013;
+        public static final int googlemap=0x7f070015;
         public static final int hybrid=0x7f070000;
         public static final int icon_only=0x7f070007;
         public static final int layout_root=0x7f07000d;
@@ -317,6 +320,7 @@ containing a value of this type.
         public static final int standard=0x7f070008;
         public static final int terrain=0x7f070004;
         public static final int textView1=0x7f07000e;
+        public static final int toggleButton1=0x7f070013;
         public static final int toolbar1=0x7f070010;
         public static final int wide=0x7f070009;
     }

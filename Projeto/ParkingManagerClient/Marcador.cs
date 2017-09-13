@@ -21,9 +21,11 @@ namespace ParkingManagerClient
             Estacionamento = estacionamento;
             Marker = marker;
         }
-
+        public long Id { get; set; }
+        public List<long> Conexoes = new List<long>();
         public JObject Estacionamento { get; set; }
         public Marker Marker { get; set; }
-        public Polyline Linha { get; set; }
+        private List<Polyline> _Linhas = new List<Polyline>();
+        public List<Polyline> Linhas { get { return _Linhas; } set { _Linhas = value; } }
     }
 }

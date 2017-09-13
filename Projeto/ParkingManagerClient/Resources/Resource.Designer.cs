@@ -243,6 +243,12 @@ namespace ParkingManagerClient
 			// aapt resource value: 0x7f020016
 			public const int Icon = 2130837526;
 			
+			// aapt resource value: 0x7f020017
+			public const int parking_sign = 2130837527;
+			
+			// aapt resource value: 0x7f020018
+			public const int red_dot = 2130837528;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -271,11 +277,14 @@ namespace ParkingManagerClient
 			// aapt resource value: 0x7f070012
 			public const int button2 = 2131165202;
 			
+			// aapt resource value: 0x7f070014
+			public const int button3 = 2131165204;
+			
 			// aapt resource value: 0x7f07000b
 			public const int dark = 2131165195;
 			
-			// aapt resource value: 0x7f070013
-			public const int googlemap = 2131165203;
+			// aapt resource value: 0x7f070015
+			public const int googlemap = 2131165205;
 			
 			// aapt resource value: 0x7f070000
 			public const int hybrid = 2131165184;
@@ -309,6 +318,9 @@ namespace ParkingManagerClient
 			
 			// aapt resource value: 0x7f07000e
 			public const int textView1 = 2131165198;
+			
+			// aapt resource value: 0x7f070013
+			public const int toggleButton1 = 2131165203;
 			
 			// aapt resource value: 0x7f070010
 			public const int toolbar1 = 2131165200;

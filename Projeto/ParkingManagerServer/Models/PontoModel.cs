@@ -13,14 +13,16 @@ namespace ParkingManagerServer.Models
         public PosicaoGeografica Localizacao { get; set; }
         public virtual ICollection<VagaModel> VagasConectadas { get; set; }
         [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<PontoModel> PontosConectados { get; set; }
+        public virtual ICollection<PontoModel> PontosFilhosConectados { get; set; }
+        [Newtonsoft.Json.JsonIgnore]
+        public virtual ICollection<PontoModel> PontosPaisConectados { get; set; }
         public ICollection<long> Conexoes {
             get
             {
                 List<long> conexoes = new List<long>();
                 try
                 {
-                    foreach (var conexao in PontosConectados)
+                    foreach (var conexao in PontosFilhosConectados)
                     {
                         conexoes.Add(conexao.Id);
                     }

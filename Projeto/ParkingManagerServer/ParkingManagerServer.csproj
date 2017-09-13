@@ -294,6 +294,14 @@
     <Compile Include="Migrations\201709101631061_pontos_4.Designer.cs">
       <DependentUpon>201709101631061_pontos_4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709120407045_PontoAPonto.cs" />
+    <Compile Include="Migrations\201709120407045_PontoAPonto.Designer.cs">
+      <DependentUpon>201709120407045_PontoAPonto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709121425481_Ponto5.cs" />
+    <Compile Include="Migrations\201709121425481_Ponto5.Designer.cs">
+      <DependentUpon>201709121425481_Ponto5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -406,6 +414,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709101631061_pontos_4.resx">
       <DependentUpon>201709101631061_pontos_4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709120407045_PontoAPonto.resx">
+      <DependentUpon>201709120407045_PontoAPonto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709121425481_Ponto5.resx">
+      <DependentUpon>201709121425481_Ponto5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

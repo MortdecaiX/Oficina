@@ -28,6 +28,16 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/button2"
                 android:visibility="invisible" />
+            <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/toggleButton1" />
+          <Button
+                android:text="Atualizar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button3"
+                 />
         </Toolbar>
     </RelativeLayout>
     <fragment

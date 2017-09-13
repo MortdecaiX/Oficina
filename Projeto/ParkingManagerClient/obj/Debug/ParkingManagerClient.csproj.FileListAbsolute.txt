@@ -59,3 +59,5 @@ C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerClient\bin\Debug\N
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerClient\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerClient\obj\Debug\res\drawable\dot.png
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerClient\obj\Debug\res\layout\custompopupdialog.xml
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerClient\obj\Debug\res\drawable\red_dot.png
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerClient\obj\Debug\res\drawable\parking_sign.png

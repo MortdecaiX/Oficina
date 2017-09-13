@@ -19,14 +19,26 @@ namespace ParkingManagerClient
     public class MainActivity : Activity, IOnMapReadyCallback
     {
         enum StatusGUI { Normal, DesenhandoCaminho }
-        Marker UltimoPontoInteracao = null;
+        Marker _UltimoPontoInteracao = null;
+        Marker UltimoPontoInteracao {
+            get { return _UltimoPontoInteracao; }
+            set {
+                if (_UltimoPontoInteracao != null)
+                    _UltimoPontoInteracao.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.dot));
+                _UltimoPontoInteracao = value;
+                if (_UltimoPontoInteracao != null)
+                    _UltimoPontoInteracao.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.red_dot));
+            }
+        }
         Button btNovoCaminho = null;
-
+        ToggleButton tButton = null;
 
         private StatusGUI _STATUS_GUI = StatusGUI.Normal;
-        StatusGUI STATUS_GUI  {
+        StatusGUI STATUS_GUI
+        {
             get { return _STATUS_GUI; }
-            set {
+            set
+            {
                 StatusGUI _STATUS_GUI_ANT = _STATUS_GUI;
                 _STATUS_GUI = value;
 
@@ -38,15 +50,9 @@ namespace ParkingManagerClient
         {
             if (_STATUS_GUI_ANT == StatusGUI.DesenhandoCaminho && _STATUS_GUI == StatusGUI.Normal)
             {
-                foreach(Marcador marcador in MarcadoresColocados)
-                {
-                   if (marcador.Linha != null)
-                        marcador.Linha.Remove();
-                    marcador.Marker.Remove();
-                }
                 btNovoCaminho.Text = "Novo Caminho";
                 btNovoCaminho.Visibility = ViewStates.Invisible;
-                MarcadoresColocados.Clear();
+                
                 UltimoPontoInteracao = null;
             }
         }
@@ -55,131 +61,159 @@ namespace ParkingManagerClient
 
         public JObject EstacionamentoSelecionado { get; private set; }
         public List<Marcador> MarcadoresColocados = new List<Marcador>();
+        private Button btAtualizar = null;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
             // Set our view from the "main" layout resource
-            this.RequestWindowFeature( WindowFeatures.NoTitle);
-            SetContentView (Resource.Layout.Main);
+            this.RequestWindowFeature(WindowFeatures.NoTitle);
+            SetContentView(Resource.Layout.Main);
             SetUpMap();
 
             btNovoCaminho = FindViewById<Button>(Resource.Id.button1);
+            btAtualizar = FindViewById<Button>(Resource.Id.button3);
+            btAtualizar.Click += Atualizar;
 
-            btNovoCaminho.Click += (o, a) => {
+
+            tButton = FindViewById<ToggleButton>(Resource.Id.toggleButton1);
+            tButton.CheckedChange += TrocarTipoMapa;
+            btNovoCaminho.Click += (o, a) =>
+            {
                 if (STATUS_GUI == StatusGUI.Normal)
                 {
-
-                    // get prompts.xml view
-                    LayoutInflater li = LayoutInflater.From(this);
-                    View promptsView = li.Inflate(Resource.Layout.CustomPopUpDialog, null);
-
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                            this);
-
-                    // set prompts.xml to alertdialog builder
-                    alertDialogBuilder.SetView(promptsView);
-
-                    TextView userInput = (TextView)promptsView.FindViewById(Resource.Id.textView1);
-                    userInput.Text = "Iniciar marcação de caminho?";
-
-                    // set dialog message
-                    alertDialogBuilder.SetCancelable(false);
-                    alertDialogBuilder.SetPositiveButton("Sim",
-                        (sender, args) =>
-                        {
-                            btNovoCaminho.Text = "Salvar";
-                            PopUpButtonPositiveOnClickListener(sender, args);
-
-                        }
-                        );
-                    alertDialogBuilder.SetNegativeButton("Não", PopUpButtonNegativeOnClickListener);
-                    // create alert dialog
-                    AlertDialog alertDialog = alertDialogBuilder.Create();
-
-                    // show it
-                    alertDialog.Show();
+                    MostraPopUpEInserirPontos();
 
                 }
                 else
-                    if(STATUS_GUI == StatusGUI.DesenhandoCaminho)
+                    if (STATUS_GUI == StatusGUI.DesenhandoCaminho)
                 {
-                    
-                    SalvarPontosMostrados();
-                    STATUS_GUI = StatusGUI.Normal;
-                    
-                    
+                     STATUS_GUI = StatusGUI.Normal;
                 }
             };
 
         }
 
-        private void SalvarPontosMostrados()
+        private void Atualizar(object sender, EventArgs e)
         {
-            
-                
-                try
+            SetUpMap();
+            foreach (Marcador marcador in MarcadoresColocados)
+            {
+                marcador.Marker.Remove();
+                foreach(Polyline linha in marcador.Linhas)
                 {
-                    JArray jPontos = new JArray();
+                    linha.Remove();
+                }
+                
+            }
+            MarcadoresColocados.Clear();
+            ObterEstacionamentos();
 
-                    foreach(var marcador in MarcadoresColocados)
-                    {
-                        string url = Resources.GetString(Resource.String.ParkingManagerServerURL) + string.Format("api/EstacionamentoModel/{0}/AdicionarPonto", EstacionamentoSelecionado["Id"].Value<long>());
-                        JObject jPonto = new JObject();
-                        jPonto.Add("VagasConectadas", null);
-                        JObject jLocalizacao = new JObject();
-                        jLocalizacao.Add("Latitude", marcador.Marker.Position.Latitude);
-                        jLocalizacao.Add("Longitude", marcador.Marker.Position.Longitude);
-                        jLocalizacao.Add("Altitude", 0);
-                        jPonto.Add("Localizacao", jLocalizacao);
-                        jPonto.Add("Entrada", false);
-                        jPonto.Add("Saida", false);
+        }
+
+        private void TrocarTipoMapa(object sender, CompoundButton.CheckedChangeEventArgs e)
+        {
+            if (e.IsChecked)
+            {
+                GMap.MapType = GoogleMap.MapTypeSatellite;
+                
+            }
+            else
+            {
+                GMap.MapType = GoogleMap.MapTypeNormal;
+            }
+        }
+
+        private void MostraPopUpEInserirPontos()
+        {
+            // get prompts.xml view
+            LayoutInflater li = LayoutInflater.From(this);
+            View promptsView = li.Inflate(Resource.Layout.CustomPopUpDialog, null);
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    this);
+
+            // set prompts.xml to alertdialog builder
+            alertDialogBuilder.SetView(promptsView);
+
+            TextView userInput = (TextView)promptsView.FindViewById(Resource.Id.textView1);
+            userInput.Text = "Iniciar marcação de caminho?";
+
+            // set dialog message
+            alertDialogBuilder.SetCancelable(false);
+            alertDialogBuilder.SetPositiveButton("Sim",
+                (sender, args) =>
+                {
+                    btNovoCaminho.Text = "Parar";
+                    STATUS_GUI = StatusGUI.DesenhandoCaminho;
+                }
+                );
+            alertDialogBuilder.SetNegativeButton("Não", PopUpButtonNegativeOnClickListener);
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.Create();
+
+            // show it
+            alertDialog.Show();
+        }
+
+        private Marcador SalvarPontoInserido(Marcador marcador)
+        {
+
+            
+                JArray jPontos = new JArray();
+                
+                
+                {
+                    string url = Resources.GetString(Resource.String.ParkingManagerServerURL) + string.Format("api/EstacionamentoModel/{0}/AdicionarPonto", EstacionamentoSelecionado["Id"].Value<long>());
+                    JObject jPonto = new JObject();
+                    jPonto.Add("VagasConectadas", null);
+                    JObject jLocalizacao = new JObject();
+                    jLocalizacao.Add("Latitude", marcador.Marker.Position.Latitude);
+                    jLocalizacao.Add("Longitude", marcador.Marker.Position.Longitude);
+                    jLocalizacao.Add("Altitude", 0);
+                    jPonto.Add("Localizacao", jLocalizacao);
+                    jPonto.Add("Entrada", false);
+                    jPonto.Add("Saida", false);
 
                     using (WebClient wc = new WebClient())
                     {
+                        wc.Headers.Add(HttpRequestHeader.ContentType, "application/json");
                         string result = wc.UploadString(url, jPonto.ToString());
-                        int.Parse(result);
+                        long id = ((JObject)JsonConvert.DeserializeObject(result))["Id"].Value<long>() ;
+                        marcador.Id = id;
+                        marcador.Marker.Title = id.ToString();
+                        if(marcador.Conexoes!= null && marcador.Conexoes.Count>0)
+                            AssociarPontos(id, marcador.Conexoes);
+
+                        return marcador;
                     }
                 }
-                    
-                    
-                }
-                catch(FormatException ex)
-                {
+                
 
-                }
-                catch (Exception ex)
-                {
-
-                }
             
+
+        }
+
+        private void AssociarPontos(long id, List<long> conexoes)
+        {
+            foreach (long conexao in conexoes) {
+                string url = Resources.GetString(Resource.String.ParkingManagerServerURL) + string.Format("api/PontoModels/ConectarPontos/{0}/{1}", id, conexao);
+                Uri uri = new Uri(url);
+                using (WebClient wc = new WebClient())
+                {
+                    wc.DownloadStringAsync(uri);
+                }
+            }
         }
 
         public override void OnBackPressed()
         {
-            if(STATUS_GUI == StatusGUI.Normal)
+            if (STATUS_GUI == StatusGUI.Normal)
                 base.OnBackPressed();
-            if(STATUS_GUI == StatusGUI.DesenhandoCaminho)
+            if (STATUS_GUI == StatusGUI.DesenhandoCaminho)
             {
-                if (this.MarcadoresColocados.Count > 0)
-                {
-                    Marcador marcador = MarcadoresColocados[this.MarcadoresColocados.Count-1];
-                    if(marcador.Linha!=null)
-                        marcador.Linha.Remove();
-                    marcador.Marker.Remove();
-                    MarcadoresColocados.Remove(marcador);
-                    
-
-                }
-                if(this.MarcadoresColocados.Count ==0)
-                {
-                    
-                    STATUS_GUI = StatusGUI.Normal;
-                }else
-                {
-                    UltimoPontoInteracao = MarcadoresColocados[this.MarcadoresColocados.Count - 1].Marker;
-                }
+                STATUS_GUI = StatusGUI.Normal;
             }
         }
 
@@ -187,6 +221,7 @@ namespace ParkingManagerClient
 
         private void SetUpMap()
         {
+            GMap = null;
             if (GMap == null)
             {
                 FragmentManager.FindFragmentById<MapFragment>(Resource.Id.googlemap).GetMapAsync(this);
@@ -196,34 +231,46 @@ namespace ParkingManagerClient
         {
             this.GMap = googleMap;
             this.GMap.MapLongClick += GMapLongClickEvent;
+            this.GMap.MarkerClick += MarkerClickEvent;
 
             ObterEstacionamentos();
 
         }
+        public void MarkerClickEvent(object sender, GoogleMap.MarkerClickEventArgs args)
+        {
+            Marcador marcador = this.MarcadoresColocados.Find(m => m.Marker.Id == args.Marker.Id);
+            if(marcador!=null)
+                UltimoPontoInteracao = args.Marker;
+            else
+            {
 
+            }
+        }
         private void GMapLongClickEvent(object sender, GoogleMap.MapLongClickEventArgs e)
         {
-            if(STATUS_GUI == StatusGUI.DesenhandoCaminho)
+            if (STATUS_GUI == StatusGUI.DesenhandoCaminho)
             {
-                if(UltimoPontoInteracao == null)
+                if (UltimoPontoInteracao == null)
                 {
                     //Colocar novo ponto
                     ColocarNovoPontoMapa(e.Point, (LatLng)null, EstacionamentoSelecionado);
-                }else
+                }
+                else
                 {
                     //colocar novo ponto a partir do ultimo interagido
                     ColocarNovoPontoMapa(e.Point, UltimoPontoInteracao.Position, EstacionamentoSelecionado);
                 }
             }
 
-           
+
         }
 
         private void ColocarNovoPontoMapa(LatLng latlngOrigem, LatLng latlngDest, JObject estacionamento)
         {
             MarkerOptions options = new MarkerOptions().SetPosition(latlngOrigem).SetTitle("").SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.dot));
+            
             Marker ponto = GMap.AddMarker(options);
-            UltimoPontoInteracao = ponto;
+            
             Marcador marcador = new Marcador(estacionamento, ponto);
             if (latlngDest != null)
             {
@@ -233,15 +280,19 @@ namespace ParkingManagerClient
                 PolylineOptions opt = new PolylineOptions();
                 opt = opt.Add(latlngOrigem, new LatLng(_latitude, _longitude));
                 opt = opt.InvokeWidth(5);
-                opt = opt.InvokeColor(Color.Blue);
+                opt = opt.InvokeColor(Color.Red);
 
                 Polyline line = GMap.AddPolyline(opt);
-                marcador.Linha = line;
+                marcador.Linhas.Add(line);
             }
-
-            
+            if (UltimoPontoInteracao != null)
+            {
+                marcador.Conexoes.Add(long.Parse(UltimoPontoInteracao.Title));
+            }
+            marcador = SalvarPontoInserido(marcador);
+            UltimoPontoInteracao = marcador.Marker;
             this.MarcadoresColocados.Add(marcador);
-
+            
         }
 
         private void PopUpButtonNegativeOnClickListener(object sender, DialogClickEventArgs e)
@@ -252,14 +303,7 @@ namespace ParkingManagerClient
             }
         }
 
-        private void PopUpButtonPositiveOnClickListener(object sender, DialogClickEventArgs e)
-        {
-            if (sender is DialogInterface)
-            {
-                ((DialogInterface)sender).Dispose();
-            }
-            STATUS_GUI = StatusGUI.DesenhandoCaminho;
-        }
+        
 
         private void ObterEstacionamentos()
         {
@@ -282,7 +326,7 @@ namespace ParkingManagerClient
 
         private void MostrarEstacionamentosNoMap(JArray lista)
         {
-           foreach(var estacionamento in lista)
+            foreach (var estacionamento in lista)
             {
                 var latitude = (estacionamento["Localizacao"])["Latitude"].Value<double>();
                 var longitude = (estacionamento["Localizacao"])["Longitude"].Value<double>();
@@ -291,9 +335,14 @@ namespace ParkingManagerClient
                 CameraUpdate camera = CameraUpdateFactory.NewLatLngZoom(latlng, altitude);
                 GMap.MoveCamera(camera);
 
+                var imagemMarcador = BitmapDescriptorFactory.FromResource(Resource.Drawable.parking_sign);
+                MarkerOptions options = new MarkerOptions().SetPosition(latlng).SetTitle("").SetIcon(imagemMarcador);
+
+                Marker ponto = GMap.AddMarker(options);
+
                 var pontos = (JArray)estacionamento["Pontos"];
-                MostrarPontosNoMapa(pontos);
-                if (estacionamento["ImagemBase64"] != null)
+                MostrarPontosNoMapa((JObject)estacionamento,pontos);
+                if (!string.IsNullOrEmpty(estacionamento["ImagemBase64"].Value<string>()))
                 {
                     try
                     {
@@ -305,26 +354,33 @@ namespace ParkingManagerClient
                         LatLng imgLatlng = new LatLng(Convert.ToDouble(imglatitude), Convert.ToDouble(imglongitude));
 
 
+                       
+
+
+
                         byte[] decodedString = Base64.Decode(estacionamento["ImagemBase64"].Value<string>(), Base64Flags.Default);
 
                         Bitmap decodedByte = BitmapFactory.DecodeByteArray(decodedString, 0, decodedString.Length);
 
-                        if(altura == 0 || largura == 0)
+                        if (altura == 0 || largura == 0)
                         {
                             altura = decodedByte.Height;
                             largura = decodedByte.Width;
                         }
 
                         GroundOverlay overlay = this.SobreporMapaComImagem(imgLatlng, BitmapDescriptorFactory.FromBitmap(decodedByte), largura, altura);
+                        overlay.Bearing = estacionamento["ImagemRotacao"].Value<float>();
+
                         overlay.Clickable = true;
-                        GMap.GroundOverlayClick += (obj, args) => {
-                            if(args.GroundOverlay.Id == overlay.Id)
+                        GMap.GroundOverlayClick += (obj, args) =>
+                        {
+                            if (args.GroundOverlay.Id == overlay.Id)
                             {
                                 if (STATUS_GUI == StatusGUI.Normal)
                                 {
                                     this.EstacionamentoSelecionado = (JObject)estacionamento;
                                     btNovoCaminho.Visibility = ViewStates.Visible;
-                                    btNovoCaminho.Text = "Novo Caminho em: " + EstacionamentoSelecionado["Nome"];
+                                    btNovoCaminho.Text = "Novo Caminho em: " +              EstacionamentoSelecionado["Nome"];
                                 }
                             }
                             else
@@ -333,7 +389,7 @@ namespace ParkingManagerClient
                             }
                         };
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
 
                     }
@@ -341,7 +397,7 @@ namespace ParkingManagerClient
             }
         }
 
-        private void MostrarPontosNoMapa(JArray lista)
+        private void MostrarPontosNoMapa(JObject estacionamento,JArray lista)
         {
             foreach (var ponto in lista)
             {
@@ -351,39 +407,45 @@ namespace ParkingManagerClient
                 var altitude = (ponto["Localizacao"])["Altitude"].Value<double>();
                 LatLng latlng = new LatLng(Convert.ToDouble(latitude), Convert.ToDouble(longitude));
                 MarkerOptions options = new MarkerOptions().SetPosition(latlng).SetTitle(ponto["Id"].Value<long>().ToString()).SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.dot));
-                GMap.AddMarker(options);
+                Marker marker = GMap.AddMarker(options);
                 var vagas = (JArray)ponto["VagasConectadas"];
-
-                foreach(var conexao in ponto["Conexoes"])
+                Marcador marcador = new Marcador(estacionamento, marker)
                 {
-                   
-                    foreach(var _ponto in lista)
+                    Id = ponto["Id"].Value<long>()
+                };
+                
+                foreach (var conexao in ponto["Conexoes"])
+                {
+
+                    foreach (var _ponto in lista)
                     {
-                        if(_ponto["Id"].Value<long>()== conexao.Value<long>())
+                        if (_ponto["Id"].Value<long>() == conexao.Value<long>())
                         {
                             var _latitude = (_ponto["Localizacao"])["Latitude"].Value<double>();
                             var _longitude = (_ponto["Localizacao"])["Longitude"].Value<double>();
                             var _altitude = (_ponto["Localizacao"])["Altitude"].Value<double>();
                             PolylineOptions opt = new PolylineOptions();
-                            opt = opt.Add(new LatLng(latitude, longitude), new LatLng(_latitude, _longitude));
+                            opt = opt.Add(latlng, new LatLng(_latitude, _longitude));
                             opt = opt.InvokeWidth(5);
                             opt = opt.InvokeColor(Color.Red);
-                            
+
                             Polyline line = GMap.AddPolyline(opt);
+                            marcador.Linhas.Add(line);
                         }
 
                     }
                 }
+                MarcadoresColocados.Add(marcador);
 
 
-                MostrarVagasNoMapa((JObject)ponto,vagas);
+                MostrarVagasNoMapa((JObject)ponto, vagas);
 
 
 
             }
         }
 
-        private void MostrarVagasNoMapa(JObject ponto,JArray lista)
+        private void MostrarVagasNoMapa(JObject ponto, JArray lista)
         {
             if (lista != null)
             {
@@ -418,7 +480,7 @@ namespace ParkingManagerClient
             //BitmapDescriptorFactory.FromResource(Resource.Drawable.Icon)
             GroundOverlayOptions newarkMap = new GroundOverlayOptions()
             .InvokeImage(bitmapDescriptor).Position(geoPosition, width, heigth);
-           return GMap.AddGroundOverlay(newarkMap);
+            return GMap.AddGroundOverlay(newarkMap);
         }
     }
 }

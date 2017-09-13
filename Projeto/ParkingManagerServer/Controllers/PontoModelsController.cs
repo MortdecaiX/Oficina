@@ -55,13 +55,13 @@ namespace ParkingManagerServer.Controllers
                 return BadRequest("Id não encontrado");
             }
 
-            if (pontoModel.PontosConectados == null)
+            if (pontoModel.PontosFilhosConectados == null)
             {
-                pontoModel.PontosConectados = new List<PontoModel>() { destPontoModel };
+                pontoModel.PontosFilhosConectados = new List<PontoModel>() { destPontoModel };
             }
             else
             {
-                pontoModel.PontosConectados.Add(destPontoModel);
+                pontoModel.PontosFilhosConectados.Add(destPontoModel);
             }
 
             

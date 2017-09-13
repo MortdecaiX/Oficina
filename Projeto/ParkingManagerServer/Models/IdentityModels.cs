@@ -54,7 +54,14 @@ namespace ParkingManagerServer.Models
             modelBuilder.Entity<VagaModel>().HasOptional(i => i.Responsavel).WithOptionalDependent();
             modelBuilder.Entity<EstacionamentoModel>().HasMany<PontoModel>(i => i.Pontos).WithRequired();
             
-            modelBuilder.Entity<PontoModel>().HasMany(i => i.PontosConectados).WithOptional();
+            modelBuilder.Entity<PontoModel>().HasMany(i => i.PontosPaisConectados).WithMany(i=>i.PontosFilhosConectados).Map(cs=> {
+                cs.MapLeftKey("PontoPaiRefId");
+                cs.MapRightKey("PontoFilhoRefId");
+                cs.ToTable("PontoPonto");
+            });
+
+
+            
             modelBuilder.Entity<PontoModel>().HasMany(i => i.VagasConectadas).WithOptional();
 
         }
