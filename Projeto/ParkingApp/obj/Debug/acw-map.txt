@@ -1,0 +1,4 @@
+ParkingApp.MainActivity, ParkingApp;md54f04a2b92e8b6f0edbcf6316e59139bd.MainActivity
+ParkingApp.MainActivity, ParkingApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md54f04a2b92e8b6f0edbcf6316e59139bd.MainActivity
+ParkingApp.MainActivity;md54f04a2b92e8b6f0edbcf6316e59139bd.MainActivity
+parkingapp.MainActivity;md54f04a2b92e8b6f0edbcf6316e59139bd.MainActivity
