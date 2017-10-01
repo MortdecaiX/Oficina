@@ -41,6 +41,6 @@
     <ImageView
         android:src="@drawable/car"
         android:layout_width="382.0dp"
-        android:layout_height="275.0dp"
+        android:layout_height="match_parent"
         android:id="@+id/imageView1" />
 </LinearLayout>
