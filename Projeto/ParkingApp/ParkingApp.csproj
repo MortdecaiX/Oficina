@@ -71,8 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AtividadeCadastro.cs" />
-    <Compile Include="MainActivity.cs" />
-    <Compile Include="Mapa.cs" />
+    <Compile Include="Atividade Login.cs" />
+    <Compile Include="AtividadeMapa.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

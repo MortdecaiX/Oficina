@@ -364,8 +364,8 @@ namespace ParkingApp
 			// aapt resource value: 0x7f070018
 			public const int editText4 = 2131165208;
 			
-			// aapt resource value: 0x7f07001f
-			public const int googlemap = 2131165215;
+			// aapt resource value: 0x7f07001e
+			public const int gmap = 2131165214;
 			
 			// aapt resource value: 0x7f07000d
 			public const int gridLayout1 = 2131165197;
@@ -391,8 +391,8 @@ namespace ParkingApp
 			// aapt resource value: 0x7f070003
 			public const int satellite = 2131165187;
 			
-			// aapt resource value: 0x7f07001e
-			public const int searchView1 = 2131165214;
+			// aapt resource value: 0x7f07001d
+			public const int searchView1 = 2131165213;
 			
 			// aapt resource value: 0x7f07000e
 			public const int space1 = 2131165198;
@@ -423,9 +423,6 @@ namespace ParkingApp
 			
 			// aapt resource value: 0x7f070017
 			public const int textView5 = 2131165207;
-			
-			// aapt resource value: 0x7f07001d
-			public const int toolbar1 = 2131165213;
 			
 			// aapt resource value: 0x7f070009
 			public const int wide = 2131165193;

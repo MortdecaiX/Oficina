@@ -6,10 +6,10 @@ ParkingApp.MainActivity, ParkingApp;md54f04a2b92e8b6f0edbcf6316e59139bd.MainActi
 ParkingApp.MainActivity, ParkingApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md54f04a2b92e8b6f0edbcf6316e59139bd.MainActivity
 ParkingApp.MainActivity;md54f04a2b92e8b6f0edbcf6316e59139bd.MainActivity
 parkingapp.MainActivity;md54f04a2b92e8b6f0edbcf6316e59139bd.MainActivity
-ParkingApp.Mapa, ParkingApp;md54f04a2b92e8b6f0edbcf6316e59139bd.Mapa
-ParkingApp.Mapa, ParkingApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md54f04a2b92e8b6f0edbcf6316e59139bd.Mapa
-ParkingApp.Mapa;md54f04a2b92e8b6f0edbcf6316e59139bd.Mapa
-parkingapp.Mapa;md54f04a2b92e8b6f0edbcf6316e59139bd.Mapa
+ParkingApp.AtividadeMapa, ParkingApp;md54f04a2b92e8b6f0edbcf6316e59139bd.AtividadeMapa
+ParkingApp.AtividadeMapa, ParkingApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md54f04a2b92e8b6f0edbcf6316e59139bd.AtividadeMapa
+ParkingApp.AtividadeMapa;md54f04a2b92e8b6f0edbcf6316e59139bd.AtividadeMapa
+parkingapp.AtividadeMapa;md54f04a2b92e8b6f0edbcf6316e59139bd.AtividadeMapa
 Android.Support.V4.View.ViewPager/IOnPageChangeListenerImplementor, Xamarin.Android.Support.v4;mono.android.support.v4.view.ViewPager_OnPageChangeListenerImplementor
 Android.Support.V4.View.ViewPager+IOnPageChangeListenerImplementor, Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;mono.android.support.v4.view.ViewPager_OnPageChangeListenerImplementor
 Android.Support.V4.View.ViewPager.IOnPageChangeListenerImplementor;mono.android.support.v4.view.ViewPager_OnPageChangeListenerImplementor

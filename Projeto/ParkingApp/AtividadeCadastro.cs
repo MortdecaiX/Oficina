@@ -20,7 +20,7 @@ namespace ParkingApp
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.TelaCadastro);
-            // Create your application here
+            
         }
 
 

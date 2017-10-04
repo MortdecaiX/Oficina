@@ -300,44 +300,43 @@ containing a value of this type.
         public static int adjust_height=0x7f070005;
         public static int adjust_width=0x7f070006;
         public static int auto=0x7f07000a;
-        public static int button1=0x7f07001d;
-        public static int button2=0x7f07001f;
+        public static int button1=0x7f070019;
+        public static int button2=0x7f07001b;
         public static int dark=0x7f07000b;
-        public static int editText1=0x7f070015;
-        public static int editText2=0x7f070017;
-        public static int editText3=0x7f070019;
-        public static int editText4=0x7f07001b;
-        public static int googlemap=0x7f070010;
-        public static int gridLayout1=0x7f070011;
+        public static int editText1=0x7f070012;
+        public static int editText2=0x7f070014;
+        public static int editText3=0x7f070016;
+        public static int editText4=0x7f070018;
+        public static int googlemap=0x7f07001f;
+        public static int gridLayout1=0x7f07000d;
         public static int hybrid=0x7f070000;
         public static int icon_only=0x7f070007;
-        public static int imageView1=0x7f070020;
+        public static int imageView1=0x7f07001c;
         public static int light=0x7f07000c;
         public static int none=0x7f070001;
         public static int normal=0x7f070002;
         public static int satellite=0x7f070003;
-        public static int searchView1=0x7f07000f;
-        public static int space1=0x7f070012;
-        public static int space2=0x7f070013;
-        public static int space3=0x7f07001e;
-        public static int space4=0x7f07001c;
+        public static int searchView1=0x7f07001e;
+        public static int space1=0x7f07000e;
+        public static int space2=0x7f070010;
+        public static int space3=0x7f07001a;
         public static int standard=0x7f070008;
         public static int terrain=0x7f070004;
-        public static int textView1=0x7f07000d;
-        public static int textView2=0x7f070014;
-        public static int textView3=0x7f070016;
-        public static int textView4=0x7f070018;
-        public static int textView5=0x7f07001a;
-        public static int toolbar1=0x7f07000e;
+        public static int textView1=0x7f07000f;
+        public static int textView2=0x7f070011;
+        public static int textView3=0x7f070013;
+        public static int textView4=0x7f070015;
+        public static int textView5=0x7f070017;
+        public static int toolbar1=0x7f07001d;
         public static int wide=0x7f070009;
     }
     public static final class integer {
         public static int google_play_services_version=0x7f050000;
     }
     public static final class layout {
-        public static int principal=0x7f030000;
-        public static int telacadastro=0x7f030001;
-        public static int telalogin=0x7f030002;
+        public static int telacadastro=0x7f030000;
+        public static int telalogin=0x7f030001;
+        public static int telamapa=0x7f030002;
     }
     public static final class string {
         public static int ApplicationName=0x7f040020;
