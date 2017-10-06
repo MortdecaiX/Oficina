@@ -2,7 +2,7 @@
 <xs:schema xmlns:android="http://schemas.android.com/apk/res/android" attributeFormDefault="qualified" targetNamespace="http://schemas.android.com/apk/res/android" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
     <xs:documentation>v23</xs:documentation>
-    <xs:documentation>04/10/2017 15:47:02</xs:documentation>
+    <xs:documentation>04/10/2017 15:35:40</xs:documentation>
   </xs:annotation>
   <xs:attribute name="accessibilityLiveRegion">
     <xs:annotation>
@@ -10885,6 +10885,46 @@
   <xs:attribute name="footerDividersEnabled">
     <xs:annotation>
       <xs:documentation>When set to false, the ListView will not draw the divider before each footer view. The default value is true.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:union memberTypes="xs:string">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="false" />
+            <xs:enumeration value="true" />
+            <xs:enumeration value="?android:attr/alertDialogCenterButtons" />
+            <xs:enumeration value="?android:attr/backgroundDimEnabled" />
+            <xs:enumeration value="?android:attr/isLightTheme" />
+            <xs:enumeration value="?android:attr/panelMenuIsCompact" />
+            <xs:enumeration value="?android:attr/windowActionBar" />
+            <xs:enumeration value="?android:attr/windowActionBarOverlay" />
+            <xs:enumeration value="?android:attr/windowActionModeOverlay" />
+            <xs:enumeration value="?android:attr/windowActivityTransitions" />
+            <xs:enumeration value="?android:attr/windowAllowEnterTransitionOverlap" />
+            <xs:enumeration value="?android:attr/windowAllowReturnTransitionOverlap" />
+            <xs:enumeration value="?android:attr/windowCloseOnTouchOutside" />
+            <xs:enumeration value="?android:attr/windowContentTransitions" />
+            <xs:enumeration value="?android:attr/windowDisablePreview" />
+            <xs:enumeration value="?android:attr/windowEnableSplitTouch" />
+            <xs:enumeration value="?android:attr/windowFullscreen" />
+            <xs:enumeration value="?android:attr/windowIsFloating" />
+            <xs:enumeration value="?android:attr/windowIsTranslucent" />
+            <xs:enumeration value="?android:attr/windowNoDisplay" />
+            <xs:enumeration value="?android:attr/windowNoTitle" />
+            <xs:enumeration value="?android:attr/windowOverscan" />
+            <xs:enumeration value="?android:attr/windowSharedElementsUseOverlay" />
+            <xs:enumeration value="?android:attr/windowShowWallpaper" />
+            <xs:enumeration value="?android:attr/windowSwipeToDismiss" />
+            <xs:enumeration value="?android:attr/windowTranslucentNavigation" />
+            <xs:enumeration value="?android:attr/windowTranslucentStatus" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:union>
+    </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="forceHasOverlappingRendering">
+    <xs:annotation>
+      <xs:documentation>Whether this view has elements that may overlap when drawn. See android.view.View.forceHasOverlappingRendering(boolean).</xs:documentation>
     </xs:annotation>
     <xs:simpleType>
       <xs:union memberTypes="xs:string">
@@ -24973,6 +25013,41 @@
             <xs:enumeration value="?android:attr/windowSwipeToDismiss" />
             <xs:enumeration value="?android:attr/windowTranslucentNavigation" />
             <xs:enumeration value="?android:attr/windowTranslucentStatus" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:union>
+    </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="pointerIcon">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:union memberTypes="xs:string">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="alias" />
+            <xs:enumeration value="all_scroll" />
+            <xs:enumeration value="arrow" />
+            <xs:enumeration value="cell" />
+            <xs:enumeration value="context_menu" />
+            <xs:enumeration value="copy" />
+            <xs:enumeration value="crosshair" />
+            <xs:enumeration value="grab" />
+            <xs:enumeration value="grabbing" />
+            <xs:enumeration value="hand" />
+            <xs:enumeration value="help" />
+            <xs:enumeration value="horizontal_double_arrow" />
+            <xs:enumeration value="no_drop" />
+            <xs:enumeration value="none" />
+            <xs:enumeration value="text" />
+            <xs:enumeration value="top_left_diagonal_double_arrow" />
+            <xs:enumeration value="top_right_diagonal_double_arrow" />
+            <xs:enumeration value="vertical_double_arrow" />
+            <xs:enumeration value="vertical_text" />
+            <xs:enumeration value="wait" />
+            <xs:enumeration value="zoom_in" />
+            <xs:enumeration value="zoom_out" />
           </xs:restriction>
         </xs:simpleType>
       </xs:union>
