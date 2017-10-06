@@ -109,7 +109,7 @@ namespace ParkingApp
                 alert.SetMessage("Senha inválida");
                 alert.SetButton("OK", (c, ev) =>
                 {
-                    editSe.IsFocused.Equals(true);
+                    editSenha.IsFocused.Equals(true);
                 });
 
                 alert.Show();
