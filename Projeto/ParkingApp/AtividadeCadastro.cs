@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using System.Text.RegularExpressions;
+using System.Net;
 
 namespace ParkingApp
 {
@@ -46,17 +47,39 @@ namespace ParkingApp
 
             if (Nome.Success == true && Sobrenome.Success == true && Email.Success == true && Senha.Success == true)
             {
-
-                Android.App.AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                AlertDialog alert = dialog.Create();
-                alert.SetTitle("Sucesso");
-                alert.SetMessage("Cadastro realizado");
-                alert.SetButton("OK", (c, ev) =>
+                try
                 {
-                    
-                });
+                    WebClient wb = new WebClient();
+                    wb.Headers.Add("Content-Type", "application/json");
+                    string endereco = "http://parkingmanagerserver.azurewebsites.net/api/Account/Register";
+                    string conteudo = "{\"Email\": \""+editEmail.Text+"\",  \"Password\": \""+editSenha.Text+"\",  \"ConfirmPassword\": \""+editSenha.Text+"\"}";
+                    wb.UploadString(endereco, "POST", conteudo);
 
-                alert.Show();
+
+
+                    Android.App.AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                    AlertDialog alert = dialog.Create();
+                    alert.SetTitle("Sucesso");
+                    alert.SetMessage("Cadastro realizado");
+                    alert.SetButton("OK", (c, ev) =>
+                    {
+
+                    });
+
+                    alert.Show();
+                }catch(Exception ex)
+                {
+                    Android.App.AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                    AlertDialog alert = dialog.Create();
+                    alert.SetTitle("Erro");
+                    alert.SetMessage(ex.Message);
+                    alert.SetButton("OK", (c, ev) =>
+                    {
+
+                    });
+
+                    alert.Show();
+                }
             }
 
             else if(Nome.Success == false)

@@ -14,8 +14,8 @@ namespace ParkingApp
             base.OnCreate(bundle);
 
             SetContentView(Resource.Layout.TelaLogin);
-            var btnCadastro = FindViewById<Button>(Resource.Id.button2);
-            var btnLogin = FindViewById<Button>(Resource.Id.button1);
+            var btnCadastro = FindViewById<Button>(Resource.Id.buttonCadastro);
+            var btnLogin = FindViewById<Button>(Resource.Id.buttonLogin);
             btnLogin.Click += capturaClickLogin;
             btnCadastro.Click += capturaClickCadastro;
 
@@ -24,8 +24,8 @@ namespace ParkingApp
 
         private void capturaClickLogin(object sender, EventArgs e)
         {
-            var editLogin = FindViewById<EditText>(Resource.Id.editText2);
-            var editSenha = FindViewById<EditText>(Resource.Id.editText1);
+            var editLogin = FindViewById<EditText>(Resource.Id.editEmail);
+            var editSenha = FindViewById<EditText>(Resource.Id.editSenha);
 
             if(editLogin.Text == "Luccas" && editSenha.Text == "200996")
             {

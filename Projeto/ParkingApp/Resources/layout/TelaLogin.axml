@@ -12,7 +12,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText2" />
+        android:id="@+id/editEmail" />
     <TextView
         android:text="Senha"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -22,19 +22,19 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText1"
+        android:id="@+id/editSenha"
         android:layout_marginBottom="0.0dp"
         android:password="true" />
     <Button
         android:text="Logar"
         android:layout_width="121.5dp"
         android:layout_height="wrap_content"
-        android:id="@+id/button1" />
+        android:id="@+id/buttonLogin" />
     <Button
         android:text="Cadastre-se"
         android:layout_width="194.0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/button2" />
+        android:id="@+id/buttonCadastro" />
     <Space
         android:layout_width="match_parent"
         android:layout_height="70.5dp"
