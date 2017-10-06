@@ -294,11 +294,7 @@ containing a value of this type.
         public static int common_plus_signin_btn_text_light_focused=0x7f020028;
         public static int common_plus_signin_btn_text_light_normal=0x7f020029;
         public static int common_plus_signin_btn_text_light_pressed=0x7f02002a;
-        public static int dot=0x7f02002b;
-        public static int icon=0x7f02002c;
-        public static int parking_sign=0x7f02002d;
-        public static int red_dot=0x7f02002e;
-        public static int search=0x7f02002f;
+        public static int icon=0x7f02002b;
     }
     public static final class id {
         public static int adjust_height=0x7f070005;
@@ -311,7 +307,7 @@ containing a value of this type.
         public static int editText2=0x7f070014;
         public static int editText3=0x7f070016;
         public static int editText4=0x7f070018;
-        public static int gmap=0x7f07001e;
+        public static int googlemap=0x7f07001f;
         public static int gridLayout1=0x7f07000d;
         public static int hybrid=0x7f070000;
         public static int icon_only=0x7f070007;
@@ -320,7 +316,7 @@ containing a value of this type.
         public static int none=0x7f070001;
         public static int normal=0x7f070002;
         public static int satellite=0x7f070003;
-        public static int searchView1=0x7f07001d;
+        public static int searchView1=0x7f07001e;
         public static int space1=0x7f07000e;
         public static int space2=0x7f070010;
         public static int space3=0x7f07001a;
@@ -331,6 +327,7 @@ containing a value of this type.
         public static int textView3=0x7f070013;
         public static int textView4=0x7f070015;
         public static int textView5=0x7f070017;
+        public static int toolbar1=0x7f07001d;
         public static int wide=0x7f070009;
     }
     public static final class integer {
