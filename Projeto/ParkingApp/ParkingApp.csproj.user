@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
@@ -6,4 +7,14 @@
     <AndroidDesignerPreferredTheme>Theme.DeviceDefault.DialogWhenLarge.NoActionBar</AndroidDesignerPreferredTheme>
     <DefaultDevice>VisualStudio_android-23_arm_phone</DefaultDevice>
   </PropertyGroup>
+=======
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SelectedDevice>LGE LG-K430</SelectedDevice>
+    <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
+    <AndroidDesignerPreferredTheme>Theme.DeviceDefault.DialogWhenLarge.NoActionBar</AndroidDesignerPreferredTheme>
+    <DefaultDevice>VisualStudio_android-23_arm_phone</DefaultDevice>
+  </PropertyGroup>
+>>>>>>> 3d9de2260a6cad87f63fc8f8b506b6c95211d578
 </Project>
