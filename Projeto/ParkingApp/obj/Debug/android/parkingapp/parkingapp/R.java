@@ -294,11 +294,7 @@ containing a value of this type.
         public static final int common_plus_signin_btn_text_light_focused=0x7f020028;
         public static final int common_plus_signin_btn_text_light_normal=0x7f020029;
         public static final int common_plus_signin_btn_text_light_pressed=0x7f02002a;
-        public static final int dot=0x7f02002b;
-        public static final int icon=0x7f02002c;
-        public static final int parking_sign=0x7f02002d;
-        public static final int red_dot=0x7f02002e;
-        public static final int search=0x7f02002f;
+        public static final int icon=0x7f02002b;
     }
     public static final class id {
         public static final int adjust_height=0x7f070005;
