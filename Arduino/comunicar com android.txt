@@ -1,0 +1,3 @@
+https://www.allaboutcircuits.com/projects/communicate-with-your-arduino-through-android/
+
+http://www.instructables.com/id/Arduin-Adroid-USB-Serial-Communication/
