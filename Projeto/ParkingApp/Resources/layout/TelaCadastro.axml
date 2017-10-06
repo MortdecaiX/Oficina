@@ -29,7 +29,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText1" />
+        android:id="@+id/editText1"
+        android:capitalize="words" />
     <TextView
         android:text="Sobrenome"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -39,7 +40,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText2" />
+        android:id="@+id/editText2"
+        android:capitalize="words" />
     <TextView
         android:text="Email"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -59,7 +61,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText4" />
+        android:id="@+id/editText4"
+        android:password="true" />
     <Button
         android:text="Cadastrar"
         android:layout_width="match_parent"
