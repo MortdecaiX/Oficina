@@ -2,6 +2,7 @@
 using Android.Widget;
 using Android.OS;
 using System;
+using Android.Views;
 
 namespace ParkingApp
 {
@@ -12,8 +13,9 @@ namespace ParkingApp
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-
+            this.RequestWindowFeature(WindowFeatures.NoTitle);
             SetContentView(Resource.Layout.TelaLogin);
+            
             var btnCadastro = FindViewById<Button>(Resource.Id.button2);
             var btnLogin = FindViewById<Button>(Resource.Id.button1);
             btnLogin.Click += capturaClickLogin;
