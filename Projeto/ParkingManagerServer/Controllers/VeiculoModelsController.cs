@@ -113,7 +113,7 @@ namespace ParkingManagerServer.Controllers
         [Route("api/CreateUsuarioModel")]
         public UsuarioModel CreateUsuarioModel()
         {
-            UsuarioModel usuarioModel = new UsuarioModel("teste", "testse", "sdfsdf", "asdfasdf", null);
+            UsuarioModel usuarioModel = new UsuarioModel("teste","sdfsdf", "testse", "sdfsdf", "asdfasdf", null);
             List<VeiculoModel> veiculos = new List<VeiculoModel>();
           
             veiculos.Add(new VeiculoModel(new List<UsuarioModel>() { usuarioModel }, "asd-3423", "Fiat", "Uno"));

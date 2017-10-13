@@ -135,3 +135,4 @@ C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\P
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.PontoAPonto.resources
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.Ponto5.resources
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.update_1.resources
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.update_2.resources

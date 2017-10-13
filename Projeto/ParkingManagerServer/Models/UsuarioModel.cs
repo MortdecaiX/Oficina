@@ -15,9 +15,10 @@ namespace ParkingManagerServer.Models
         {
 
         }
-        public UsuarioModel(string nome, string email, string senha, string cpf, ICollection<VeiculoModel> veiculos)
+        public UsuarioModel(string nome, string sobrenome, string email, string senha, string cpf, ICollection<VeiculoModel> veiculos)
         {
             Nome = nome;
+            Sobrenome = sobrenome;
             Email = email;
             Senha = senha;
             CPF = cpf;
@@ -27,6 +28,7 @@ namespace ParkingManagerServer.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         public string Nome { get; set; }
+        public string Sobrenome { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }
         public string CPF { get; set; }

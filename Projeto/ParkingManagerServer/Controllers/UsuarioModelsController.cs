@@ -20,14 +20,41 @@ namespace ParkingManagerServer.Controllers
         // GET: api/UsuarioModels
         public IQueryable<UsuarioModel> GetUsuarioModels()
         {
+            var usuarios = db.UsuarioModels;
+            foreach(var usuario in usuarios)
+            {
+                usuario.Senha = null;
+            }
             return db.UsuarioModels;
         }
+
+
+        // GET: api/UsuarioModels/5
+        [AcceptVerbs("POST")]
+        [Route("api/UsuarioModels/Logon")]
+        public UsuarioModel GetUsuarioModel(DadosLogon dadosLogon)
+        {
+            UsuarioModel usuarioModel = null;
+
+            try
+            {
+                usuarioModel = db.UsuarioModels.Where(x => (x.Email == dadosLogon.Email && x.Senha == dadosLogon.Senha)).First();
+                usuarioModel.Senha = null;
+            }catch(Exception ex)
+            {
+
+            }
+
+            return usuarioModel;
+        }
+
 
         // GET: api/UsuarioModels/5
         [ResponseType(typeof(UsuarioModel))]
         public IHttpActionResult GetUsuarioModel(long id)
         {
             UsuarioModel usuarioModel = db.UsuarioModels.Find(id);
+            usuarioModel.Senha = null;
             if (usuarioModel == null)
             {
                 return NotFound();

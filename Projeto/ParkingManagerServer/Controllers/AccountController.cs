@@ -19,6 +19,8 @@ using ParkingManagerServer.Results;
 
 namespace ParkingManagerServer.Controllers
 {
+    
+    [Obsolete]
     [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
@@ -28,6 +30,8 @@ namespace ParkingManagerServer.Controllers
 
         public AccountController()
         {
+            throw new Exception("Controlador Obsoleto");
+
         }
 
         public AccountController(ApplicationUserManager userManager,
