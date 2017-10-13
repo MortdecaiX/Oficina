@@ -74,6 +74,14 @@ namespace ParkingManagerServer.Controllers
             return Ok(estacionamentoModel);
         }
 
+        [AcceptVerbs("GET")]
+        [Route("api/EstacionamentoModels/{termo}")]
+        public List<EstacionamentoModel> GetEstacionamentoModel(string termo)
+        {
+            var estacionamentos = db.EstacionamentoModels.Where(x=>x.Nome.ToLower().Contains(termo.ToLower())).ToList<EstacionamentoModel>();
+            return estacionamentos;
+        }
+
         // PUT: api/EstacionamentoModels/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutEstacionamentoModel(long id, EstacionamentoModel estacionamentoModel)
@@ -133,6 +141,10 @@ namespace ParkingManagerServer.Controllers
             {
                 return NotFound();
             }
+
+           
+
+            
 
             db.EstacionamentoModels.Remove(estacionamentoModel);
             db.SaveChanges();

@@ -2,8 +2,8 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
-    <SelectedDevice>LGE LG-K430</SelectedDevice>
+    <SelectedDevice>4.5" KitKat %284.4%29 HDPI Phone</SelectedDevice>
     <AndroidDesignerPreferredTheme>Theme.Black.NoTitleBar</AndroidDesignerPreferredTheme>
-    <DefaultDevice>VisualStudio_android-23_arm_phone</DefaultDevice>
+    <DefaultDevice>4.5" KitKat %284.4%29 HDPI Phone</DefaultDevice>
   </PropertyGroup>
 </Project>

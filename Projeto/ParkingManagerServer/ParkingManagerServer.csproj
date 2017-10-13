@@ -267,6 +267,13 @@
     <Compile Include="Controllers\UsuarioModelsController.cs" />
     <Compile Include="Controllers\VagaModelsController.cs" />
     <Compile Include="Controllers\VeiculoModelsController.cs" />
+    <Compile Include="default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -302,6 +309,10 @@
     <Compile Include="Migrations\201709121425481_Ponto5.Designer.cs">
       <DependentUpon>201709121425481_Ponto5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710051914483_update_1.cs" />
+    <Compile Include="Migrations\201710051914483_update_1.Designer.cs">
+      <DependentUpon>201710051914483_update_1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -324,6 +335,7 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -420,6 +432,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709121425481_Ponto5.resx">
       <DependentUpon>201709121425481_Ponto5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710051914483_update_1.resx">
+      <DependentUpon>201710051914483_update_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
