@@ -38,6 +38,55 @@ namespace ParkingManagerServer.Controllers
 
 
         // GET: api/VagaModels/{id}
+        [Route("api/VagaModels/{id}/ModificarEstado/{estado}")]
+        [ResponseType(typeof(VagaModel))]
+        public IHttpActionResult ModificarEstado(long id, long estado)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var vaga = db.VagaModels.Find(id);
+
+
+            if (estado == 1)
+            {
+                if (vaga.Ocupacao == null)
+                {
+                    if (vaga.Reserva == null)
+                    {
+                        vaga.Ocupacao = new OcupacaoModel(0, null, null, DateTime.Now, DateTime.MaxValue);
+                        db.Entry(vaga).State = EntityState.Modified;
+                    }
+                    else
+                    if (vaga.Reserva != null)
+                    {
+                        vaga.Ocupacao = new OcupacaoModel(0, null, vaga.Reserva.Usuario, DateTime.Now, DateTime.MaxValue);
+                        vaga.Reserva = null;
+                        db.Entry(vaga).State = EntityState.Modified;
+                    }
+                    
+                }
+
+
+            }
+            else
+            {
+                if (vaga.Ocupacao != null)
+                {
+                    vaga.Ocupacao.DataSaida = DateTime.Now;
+                    db.Entry(vaga.Ocupacao).State = EntityState.Modified;
+                    vaga.Ocupacao = null;
+                    db.Entry(vaga).State = EntityState.Modified;
+
+                }
+            }
+            db.SaveChanges();
+            return Ok(vaga);
+        }
+
+        // GET: api/VagaModels/{id}
         [Route("api/VagaModels/{id}/ModificarReserva")]
         public IHttpActionResult ModificarReserva(long id, ReservaModel reserva)
         {

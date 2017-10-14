@@ -1,13 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace ArduinoComunicacao
 {
@@ -55,15 +58,33 @@ namespace ArduinoComunicacao
 
         private void TratarDados(object sender, SerialDataReceivedEventArgs e)
         {
+            string text = ((SerialPort)sender).ReadLine() + "\n";//"<vaga><id>1</id><estado>1</estado></vaga>"
+            XmlDocument xm = new XmlDocument();
+            xm.LoadXml(text);
+
             BeginInvoke(new Action(() => {
-                string text = ((SerialPort)sender).ReadLine() + "\n";
+                
                 richTextBox1.Text = text;
 
                 //"http://parkingmanagerserver.azurewebsites.net/Help
 
 
+
             }));
+
             
+            
+                using (WebClient wb = new WebClient())
+                {
+                    wb.Headers.Add("Content-Type", "application/json");
+                    string endereco = "http://parkingmanagerserver.azurewebsites.net/api/VagaModels/" + xm.DocumentElement["id"].Value + "/ModificarEstado/"+ xm.DocumentElement["estado"].Value;
+                    
+                    string resultado = wb.DownloadString(endereco);
+                    //faz alguma coisa om o resultado a atualização aqui
+
+                }
+            
+
         }
     }
 }
