@@ -39,7 +39,7 @@ namespace ParkingManagerServer.Controllers
             try
             {
                 usuarioModel = db.UsuarioModels.Where(x => (x.Email == dadosLogon.Email && x.Senha == dadosLogon.Senha)).First();
-                usuarioModel.Senha = null;
+                
             }catch(Exception ex)
             {
 
@@ -47,6 +47,30 @@ namespace ParkingManagerServer.Controllers
 
             return usuarioModel;
         }
+
+
+        // GET: api/UsuarioModels/5
+        //[AcceptVerbs("POST")]
+        //[Route("api/UsuarioModels/SetSenha/{id}")]
+        private bool AtribuirSenhaUsuarioModel(long id, DadosLogon dadosLogon)
+        {
+            UsuarioModel usuarioModel = null;
+
+            try
+            {
+                usuarioModel = db.UsuarioModels.Find(id);
+                usuarioModel.Senha = dadosLogon.Senha;
+                PutUsuarioModel(usuarioModel.Id, usuarioModel);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            
+        }
+
 
 
         // GET: api/UsuarioModels/5
@@ -110,17 +134,17 @@ namespace ParkingManagerServer.Controllers
 
         // POST: api/UsuarioModels
         [ResponseType(typeof(UsuarioModel))]
-        public IHttpActionResult PostUsuarioModel(UsuarioModel usuarioModel)
+        public IHttpActionResult PostUsuarioModel(CadastroUsuario dadosCadastro)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            db.UsuarioModels.Add(usuarioModel);
+            dadosCadastro.Usuario.Senha = dadosCadastro.Senha;
+            db.UsuarioModels.Add(dadosCadastro.Usuario);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = usuarioModel.Id }, usuarioModel);
+            return CreatedAtRoute("DefaultApi", new { id = dadosCadastro.Usuario.Id }, dadosCadastro.Usuario);
         }
 
         // DELETE: api/UsuarioModels/5

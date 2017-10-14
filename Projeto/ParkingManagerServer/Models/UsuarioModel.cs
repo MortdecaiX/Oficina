@@ -30,6 +30,7 @@ namespace ParkingManagerServer.Models
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
         public string Email { get; set; }
+        [Newtonsoft.Json.JsonIgnore]
         public string Senha { get; set; }
         public string CPF { get; set; }
         [Newtonsoft.Json.JsonIgnore]

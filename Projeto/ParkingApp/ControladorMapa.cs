@@ -205,6 +205,7 @@ namespace ParkingApp
             JArray lista = null;
             using (WebClient wc = new WebClient())
             {
+                wc.Headers.Add(HttpRequestHeader.ContentType, "application/json");
                 string url = ParkingManagerServerURL + "api/EstacionamentoModels/" + termoBusca;
 
                 string vagasJsonText = wc.DownloadString(url);

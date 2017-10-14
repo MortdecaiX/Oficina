@@ -12,6 +12,7 @@ using Android.Widget;
 using System.Text.RegularExpressions;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace ParkingApp
 {
@@ -37,10 +38,10 @@ namespace ParkingApp
             var editEmail = FindViewById<EditText>(Resource.Id.editText3);
             var editSenha = FindViewById<EditText>(Resource.Id.editText4);
 
-            Regex regexNome = new Regex(@"^([a-zA-Z]{3}[a-zA-Z]*) *([a-zA-Z]{3}[a-zA-Z]*)* ([a-zA-Z]{3}[a-zA-Z]*)*$");
-            Regex regexSobrenome = new Regex(@"^([a-zA-Z]{3}[a-zA-Z]*) *([a-zA-Z]{3}[a-zA-Z]*)* ([a-zA-Z]{3}[a-zA-Z]*)*$");
+            Regex regexNome = new Regex(@"^([A-Za-z]+\s?)+\S$");
+            Regex regexSobrenome = new Regex(@"^([A-Za-z]+\s?)+\S$");
             Regex regexEmail = new Regex(@"^([a-zA-Z0-9][-.a-zA-Z0-9_]{2}[-.a-zA-Z0-9_]*@gmail.com)$");
-            Regex regexSenha = new Regex(@"^.{6}.*)$");
+            Regex regexSenha = new Regex(@"^.{6}.*$");
             Match Nome = regexNome.Match(editNome.Text);
             Match Sobrenome = regexSobrenome.Match(editSobrenome.Text);
             Match Email = regexEmail.Match(editEmail.Text);
@@ -50,18 +51,30 @@ namespace ParkingApp
             {
                 try
                 {
-                    WebClient wb = new WebClient();
-                    wb.Headers.Add("Content-Type", "application/json");
-                    string endereco = "http://parkingmanagerserver.azurewebsites.net/api/UsuarioModels";
-                    JObject usuario = new JObject();
-                    usuario.Add("Id", 0);
-                    usuario.Add("Nome", editNome.Text);
-                    usuario.Add("Sobrenome", editSobrenome.Text);
-                    usuario.Add("Senha", editSenha.Text);
-                    usuario.Add("CPF", null);
-                    string conteudo = usuario.ToString();
-                    wb.UploadString(endereco, "POST", conteudo);
+                    JObject usuarioCadastrado = null;
+                    using (WebClient wb = new WebClient())
+                    {
+                        wb.Headers.Add("Content-Type", "application/json");
+                        string endereco = "http://parkingmanagerserver.azurewebsites.net/api/UsuarioModels";
+                        JObject cadastro = new JObject();
 
+                        JObject usuario = new JObject();
+                        usuario.Add("Id", 0);
+                        usuario.Add("Nome", editNome.Text);
+                        usuario.Add("Sobrenome", editSobrenome.Text);
+                        usuario.Add("CPF", null);
+                        usuario.Add("Email", editEmail.Text);
+
+
+                        cadastro.Add("Usuario", usuario);
+                        cadastro.Add("Senha", editSenha.Text);
+                        
+
+                        string conteudo = cadastro.ToString();
+                        string resultado = wb.UploadString(endereco, "POST", conteudo);
+                        usuarioCadastrado = (JObject)JsonConvert.DeserializeObject<JObject>(resultado);
+                       
+                    }
 
 
                     Android.App.AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -70,7 +83,9 @@ namespace ParkingApp
                     alert.SetMessage("Cadastro realizado");
                     alert.SetButton("OK", (c, ev) =>
                     {
-
+                        this.Finish();
+                        MainActivity.AbrirSessao(usuarioCadastrado);
+                       
                     });
 
                     alert.Show();
