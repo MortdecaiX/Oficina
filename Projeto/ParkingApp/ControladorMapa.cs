@@ -198,8 +198,9 @@ namespace ParkingApp
 
         }
 
-        public JArray ObterEstacionamentos(bool MostrarNoMapa, string termoBusca)
+        public JArray ObterEstacionamentos( string termoBusca)
         {
+
             UltimoTermoDeBusca = termoBusca;
 
             JArray lista = null;
@@ -210,8 +211,7 @@ namespace ParkingApp
 
                 string vagasJsonText = wc.DownloadString(url);
                 lista = (JArray)JsonConvert.DeserializeObject(vagasJsonText);
-                if (MostrarNoMapa && lista != null && lista.Count != 0)
-                    MostrarEstacionamentosNoMap(lista);
+                
                 return lista;
 
             }
@@ -493,7 +493,11 @@ namespace ParkingApp
 
         private void Atualizar(object sender, EventArgs e)
         {
-            ObterEstacionamentos(MostrarEstacionamentosAoAtualizar, UltimoTermoDeBusca);
+            try
+            {
+                MostrarEstacionamentosNoMap(ObterEstacionamentos(UltimoTermoDeBusca));
+            }
+            catch { }
         }
 
         private StatusGUI _STATUS_GUI = StatusGUI.Normal;
@@ -511,7 +515,7 @@ namespace ParkingApp
 
         public Action EstacionamentoSelecionadoEvent { get; set; }
         public Action CliqueNoChaoEvent { get; set; }
-        public Action LocalizacaoAtualAlteradaEvent { get; private set; }
+        public Action LocalizacaoAtualAlteradaEvent { get;  set; }
 
         IntPtr intPtr = new IntPtr(new System.Random().Next());
 
@@ -546,7 +550,7 @@ namespace ParkingApp
             Criteria locationCriteria = new Criteria();
 
             locationCriteria.Accuracy = Accuracy.Fine;
-            locationCriteria.PowerRequirement = Power.Medium;
+            locationCriteria.PowerRequirement = Power.Low;
 
             _locationProvider = GerenciadorDeLocalizacao.GetBestProvider(locationCriteria, true);
 

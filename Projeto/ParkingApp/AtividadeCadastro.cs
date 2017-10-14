@@ -24,6 +24,8 @@ namespace ParkingApp
         protected override void OnCreate(Bundle savedInstanceState)
         {
              base.OnCreate(savedInstanceState);
+
+            this.RequestWindowFeature(WindowFeatures.NoTitle);
             SetContentView(Resource.Layout.TelaCadastro);
 
             var btnCadastro = FindViewById<Button>(Resource.Id.button1);

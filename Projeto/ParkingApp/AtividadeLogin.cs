@@ -16,6 +16,7 @@ namespace ParkingApp
         {
             base.OnCreate(bundle);
             ThisActivity = this;
+
             SetContentView(Resource.Layout.TelaLogin);
             var btnCadastro = FindViewById<Button>(Resource.Id.buttonCadastro);
             var btnLogin = FindViewById<Button>(Resource.Id.buttonLogin);
