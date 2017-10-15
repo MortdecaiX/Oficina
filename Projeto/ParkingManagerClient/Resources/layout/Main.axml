@@ -3,43 +3,25 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <RelativeLayout
-        android:minWidth="25px"
-        android:minHeight="25px"
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/toggleButton1" />
+    <Button
+        android:text="Atualizar"
+        android:id="@+id/button3"
         android:layout_width="match_parent"
-        android:layout_height="62.5dp"
-        android:id="@+id/relativeLayout1">
-        <Toolbar
-            android:minHeight="?android:attr/actionBarSize"
-            android:background="?android:attr/colorPrimary"
-            android:minWidth="25px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/toolbar1">
-            <Button
-                android:text="Novo Caminho"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button1"
-                android:visibility="invisible" />
-            <Button
-                android:text="Nova Vaga"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button2"
-                android:visibility="invisible" />
-            <ToggleButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/toggleButton1" />
-          <Button
-                android:text="Atualizar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button3"
-                 />
-        </Toolbar>
-    </RelativeLayout>
+        android:layout_height="wrap_content" />
+    <Button
+        android:text="Novo Caminho"
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:text="Nova Vaga"
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <fragment
         android:id="@+id/googlemap"
         android:layout_width="match_parent"

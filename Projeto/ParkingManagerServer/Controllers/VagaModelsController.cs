@@ -194,51 +194,20 @@ namespace ParkingManagerServer.Controllers
             return Ok(vaga);
         }
 
-        // PUT: api/VagaModels/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutVagaModel(long id, VagaModel vagaModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != vagaModel.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(vagaModel).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!VagaModelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/VagaModels
+               // POST: api/VagaModels
         [ResponseType(typeof(VagaModel))]
-        public IHttpActionResult PostVagaModel(VagaModel vagaModel)
+        public IHttpActionResult PostVagaModel(long idPonto,VagaModel vagaModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            db.VagaModels.Add(vagaModel);
+            var ponto = db.PontoModels.Find(idPonto);
+            if (ponto.VagasConectadas == null)
+            {
+                ponto.VagasConectadas = new List<VagaModel>();
+            }
+            ponto.VagasConectadas.Add(vagaModel);
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = vagaModel.Id }, vagaModel);

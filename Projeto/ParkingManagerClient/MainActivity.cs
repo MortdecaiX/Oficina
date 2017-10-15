@@ -18,7 +18,7 @@ namespace ParkingManagerClient
     [Activity(Label = "ParkingManagerClient", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity, IOnMapReadyCallback
     {
-        enum StatusGUI { Normal, DesenhandoCaminho }
+        enum StatusGUI { Normal, DesenhandoCaminho,CriandoVagas }
         Marker _UltimoPontoInteracao = null;
         Marker UltimoPontoInteracao {
             get { return _UltimoPontoInteracao; }
@@ -31,6 +31,7 @@ namespace ParkingManagerClient
             }
         }
         Button btNovoCaminho = null;
+        Button btNovaVaga = null;
         ToggleButton tButton = null;
 
         private StatusGUI _STATUS_GUI = StatusGUI.Normal;
@@ -73,9 +74,10 @@ namespace ParkingManagerClient
             SetUpMap();
 
             btNovoCaminho = FindViewById<Button>(Resource.Id.button1);
+            btNovaVaga = FindViewById<Button>(Resource.Id.button2);
             btAtualizar = FindViewById<Button>(Resource.Id.button3);
             btAtualizar.Click += Atualizar;
-
+            btNovaVaga.Click += btNovaVagaClick;
 
             tButton = FindViewById<ToggleButton>(Resource.Id.toggleButton1);
             tButton.CheckedChange += TrocarTipoMapa;
@@ -94,6 +96,75 @@ namespace ParkingManagerClient
             };
 
         }
+
+        EventHandler<GoogleMap.MarkerClickEventArgs> eventoEscolhePontoPVaga = null;
+        EventHandler<GoogleMap.MapLongClickEventArgs> eventoEscolheLocalPVaga = null;
+        private void btNovaVagaClick(object sender, EventArgs e)
+        {
+            if (EstacionamentoSelecionado == null) return;
+            this.STATUS_GUI = StatusGUI.CriandoVagas;
+            if(eventoEscolhePontoPVaga != null)
+            {
+                GMap.MarkerClick -= eventoEscolhePontoPVaga;
+            }
+
+            eventoEscolhePontoPVaga = (object sendr, GoogleMap.MarkerClickEventArgs args) => {
+                GMap.MarkerClick -= eventoEscolhePontoPVaga;
+                eventoEscolhePontoPVaga = null;
+
+                Marcador marcador = this.MarcadoresColocados.Find(m => m.Marker.Id == args.Marker.Id);
+                if (marcador != null)
+                {
+                    eventoEscolheLocalPVaga = (object sendrr, GoogleMap.MapLongClickEventArgs args2) => {
+                        GMap.MapLongClick -= eventoEscolheLocalPVaga;
+                        eventoEscolheLocalPVaga = null;
+
+                        this.STATUS_GUI = StatusGUI.Normal;
+
+                        JObject vaga = new JObject();
+                        vaga.Add("Id", 0);
+                        vaga.Add("Numero", 0);
+                        vaga.Add("Tipo", 0);
+                        vaga.Add("Ocupacao", null);
+                        JObject localizacao = new JObject();
+                        localizacao.Add("Latitude", args2.Point.Latitude);
+                        localizacao.Add("Longitude", args2.Point.Longitude);
+                        localizacao.Add("Altitude", 0);
+                        vaga.Add("Localizacao", localizacao);
+                        vaga.Add("Pavimento", 0);
+                        vaga.Add("Reserva", null);
+                        vaga.Add("Responsavel", EstacionamentoSelecionado["Responsavel"]);
+
+                        string vagaJson = vaga.ToString();
+
+                        string url = Resources.GetString(Resource.String.ParkingManagerServerURL) + "api/VagaModels/?idPonto=" + marcador.Id;
+
+                        using (WebClient wc = new WebClient())
+                        {
+                            wc.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+                            string result = wc.UploadString(url, "POST", vagaJson);
+                            JObject vagaInserida = ((JObject)JsonConvert.DeserializeObject(result));
+                            MarkerOptions options = new MarkerOptions().SetPosition(args2.Point).SetTitle("Inserida");
+
+                            Marker ponto = GMap.AddMarker(options);
+                            PolylineOptions opt = new PolylineOptions();
+                            opt = opt.Add(marcador.Marker.Position, args2.Point);
+                            opt = opt.InvokeWidth(5);
+                            opt = opt.InvokeColor(Color.Red);
+
+                            Polyline line = GMap.AddPolyline(opt);
+
+                        }
+
+                    };
+
+                    GMap.MapLongClick += eventoEscolheLocalPVaga;
+                }
+            };
+            GMap.MarkerClick += eventoEscolhePontoPVaga;
+
+        }
+
 
         private void Atualizar(object sender, EventArgs e)
         {
@@ -410,6 +481,7 @@ namespace ParkingManagerClient
                 Marker marker = GMap.AddMarker(options);
                 var vagas = (JArray)ponto["VagasConectadas"];
                 Marcador marcador = new Marcador(estacionamento, marker)
+                
                 {
                     Id = ponto["Id"].Value<long>()
                 };
@@ -484,4 +556,5 @@ namespace ParkingManagerClient
         }
     }
 }
+
 

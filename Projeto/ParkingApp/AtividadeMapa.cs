@@ -13,6 +13,7 @@ using Android.Gms.Maps.Model;
 using Android.Gms.Maps;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
+using Android.Graphics;
 
 namespace ParkingApp
 {
@@ -122,35 +123,169 @@ namespace ParkingApp
         {
             //Gera e desenha a rota da posição atual do smartphone até o estacionamento escolhido
 
+            foreach(Vaga vaga in this.ControleMapa.VagasColocadas)
+            {
+                if(e.Marker.Id == vaga.Marker.Id)
+                {
+                    MostrarRotaParaVaga(vaga);
+                    break;
+                }
+            }
+
            
             foreach (Marcador marcador in ControleMapa.MarcadoresColocados)
             {
                 if (marcador.Marker.Id == e.Marker.Id)
                 {
-
-                    if (ControleMapa.LocalizacaoAtual == null)
-                    {
-                        Android.App.AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                        AlertDialog alert = dialog.Create();
-                        alert.SetTitle("Serviços de Localização");
-                        alert.SetMessage("Não foi possível obter a sua localização atual. Ative os serviços de localização e tente novamente.");
-                        alert.SetButton("OK", (c, ev) =>
-                        {
-                            // Ok button click task  
-                            StartActivity(new Android.Content.Intent(Android.Provider.Settings.ActionLocat‌​ionSourceSettings));
-                        });
-
-                        alert.Show();
-                        return;
-                    }
-
-                    string origem = ControleMapa.LocalizacaoAtual.Latitude.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) + "," + ControleMapa.LocalizacaoAtual.Longitude.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture);
-                    string destino = marcador.Estacionamento["Localizacao"].Value<double>("Latitude").ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) + "," + marcador.Estacionamento["Localizacao"].Value<double>("Longitude").ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture);
-                    JObject direcoes = ControleMapa.ObterDirecoes(origem, destino, true);//Direções
+                    DirecoesParaMarcador(marcador);
                     break;
                 }
             }
 
+        }
+
+        private void DirecoesParaMarcador(Marcador marcador)
+        {
+            if (ControleMapa.LocalizacaoAtual == null)
+            {
+                AlertaServicoLocalizacao();
+
+            }
+            else
+            {
+
+                string origem = ControleMapa.LocalizacaoAtual.Latitude.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) + "," + ControleMapa.LocalizacaoAtual.Longitude.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture);
+                string destino = marcador.Estacionamento["Localizacao"].Value<double>("Latitude").ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) + "," + marcador.Estacionamento["Localizacao"].Value<double>("Longitude").ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture);
+                JObject direcoes = ControleMapa.ObterDirecoes(origem, destino, true);//Direções
+            }
+        }
+
+        private void AlertaServicoLocalizacao()
+        {
+            Android.App.AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            AlertDialog alert = dialog.Create();
+            alert.SetTitle("Serviços de Localização");
+            alert.SetMessage("Não foi possível obter a sua localização atual. Ative os serviços de localização e tente novamente.");
+            alert.SetButton("OK", (c, ev) =>
+            {
+                // Ok button click task  
+                StartActivity(new Android.Content.Intent(Android.Provider.Settings.ActionLocat‌​ionSourceSettings));
+            });
+
+            alert.Show();
+        }
+
+        private void MostrarRotaParaVaga(Vaga vaga)
+        {
+            this.ControleMapa.PolylinesCaminhoInterno.ForEach(x => x.Remove());
+
+               JObject estacionamento = null;
+           if(ControleMapa.EstacionamentoSelecionado!=null && ControleMapa.EstacionamentoSelecionado.Value<long>("Id")== vaga.IdEstacionamento)
+            {
+                estacionamento = ControleMapa.EstacionamentoSelecionado;
+            }
+           else
+            {
+                estacionamento = ControleMapa.ObterEstacionamento(vaga.IdEstacionamento);
+            }
+            if (estacionamento==null) return;
+
+            JArray pontos = (JArray)estacionamento["Pontos"];
+
+            Graph g = new Graph();
+            /*
+            g.add_vertex('A', new Dictionary<char, int>() { { 'B', 7 }, { 'C', 8 } });
+            g.add_vertex('B', new Dictionary<char, int>() { { 'A', 7 }, { 'F', 2 } });
+            g.add_vertex('C', new Dictionary<char, int>() { { 'A', 8 }, { 'F', 6 }, { 'G', 4 } });
+            g.add_vertex('D', new Dictionary<char, int>() { { 'F', 8 } });
+            g.add_vertex('E', new Dictionary<char, int>() { { 'H', 1 } });
+            g.add_vertex('F', new Dictionary<char, int>() { { 'B', 2 }, { 'C', 6 }, { 'D', 8 }, { 'G', 9 }, { 'H', 3 } });
+            g.add_vertex('G', new Dictionary<char, int>() { { 'C', 4 }, { 'F', 9 } });
+            g.add_vertex('H', new Dictionary<char, int>() { { 'E', 1 }, { 'F', 3 } });
+            */
+            JObject entrada = (JObject)pontos.Where(x => x.Value<bool>("Entrada") == true).FirstOrDefault();
+            foreach (JObject ponto in pontos)
+            {
+                // g.add_vertex('A', new Dictionary<long, int>() { { 'B', 7 }, { 'C', 8 } });
+                long id = ponto.Value<long>("Id");
+                Dictionary<string, int> distancias = new Dictionary<string, int>();
+                LatLng origem = new LatLng(ponto["Localizacao"].Value<double>("Latitude"), ponto["Localizacao"].Value<double>("Longitude"));
+                foreach(var conexao in ponto["ConexoesComplexas"])
+                {
+                    var alvo = pontos.Where(x => x.Value<long>("Id") == conexao.ToObject<long>()).FirstOrDefault();
+                    LatLng destino = new LatLng(alvo["Localizacao"].Value<double>("Latitude"), alvo["Localizacao"].Value<double>("Longitude"));
+
+                    var distancia = (int)( CalculationByDistance(origem, destino)*1000);
+                    distancias.Add(alvo.Value<long>("Id").ToString(), distancia);
+
+                }
+
+                g.add_vertex(ponto.Value<long>("Id").ToString(), distancias);
+
+            }
+            string c_entrada = entrada.Value<long>("Id").ToString();
+            string c_alvo = vaga.Ponto.Value<long>("Id").ToString() ;
+
+            
+            var shortPath = g.shortest_path(c_entrada, c_alvo);
+            
+
+
+            var caminho = pontos.Where(x => shortPath.Contains(x.Value<long>("Id").ToString())).ToList();
+
+            PolylineOptions opt = new PolylineOptions();
+            double _lat = entrada["Localizacao"].Value<double>("Latitude");
+            double _lng = entrada["Localizacao"].Value<double>("Longitude");
+            opt.Add(new LatLng(_lat, _lng));
+            opt = opt.InvokeWidth(20);
+            opt = opt.InvokeColor( Color.Blue);
+
+            foreach (var no in caminho)
+            {
+                double lat = no["Localizacao"].Value<double>("Latitude");
+                double lng = no["Localizacao"].Value<double>("Longitude");
+                opt = opt.Add(new LatLng(lat, lng));
+            }
+           ControleMapa.PolylinesCaminhoInterno.Add( GMap.AddPolyline(opt));
+
+            if (ControleMapa.LocalizacaoAtual == null)
+            {
+                AlertaServicoLocalizacao();
+
+            }
+            else
+            {
+
+                string origem_s = ControleMapa.LocalizacaoAtual.Latitude.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) + "," + ControleMapa.LocalizacaoAtual.Longitude.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture);
+                string destino_s = estacionamento["Localizacao"].Value<double>("Latitude").ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) + "," + estacionamento["Localizacao"].Value<double>("Longitude").ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture);
+                JObject direcoes = ControleMapa.ObterDirecoes(origem_s, destino_s, true);
+            }
+
+        }
+
+        //Fonte https://stackoverflow.com/questions/14394366/find-distance-between-two-points-on-map-using-google-map-api-v2
+        public double CalculationByDistance(LatLng StartP, LatLng EndP)
+        {
+            int Radius = 6371;// radius of earth in Km
+            double lat1 = StartP.Latitude;
+            double lat2 = EndP.Latitude;
+            double lon1 = StartP.Longitude;
+            double lon2 = EndP.Longitude;
+            double dLat = (lat2 - lat1).ToRadians();
+            double dLon = (lon2 - lon1).ToRadians();
+            double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2)
+                    + Math.Cos((lat1).ToRadians())
+                    * Math.Cos((lat2).ToRadians()) * Math.Sin(dLon / 2)
+                    * Math.Sin(dLon / 2);
+            double c = 2 * Math.Asin(Math.Sqrt(a));
+            double valueResult = Radius * c;
+            double km = valueResult / 1;
+            
+            int kmInDec =(int) Math.Truncate(km) ;
+            double meter = valueResult % 1000;
+            int meterInDec = (int)Math.Truncate(meter); 
+
+            return Radius * c;
         }
 
     }

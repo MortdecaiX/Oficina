@@ -31,6 +31,28 @@ namespace ParkingManagerServer.Models
                 return conexoes;
             }
         }
+
+        public ICollection<long> ConexoesComplexas
+        {
+            get
+            {
+                List<long> conexoes = new List<long>();
+                try
+                {
+                    foreach (var conexao in PontosFilhosConectados)
+                    {
+                        conexoes.Add(conexao.Id);
+                    }
+                    foreach (var conexao in PontosPaisConectados)
+                    {
+                        conexoes.Add(conexao.Id);
+                    }
+                }
+                catch { }
+                return conexoes;
+            }
+        }
+
         public bool Entrada { get; set; }
         public bool Saida { get; set; }
     }

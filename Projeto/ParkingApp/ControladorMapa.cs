@@ -59,7 +59,7 @@ namespace ParkingApp
             MostrarEstacionamentosAoAtualizar = true;
             this.AtividadePai = atividadePai;
             this.Mapa = gmap;
-            CorLinhaEstrada = Color.Gray;
+            CorLinhaEstrada = Color.DarkBlue;
             CorLinhaCaminhoEstacionamento = Color.LightGray;
         }
 
@@ -190,12 +190,28 @@ namespace ParkingApp
                 opt = opt.Add(point);
             }
             ;
-            opt = opt.InvokeWidth(5);
+            opt = opt.InvokeWidth(20);
             opt = opt.InvokeColor(this.CorLinhaEstrada);
 
             this.Polylines.Add(Mapa.AddPolyline(opt));
 
 
+        }
+
+        internal JObject ObterEstacionamento(long idEstacionamento)
+        {
+            JObject estacionamento = null;
+            using (WebClient wc = new WebClient())
+            {
+                wc.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+                string url = ParkingManagerServerURL + "api/EstacionamentoModels/?id=" + idEstacionamento;
+
+                string vagasJsonText = wc.DownloadString(url);
+                estacionamento = (JObject)JsonConvert.DeserializeObject(vagasJsonText);
+
+                return estacionamento;
+
+            }
         }
 
         public JArray ObterEstacionamentos( string termoBusca)
@@ -315,19 +331,25 @@ namespace ParkingApp
             }
         }
 
-        private void MostrarVagasNoMapa(JObject ponto, JArray lista)
+        public List<Vaga> VagasColocadas = new List<Vaga>();
+        private void MostrarVagasNoMapa(long idEstacionamento,  JObject ponto, JArray lista)
         {
             if (lista != null)
             {
                 foreach (var vaga in lista)
                 {
+                    Vaga _vaga = new Vaga();
                     var latitude = (vaga["Localizacao"])["Latitude"].Value<double>();
                     var longitude = (vaga["Localizacao"])["Longitude"].Value<double>();
                     var altitude = (vaga["Localizacao"])["Altitude"].Value<double>();
                     LatLng latlng = new LatLng(Convert.ToDouble(latitude), Convert.ToDouble(longitude));
                     MarkerOptions options = new MarkerOptions().SetPosition(latlng).SetTitle(vaga["Numero"].Value<long>().ToString());
-                    Mapa.AddMarker(options);
 
+                    _vaga.Marker = Mapa.AddMarker(options);
+                    _vaga.Ponto = ponto;
+                    _vaga.Dados = vaga;
+                    _vaga.IdEstacionamento = idEstacionamento;
+                    VagasColocadas.Add(_vaga);
 
                     var _latitude = (ponto["Localizacao"])["Latitude"].Value<double>();
                     var _longitude = (ponto["Localizacao"])["Longitude"].Value<double>();
@@ -409,7 +431,7 @@ namespace ParkingApp
                 MarcadoresColocados.Add(marcador);
 
 
-                MostrarVagasNoMapa((JObject)ponto, vagas);
+                MostrarVagasNoMapa(estacionamento.Value<long>("Id"),(JObject)ponto, vagas);
 
 
 
@@ -539,7 +561,8 @@ namespace ParkingApp
         public Location LocalizacaoAtual { get; private set; }
         private List<Marker> Markers = new List<Marker>();
 
-        private List<Polyline> Polylines = new List<Polyline>();
+        public List<Polyline> Polylines = new List<Polyline>();
+        public List<Polyline> PolylinesCaminhoInterno = new List<Polyline>();
 
         public readonly LocationManager GerenciadorDeLocalizacao = Application.Context.GetSystemService(Context.LocationService) as LocationManager;
 
@@ -616,6 +639,14 @@ namespace ParkingApp
 
 
 
+    }
+
+    public class Vaga
+    {
+        public JToken Dados { get; internal set; }
+        public long IdEstacionamento { get; internal set; }
+        public Marker Marker { get; internal set; }
+        public JObject Ponto { get; internal set; }
     }
 
     /// <summary>
@@ -721,6 +752,84 @@ namespace ParkingApp
             }
 
             return str.ToString();
+        }
+    }
+    //Fonte: https://github.com/mburst/dijkstras-algorithm/blob/master/dijkstras.cs
+    class Graph
+    {
+       public Dictionary<string, Dictionary<string, int>> vertices = new Dictionary<string, Dictionary<string, int>>();
+
+        public void add_vertex(string name, Dictionary<string, int> edges)
+        {
+            vertices[name] = edges;
+        }
+
+        public List<string> shortest_path(string start, string finish)
+        {
+            var previous = new Dictionary<string, string>();
+            var distances = new Dictionary<string, int>();
+            var nodes = new List<string>();
+
+            List<string> path = null;
+
+            foreach (var vertex in vertices)
+            {
+                if (vertex.Key == start)
+                {
+                    distances[vertex.Key] = 0;
+                }
+                else
+                {
+                    distances[vertex.Key] = int.MaxValue;
+                }
+
+                nodes.Add(vertex.Key);
+            }
+
+            while (nodes.Count != 0)
+            {
+                nodes.Sort((x, y) => distances[x] - distances[y]);
+
+                var smallest = nodes[0];
+                nodes.Remove(smallest);
+
+                if (smallest == finish)
+                {
+                    path = new List<string>();
+                    while (previous.ContainsKey(smallest))
+                    {
+                        path.Add(smallest);
+                        smallest = previous[smallest];
+                    }
+
+                    break;
+                }
+
+                if (distances[smallest] == int.MaxValue)
+                {
+                    break;
+                }
+
+                foreach (var neighbor in vertices[smallest])
+                {
+                    var alt = distances[smallest] + neighbor.Value;
+                    if (alt < distances[neighbor.Key])
+                    {
+                        distances[neighbor.Key] = alt;
+                        previous[neighbor.Key] = smallest;
+                    }
+                }
+            }
+
+            return path;
+        }
+    }
+
+    public static class NumericExtensions
+    {
+        public static double ToRadians(this double val)
+        {
+            return (Math.PI / 180) * val;
         }
     }
 

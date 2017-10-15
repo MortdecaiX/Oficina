@@ -277,14 +277,14 @@ namespace ParkingManagerClient
 			// aapt resource value: 0x7f070012
 			public const int button2 = 2131165202;
 			
-			// aapt resource value: 0x7f070014
-			public const int button3 = 2131165204;
+			// aapt resource value: 0x7f070010
+			public const int button3 = 2131165200;
 			
 			// aapt resource value: 0x7f07000b
 			public const int dark = 2131165195;
 			
-			// aapt resource value: 0x7f070015
-			public const int googlemap = 2131165205;
+			// aapt resource value: 0x7f070013
+			public const int googlemap = 2131165203;
 			
 			// aapt resource value: 0x7f070000
 			public const int hybrid = 2131165184;
@@ -304,9 +304,6 @@ namespace ParkingManagerClient
 			// aapt resource value: 0x7f070002
 			public const int normal = 2131165186;
 			
-			// aapt resource value: 0x7f07000f
-			public const int relativeLayout1 = 2131165199;
-			
 			// aapt resource value: 0x7f070003
 			public const int satellite = 2131165187;
 			
@@ -319,11 +316,8 @@ namespace ParkingManagerClient
 			// aapt resource value: 0x7f07000e
 			public const int textView1 = 2131165198;
 			
-			// aapt resource value: 0x7f070013
-			public const int toggleButton1 = 2131165203;
-			
-			// aapt resource value: 0x7f070010
-			public const int toolbar1 = 2131165200;
+			// aapt resource value: 0x7f07000f
+			public const int toggleButton1 = 2131165199;
 			
 			// aapt resource value: 0x7f070009
 			public const int wide = 2131165193;
