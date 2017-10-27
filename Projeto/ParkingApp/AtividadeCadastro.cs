@@ -39,6 +39,7 @@ namespace ParkingApp
             var editSobrenome = FindViewById<EditText>(Resource.Id.editText2);
             var editEmail = FindViewById<EditText>(Resource.Id.editText3);
             var editSenha = FindViewById<EditText>(Resource.Id.editText4);
+            var checkVagaEspecial = FindViewById<CheckBox>(Resource.Id.checkBoxVagaEspecial);
 
             Regex regexNome = new Regex(@"^([A-Za-z]+\s?)+\S$");
             Regex regexSobrenome = new Regex(@"^([A-Za-z]+\s?)+\S$");
@@ -66,8 +67,11 @@ namespace ParkingApp
                         usuario.Add("Sobrenome", editSobrenome.Text);
                         usuario.Add("CPF", null);
                         usuario.Add("Email", editEmail.Text);
-
-
+                        /*if(checkVagaEspecial.Checked == true)
+                            usuario.Add("VagaEspecial",true);
+                        else
+                            usuario.Add("VagaEspecial",false);*/
+                        
                         cadastro.Add("Usuario", usuario);
                         cadastro.Add("Senha", editSenha.Text);
                         

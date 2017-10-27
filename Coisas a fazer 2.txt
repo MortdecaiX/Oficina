@@ -1,0 +1,5 @@
+- Fazer um atributo boolean de usuário para vaga especial (descomentar o código após ter feito isso, Atividade cadastro_Linhas 70 a 73)
+- O aplicativo para a criação dos estacionamentos não pode ser feito em C#. Sugestão: Javascript.
+- Associar um Id para cada vaga, fazer isso pela API.
+- Fazer o mapa já aparecer na sua posição atual, com zoom
+- Corrigir o relatório que o professor entregou!
