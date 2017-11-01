@@ -84,21 +84,28 @@ namespace ParkingManagerServer.Controllers
         [HttpPost, Route("api/EstacionamentoModels/{id}/Imagem")]
         public string  Upload(long id, UploadData data)
         {
-            var estacionamento = db.EstacionamentoModels.Find(id);
-            var base64 = data.Data.Split(',')[1];
-            estacionamento.ImagemBase64 = base64;
-            estacionamento.NEBoundImagem = new PosicaoGeografica(data.neBoundLat, data.neBoundLng, 0);
-            estacionamento.SWBoundImagem = new PosicaoGeografica(data.swBoundLat, data.swBoundLng, 0);
-            var path = Path.Combine(HostingEnvironment.MapPath("~/Uploads/"), new Random(DateTime.Now.Millisecond).Next()+"_"+id+"_"+ data.Filename);
-            File.WriteAllBytes(path, data.DataToByteArray());
-            data.url = MapURL(path);
-            estacionamento.ImagemURL = data.url;
-
-            db.Entry(estacionamento).State = EntityState.Modified;
-
-            db.SaveChanges();
             
-            return Newtonsoft.Json.JsonConvert.SerializeObject(data);
+                var estacionamento = db.EstacionamentoModels.Find(id);
+                var base64 = data.Data.Split(',')[1];
+                estacionamento.ImagemBase64 = base64;
+                estacionamento.NEBoundImagem = new PosicaoGeografica(data.neBoundLat, data.neBoundLng, 0);
+                estacionamento.SWBoundImagem = new PosicaoGeografica(data.swBoundLat, data.swBoundLng, 0);
+                var path = Path.Combine(HostingEnvironment.MapPath("~/Uploads/"), new Random(DateTime.Now.Millisecond).Next() + "_" + id + "_" + data.Filename);
+                var directory = Path.GetDirectoryName(path);
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+                File.WriteAllBytes(path, data.DataToByteArray());
+                data.url = MapURL(path);
+                estacionamento.ImagemURL = data.url;
+
+                db.Entry(estacionamento).State = EntityState.Modified;
+
+                db.SaveChanges();
+
+                return Newtonsoft.Json.JsonConvert.SerializeObject(data);
+           
         }
 
        

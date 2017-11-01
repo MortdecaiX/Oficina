@@ -31,11 +31,11 @@
 
 
           // Adds a marker to the map and push to the array.  
-          function addMarker(location) {
+          function addMarker(location, id) {
               var marker = new google.maps.Marker({
                   position: location,
                   map: map,
-                  title: "marker"
+                  title: id
               });
               markers.push(marker);
 
@@ -43,7 +43,7 @@
               return marker;
           }
 
-          
+          var dadosUltimoPontoColocado = null;
 
           function MarkerClicked() {
               var marker = this;
@@ -57,7 +57,67 @@
               if (!document.getElementById("Button1").disabled) {
                   if (markerAddedEventListener == null) {
                       markerAddedEventListener = google.maps.event.addListener(map, 'click', function MapClickEvent(event) {
-                            addMarker(event.latLng);
+
+                          var tempUltimoPontoColocado = dadosUltimoPontoColocado;
+                          
+
+                          dadosUltimoPontoColocado = new Object();
+                          dadosUltimoPontoColocado.Id = 0;
+                          dadosUltimoPontoColocado.Localizacao = new Object();
+                          dadosUltimoPontoColocado.Localizacao.Latitude = event.latLng.lat();
+                          dadosUltimoPontoColocado.Localizacao.Longitude = event.latLng.lng();
+                          dadosUltimoPontoColocado.Localizacao.Altitude = 0;
+                          dadosUltimoPontoColocado.Conexoes = new Array();
+                          if (tempUltimoPontoColocado != null) {
+                              dadosUltimoPontoColocado.Conexoes.push(tempUltimoPontoColocado.Id);
+                          } 
+                          dadosUltimoPontoColocado.Entrada = false;
+                          dadosUltimoPontoColocado.Saida = false;
+
+                          $.ajax({
+                              contentType: "application/json",
+                              data: JSON.stringify(dadosUltimoPontoColocado),
+                              type: "POST",
+                              url: "api/EstacionamentoModel/" + idEstacionamento + "/AdicionarPonto",
+                              success: function (data, status) {
+                                  if (status == 'success') {
+                                      dadosUltimoPontoColocado.Id = data.Id;
+
+                                      dadosUltimoPontoColocado.Conexoes.forEach(function (item, index) {
+                                         
+                                          $.ajax({
+                                              contentType: "application/json",
+                                              type: "GET",
+                                              url: "api/PontoModels/ConectarPontos/" + item + "/" + dadosUltimoPontoColocado.Id,
+                                              success: function (data, status) {
+                                                  if (status == 'success') {
+                                                      //mostrar polylines ligando os dois pontos
+                                                      if (tempUltimoPontoColocado != null) {
+                                                          var flightPlanCoordinates = [
+                                                               { lat: tempUltimoPontoColocado.Localizacao.Latitude, lng: tempUltimoPontoColocado.Localizacao.Longitude },
+                                                               { lat: dadosUltimoPontoColocado.Localizacao.Latitude, lng: dadosUltimoPontoColocado.Localizacao.Longitude }
+                                                          ];
+                                                          var flightPath = new google.maps.Polyline({
+                                                              path: flightPlanCoordinates,
+                                                              geodesic: true,
+                                                              strokeColor: '#FF0000',
+                                                              strokeOpacity: 1.0,
+                                                              strokeWeight: 2
+                                                          });
+
+                                                          flightPath.setMap(map);
+                                                      }
+                                                  }
+                                              }
+                                          });
+
+
+                                      })
+                                      addMarker(event.latLng, dadosUltimoPontoColocado.Id.toString());
+                                  }
+                              }
+                          });
+                          
                       });
                       DisableAllButtonsBut('Button1');
                       originalButtonValue = document.getElementById("Button1").value;
@@ -122,8 +182,9 @@
               window.removeEventListener('MarkerClickedEvent', MarkedClickedOnExpectVacanceOrigin);
 
               markerAddedEventListener = google.maps.event.addListener(map, 'click', function MapClickEvent(event) {
+
                   addMarker(event.latLng);
-                  alert('Vaga a partir de:' + e.detail.title);
+                  alert('Vaga colocada a partir de:' + e.detail.title);
                   
               });
           }
@@ -177,28 +238,45 @@
         var map = null;
         var historicalOverlay;
 
-      function initMap() {
-          var myLatLng = { lat: 40.740, lng: -74.18 };
+        function initMap() {
+           
+            
 
-          map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 13,
-              center: { lat: 40.740, lng: -74.18 }
-          });
+            if ((window.location.protocol == "https") && navigator.geolocation) {
+               
+                    navigator.geolocation.getCurrentPosition(function (position) {
+
+                        var myLatLng = { lat: position.coords.latitud, lng: position.coords.longitude };
+
+                        map = new google.maps.Map(document.getElementById('map'), {
+                            zoom: 4,
+                            center: myLatLng
+                        });
+
+
+
+
+                    });
+                
+          } else {
+              showOnDefaultLocation();
+          }
+        }
+
+        function showOnDefaultLocation() {
+
+            var myLatLng = { lat: -15.741186, lng: -47.954068 };
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 5,
+                center: myLatLng
+            });
+        }
 
        
-        var imageBounds = {
-            north: 40.773941,
-            south: 40.712216,
-            east: -74.12544,
-            west: -74.22655
-        };
 
-        historicalOverlay = new google.maps.GroundOverlay(
-            'http://localhost:61211/uploads/capa%20feminina%2003.jpg',
-            imageBounds);
-        historicalOverlay.setMap(map);
+        
 
-      }
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_VmR84B8dxqCxnDEm5g-zLKcWX2cCOvg&callback=initMap">
@@ -240,7 +318,7 @@
                         contentType: "application/json",
                         data: JSON.stringify(obj),
                         type: "POST",
-                        url: "api/EstacionamentoModels/"+idEstacionamento+"/Imagem",
+                        url: "http://parkingmanagerserver.azurewebsites.net/api/EstacionamentoModels/" + idEstacionamento + "/Imagem",
                         success: function (data, status) {
                             if (status == 'success') {
 
@@ -286,6 +364,9 @@
                                             bounds);
                                 historicalOverlay.setMap(map);
                             }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(errorThrown + "\n" + textStatus + "\n\n" + XMLHttpRequest);
                         }
                     });
 
