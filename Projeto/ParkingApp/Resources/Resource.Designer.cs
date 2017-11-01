@@ -352,23 +352,26 @@ namespace ParkingApp
 			// aapt resource value: 0x7f07000a
 			public const int auto = 2131165194;
 			
-			// aapt resource value: 0x7f070019
-			public const int button1 = 2131165209;
+			// aapt resource value: 0x7f07001a
+			public const int button1 = 2131165210;
+			
+			// aapt resource value: 0x7f07001f
+			public const int buttonCadastro = 2131165215;
 			
 			// aapt resource value: 0x7f07001e
-			public const int buttonCadastro = 2131165214;
+			public const int buttonLogin = 2131165214;
 			
-			// aapt resource value: 0x7f07001d
-			public const int buttonLogin = 2131165213;
+			// aapt resource value: 0x7f070019
+			public const int checkBoxVagaEspecial = 2131165209;
 			
 			// aapt resource value: 0x7f07000b
 			public const int dark = 2131165195;
 			
-			// aapt resource value: 0x7f07001b
-			public const int editEmail = 2131165211;
-			
 			// aapt resource value: 0x7f07001c
-			public const int editSenha = 2131165212;
+			public const int editEmail = 2131165212;
+			
+			// aapt resource value: 0x7f07001d
+			public const int editSenha = 2131165213;
 			
 			// aapt resource value: 0x7f070012
 			public const int editText1 = 2131165202;
@@ -382,8 +385,8 @@ namespace ParkingApp
 			// aapt resource value: 0x7f070018
 			public const int editText4 = 2131165208;
 			
-			// aapt resource value: 0x7f070021
-			public const int gmap = 2131165217;
+			// aapt resource value: 0x7f070022
+			public const int gmap = 2131165218;
 			
 			// aapt resource value: 0x7f07000d
 			public const int gridLayout1 = 2131165197;
@@ -394,8 +397,8 @@ namespace ParkingApp
 			// aapt resource value: 0x7f070007
 			public const int icon_only = 2131165191;
 			
-			// aapt resource value: 0x7f07001f
-			public const int imageView1 = 2131165215;
+			// aapt resource value: 0x7f070020
+			public const int imageView1 = 2131165216;
 			
 			// aapt resource value: 0x7f07000c
 			public const int light = 2131165196;
@@ -409,8 +412,8 @@ namespace ParkingApp
 			// aapt resource value: 0x7f070003
 			public const int satellite = 2131165187;
 			
-			// aapt resource value: 0x7f070020
-			public const int searchView1 = 2131165216;
+			// aapt resource value: 0x7f070021
+			public const int searchView1 = 2131165217;
 			
 			// aapt resource value: 0x7f07000e
 			public const int space1 = 2131165198;
@@ -418,8 +421,8 @@ namespace ParkingApp
 			// aapt resource value: 0x7f070010
 			public const int space2 = 2131165200;
 			
-			// aapt resource value: 0x7f07001a
-			public const int space3 = 2131165210;
+			// aapt resource value: 0x7f07001b
+			public const int space3 = 2131165211;
 			
 			// aapt resource value: 0x7f070008
 			public const int standard = 2131165192;
