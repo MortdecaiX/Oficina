@@ -317,6 +317,18 @@
     <Compile Include="Migrations\201710131846158_update_2.Designer.cs">
       <DependentUpon>201710131846158_update_2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711011450374_ajustesEstacionamento.cs" />
+    <Compile Include="Migrations\201711011450374_ajustesEstacionamento.Designer.cs">
+      <DependentUpon>201711011450374_ajustesEstacionamento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711011500178_ajustesEstacionamento2.cs" />
+    <Compile Include="Migrations\201711011500178_ajustesEstacionamento2.Designer.cs">
+      <DependentUpon>201711011500178_ajustesEstacionamento2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711011521582_ajustesEstacionamento3.cs" />
+    <Compile Include="Migrations\201711011521582_ajustesEstacionamento3.Designer.cs">
+      <DependentUpon>201711011521582_ajustesEstacionamento3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -324,6 +336,7 @@
     <Compile Include="Models\DadosLogon.cs" />
     <Compile Include="Models\EstacionamentoModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ImagemUpload.cs" />
     <Compile Include="Models\OcupacaoModel.cs" />
     <Compile Include="Models\PontoModel.cs" />
     <Compile Include="Models\PosicaoGeografica.cs" />
@@ -405,6 +418,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\" />
+    <Folder Include="Views\ImageUpload\" />
+    <Folder Include="Views\Upload\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -444,6 +460,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710131846158_update_2.resx">
       <DependentUpon>201710131846158_update_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711011450374_ajustesEstacionamento.resx">
+      <DependentUpon>201711011450374_ajustesEstacionamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711011500178_ajustesEstacionamento2.resx">
+      <DependentUpon>201711011500178_ajustesEstacionamento2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711011521582_ajustesEstacionamento3.resx">
+      <DependentUpon>201711011521582_ajustesEstacionamento3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

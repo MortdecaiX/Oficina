@@ -108,25 +108,7 @@ namespace ParkingManagerServer.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = veiculoModel.Id }, veiculoModel);
         }
-        // GET: api/UsuarioModels/5
-        [AcceptVerbs("GET")]
-        [Route("api/CreateUsuarioModel")]
-        public UsuarioModel CreateUsuarioModel()
-        {
-            UsuarioModel usuarioModel = new UsuarioModel("teste","sdfsdf", "testse", "sdfsdf", "asdfasdf", null);
-            List<VeiculoModel> veiculos = new List<VeiculoModel>();
-          
-            veiculos.Add(new VeiculoModel(new List<UsuarioModel>() { usuarioModel }, "asd-3423", "Fiat", "Uno"));
-
-            usuarioModel.Veiculos = veiculos;
-
-
-            db.UsuarioModels.Add(usuarioModel);
-            db.SaveChanges();
-
-            return db.UsuarioModels.Find(usuarioModel.Id);
-            
-        }
+        
 
         // DELETE: api/VeiculoModels/5
         [ResponseType(typeof(VeiculoModel))]

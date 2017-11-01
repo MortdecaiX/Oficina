@@ -9,6 +9,12 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ParkingManagerServer.Models;
+using System.Web;
+using System.Web.Hosting;
+using System.IO;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace ParkingManagerServer.Controllers
 {
@@ -74,6 +80,35 @@ namespace ParkingManagerServer.Controllers
             return Ok(estacionamentoModel);
         }
 
+
+        [HttpPost, Route("api/EstacionamentoModels/{id}/Imagem")]
+        public string  Upload(long id, UploadData data)
+        {
+            var estacionamento = db.EstacionamentoModels.Find(id);
+            var base64 = data.Data.Split(',')[1];
+            estacionamento.ImagemBase64 = base64;
+            estacionamento.NEBoundImagem = new PosicaoGeografica(data.neBoundLat, data.neBoundLng, 0);
+            estacionamento.SWBoundImagem = new PosicaoGeografica(data.swBoundLat, data.swBoundLng, 0);
+            var path = Path.Combine(HostingEnvironment.MapPath("~/Uploads/"), new Random(DateTime.Now.Millisecond).Next()+"_"+id+"_"+ data.Filename);
+            File.WriteAllBytes(path, data.DataToByteArray());
+            data.url = MapURL(path);
+            estacionamento.ImagemURL = data.url;
+
+            db.Entry(estacionamento).State = EntityState.Modified;
+
+            db.SaveChanges();
+            
+            return Newtonsoft.Json.JsonConvert.SerializeObject(data);
+        }
+
+       
+
+
+        private string MapURL(string path)
+        {
+            string appPath = HostingEnvironment.MapPath("/").ToLower();
+            return string.Format("/{0}", path.ToLower().Replace(appPath, "").Replace(@"\", "/"));
+        }
         [AcceptVerbs("GET")]
         [Route("api/EstacionamentoModels/{termo}")]
         public List<EstacionamentoModel> GetEstacionamentoModel(string termo)
