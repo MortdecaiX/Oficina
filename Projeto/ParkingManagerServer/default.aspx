@@ -304,6 +304,7 @@
           function DisableAllButtonsBut(butButtonId) {
               document.getElementById("Button1").disabled = true;
               document.getElementById("Button2").disabled = true;
+              document.getElementById("Button3").disabled = true;
               document.getElementById("upload").disabled = true;
 
               document.getElementById("file").disabled = true;
@@ -313,6 +314,7 @@
           function EnableAllButtons() {
               document.getElementById("Button1").disabled = false;
               document.getElementById("Button2").disabled = false;
+              document.getElementById("Button3").disabled = false;
               document.getElementById("upload").disabled = false;
           
               document.getElementById("file").disabled = false;
@@ -395,9 +397,65 @@
                   
               });
           }
-
+          var PontoOrigem = null;
+          var PontoDestino = null;
+          var ligandoPontos = false;
+          var tituloOriginalButton3 = null;
           function Button3ClickEvent() {
-              document.getElementById("demo").innerHTML = "Hello World";
+              if (!ligandoPontos) {
+                  ligandoPontos = true;
+                  DisableAllButtonsBut("Button3");
+                  tituloOriginalButton3 = document.getElementById("Button3").value;
+                  document.getElementById("Button3").value = "Parar";
+                  runOnMarkerClicked = function (evt) {
+                      PontoOrigem = evt.detail;
+                      runOnMarkerClicked = function (evt) {
+                          PontoDestino = evt.detail;
+                          
+
+                          $.ajax({
+                              contentType: "application/json",
+                              type: "GET",
+                              url: "api/PontoModels/ConectarPontos/" + PontoOrigem.title + "/" + PontoDestino.title,
+                              success: function (data, status) {
+                                  if (status == 'success') {
+                                      //mostrar polylines ligando os dois pontos
+                                      
+                                          var flightPlanCoordinates = [
+                                               PontoOrigem.position,
+                                               PontoDestino.position
+                                          ];
+                                          var flightPath = new google.maps.Polyline({
+                                              path: flightPlanCoordinates,
+                                              geodesic: true,
+                                              strokeColor: '#FF0000',
+                                              strokeOpacity: 1.0,
+                                              strokeWeight: 2
+                                          });
+
+                                          flightPath.setMap(map);
+                                      
+                                  }
+                              }
+                          });
+
+
+                          document.getElementById("Button3").value=tituloOriginalButton3;
+                          EnableAllButtons();
+                          idPontoOrigem = null;
+                          idPontoDestino = null;
+                          runOnMarkerClicked = null;
+                          ligandoPontos = false;
+                      };
+                  };
+              } else {
+                  EnableAllButtons();
+                  document.getElementById("Button3").value = tituloOriginalButton3;
+                  idPontoOrigem = null;
+                  idPontoDestino = null;
+                  runOnMarkerClicked = null;
+                  ligandoPontos = false;
+              }
           }
           
         
@@ -421,7 +479,9 @@
       <div>
           <asp:Image ID="Image1" runat="server" />
           <input id="Button1" type="button" onclick="Button1ClickEvent()" value="Demarcar Caminho" />
+          <input id="Button3" type="button" onclick="Button3ClickEvent()" value="Ligar Pontos" />
           <input id="Button2" type="button" onclick="Button2ClickEvent()" value="Demarcar Vagas" />
+          
           
           <input id="file" type="file" />
           <input type="button" id="upload" value="Importar Planta" />
