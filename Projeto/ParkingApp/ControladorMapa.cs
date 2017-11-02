@@ -341,7 +341,22 @@ namespace ParkingApp
                     var longitude = (vaga["Localizacao"])["Longitude"].Value<double>();
                     var altitude = (vaga["Localizacao"])["Altitude"].Value<double>();
                     LatLng latlng = new LatLng(Convert.ToDouble(latitude), Convert.ToDouble(longitude));
-                    MarkerOptions options = new MarkerOptions().SetPosition(latlng).SetTitle(vaga["Numero"].Value<long>().ToString());
+
+                    int icone = 0;
+                    switch (vaga["Tipo"].Value<int>())
+                    {
+                        default:
+                            icone = Resource.Drawable.dot;//vaga normal;
+                            break;
+                        case 1:
+                            icone = Resource.Drawable.dot;//vaga idoso;
+                            break;
+                        case 2:
+                            icone = Resource.Drawable.dot;//vaga especial;
+                            break;
+                    }
+
+                    MarkerOptions options = new MarkerOptions().SetPosition(latlng).SetTitle(vaga["Numero"].Value<long>().ToString()).SetIcon(BitmapDescriptorFactory.FromResource(icone));
 
                     _vaga.Marker = Mapa.AddMarker(options);
                     _vaga.Ponto = ponto;

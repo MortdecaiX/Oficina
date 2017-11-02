@@ -22,33 +22,6 @@ C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\uplo
 C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\ParkingApp.dll.mdb
 C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\android\assets\ParkingApp.dll.mdb
 C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\ParkingApp.csprojResolveAssemblyReference.cache
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\ParkingApp.csprojResolveAssemblyReference.cache
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\ParkingApp.dll
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\ParkingApp.pdb
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\ParkingApp.dll
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\ParkingApp.pdb
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\ParkingApp.ParkingApp.apk
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\ParkingApp.ParkingApp-Signed.apk
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\Newtonsoft.Json.dll
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\Xamarin.Android.Support.v4.dll
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\Xamarin.GooglePlayServices.Base.dll
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\Xamarin.GooglePlayServices.Basement.dll
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\Xamarin.GooglePlayServices.Maps.dll
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\Newtonsoft.Json.xml
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\android\bin\ParkingApp.ParkingApp.apk
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\layout\telacadastro.xml
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\layout\telamapa.xml
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\layout\telalogin.xml
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\values\strings.xml
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\icon.png
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\car.png
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\dot.png
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\parking_sign.png
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\red_dot.png
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\R.cs.flag
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\uploadflags.txt
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\ParkingApp.dll.mdb
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\android\assets\ParkingApp.dll.mdb
 C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\dot.png
 C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\parking_sign.png
 C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\red_dot.png
