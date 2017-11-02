@@ -67,10 +67,10 @@ namespace ParkingApp
                         usuario.Add("Sobrenome", editSobrenome.Text);
                         usuario.Add("CPF", null);
                         usuario.Add("Email", editEmail.Text);
-                        /*if(checkVagaEspecial.Checked == true)
+                        if(checkVagaEspecial.Checked == true)
                             usuario.Add("VagaEspecial",true);
                         else
-                            usuario.Add("VagaEspecial",false);*/
+                            usuario.Add("VagaEspecial",false);
                         
                         cadastro.Add("Usuario", usuario);
                         cadastro.Add("Senha", editSenha.Text);

@@ -223,7 +223,7 @@ namespace ParkingApp
             using (WebClient wc = new WebClient())
             {
                 wc.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-                string url = ParkingManagerServerURL + "api/EstacionamentoModels/" + termoBusca;
+                string url = ParkingManagerServerURL + "api/EstacionamentoModels/busca/" + termoBusca;
 
                 string vagasJsonText = wc.DownloadString(url);
                 lista = (JArray)JsonConvert.DeserializeObject(vagasJsonText);
@@ -277,12 +277,13 @@ namespace ParkingApp
                 {
                     try
                     {
-                        var imglatitude = (estacionamento["LocalizacaoImagem"])["Latitude"].Value<double>();
-                        var imglongitude = (estacionamento["LocalizacaoImagem"])["Longitude"].Value<double>();
-                        var imgaltitude = (estacionamento["LocalizacaoImagem"])["Altitude"].Value<double>();
-                        var altura = (estacionamento["ImagemAltura"]).Value<float>();
-                        var largura = (estacionamento["ImagemLargura"]).Value<float>();
-                        LatLng imgLatlng = new LatLng(Convert.ToDouble(imglatitude), Convert.ToDouble(imglongitude));
+                        var swbounds = new LatLng(estacionamento["SWBoundImagem"].Value<double>("Latitude"),
+                        estacionamento["SWBoundImagem"].Value<double>("Longitude"));
+                        var nebounds = new LatLng(estacionamento["NEBoundImagem"].Value<double>("Latitude"),
+                        estacionamento["NEBoundImagem"].Value<double>("Longitude"));
+
+
+                        LatLngBounds bounds = new LatLngBounds(swbounds, nebounds);
 
 
 
@@ -293,15 +294,12 @@ namespace ParkingApp
 
                         Bitmap decodedByte = BitmapFactory.DecodeByteArray(decodedString, 0, decodedString.Length);
 
-                        if (altura == 0 || largura == 0)
-                        {
-                            altura = decodedByte.Height;
-                            largura = decodedByte.Width;
-                        }
+                        var bitmapDescriptor = BitmapDescriptorFactory.FromBitmap(decodedByte);
 
-                        GroundOverlay overlay = this.SobreporMapaComImagem(imgLatlng, BitmapDescriptorFactory.FromBitmap(decodedByte), largura, altura);
-                        overlay.Bearing = estacionamento["ImagemRotacao"].Value<float>();
+                        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
+            .InvokeImage(bitmapDescriptor).PositionFromBounds(bounds);
 
+                        var overlay= Mapa.AddGroundOverlay(newarkMap);
                         overlay.Clickable = true;
                         Mapa.GroundOverlayClick += (obj, args) =>
                         {
@@ -380,14 +378,7 @@ namespace ParkingApp
         }
 
 
-        private GroundOverlay SobreporMapaComImagem(LatLng geoPosition, BitmapDescriptor bitmapDescriptor, float width, float heigth)
-        {
-            //LatLng NEWARK = new LatLng(-23.312847, -51.1448709);
-            //BitmapDescriptorFactory.FromResource(Resource.Drawable.Icon)
-            GroundOverlayOptions newarkMap = new GroundOverlayOptions()
-            .InvokeImage(bitmapDescriptor).Position(geoPosition, width, heigth);
-            return Mapa.AddGroundOverlay(newarkMap);
-        }
+      
 
         private void MostrarPontosNoMapa(JObject estacionamento, JArray lista)
         {
