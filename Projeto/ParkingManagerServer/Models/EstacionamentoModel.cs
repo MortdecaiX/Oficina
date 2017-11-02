@@ -10,6 +10,7 @@ namespace ParkingManagerServer.Models
     {
         [Key]
         public long Id { get; set; }
+        public float Zoom { get; set; }
         public string Nome { get; set; }
         public string ImagemBase64 { get; set; }
         public string ImagemURL { get; set; }

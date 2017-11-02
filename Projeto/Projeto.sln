@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingManagerServer", "ParkingManagerServer\ParkingManagerServer.csproj", "{944EFC01-6DEA-468D-9357-C18392AEDD18}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingApp", "ParkingApp\ParkingApp.csproj", "{026E18F5-5497-41D5-906C-FC3FB50AAFB2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoComunicacao", "ArduinoComunicacao\ArduinoComunicacao.csproj", "{CAA4A22D-73D8-4039-BD32-049A343CD054}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingManager", "ParkingManager\ParkingManager.csproj", "{137146CD-2913-4F3C-8A3B-637D855D47E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +37,6 @@ Global
 		{CAA4A22D-73D8-4039-BD32-049A343CD054}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAA4A22D-73D8-4039-BD32-049A343CD054}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAA4A22D-73D8-4039-BD32-049A343CD054}.Release|Any CPU.Build.0 = Release|Any CPU
-		{137146CD-2913-4F3C-8A3B-637D855D47E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{137146CD-2913-4F3C-8A3B-637D855D47E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{137146CD-2913-4F3C-8A3B-637D855D47E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{137146CD-2913-4F3C-8A3B-637D855D47E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

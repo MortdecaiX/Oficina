@@ -51,7 +51,6 @@ namespace ParkingManagerServer.Models
                     cs.ToTable("UsuarioVeiculo");
                 });
             // modelBuilder.Entity<VagaModel>().HasOptional<UsuarioModel>(v => v.Responsavel).WithRequired();
-            modelBuilder.Entity<VagaModel>().HasOptional(i => i.Responsavel).WithOptionalDependent();
             modelBuilder.Entity<EstacionamentoModel>().HasMany<PontoModel>(i => i.Pontos).WithRequired().WillCascadeOnDelete(true);
             
             modelBuilder.Entity<PontoModel>().HasMany(i => i.PontosPaisConectados).WithMany(i=>i.PontosFilhosConectados).Map(cs=> {

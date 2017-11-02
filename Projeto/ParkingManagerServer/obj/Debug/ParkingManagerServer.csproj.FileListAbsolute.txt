@@ -139,3 +139,5 @@ C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\P
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.ajustesEstacionamento.resources
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.ajustesEstacionamento2.resources
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.ajustesEstacionamento3.resources
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.ajustesEntidades1.resources
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.ajustesEntidades2.resources

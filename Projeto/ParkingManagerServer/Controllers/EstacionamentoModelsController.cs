@@ -86,19 +86,24 @@ namespace ParkingManagerServer.Controllers
         {
             
                 var estacionamento = db.EstacionamentoModels.Find(id);
-                var base64 = data.Data.Split(',')[1];
-                estacionamento.ImagemBase64 = base64;
+                if (data.Data != null)
+                {
+                    var base64 = data.Data.Split(',')[1];
+                    estacionamento.ImagemBase64 = base64;
+
+                    var path = Path.Combine(HostingEnvironment.MapPath("~/Uploads/"), new Random(DateTime.Now.Millisecond).Next() + "_" + id + "_" + data.Filename);
+                    var directory = Path.GetDirectoryName(path);
+                    if (!Directory.Exists(directory))
+                    {
+                        Directory.CreateDirectory(directory);
+                    }
+                    File.WriteAllBytes(path, data.DataToByteArray());
+                    data.url = MapURL(path);
+                    estacionamento.ImagemURL = data.url;
+            }
                 estacionamento.NEBoundImagem = new PosicaoGeografica(data.neBoundLat, data.neBoundLng, 0);
                 estacionamento.SWBoundImagem = new PosicaoGeografica(data.swBoundLat, data.swBoundLng, 0);
-                var path = Path.Combine(HostingEnvironment.MapPath("~/Uploads/"), new Random(DateTime.Now.Millisecond).Next() + "_" + id + "_" + data.Filename);
-                var directory = Path.GetDirectoryName(path);
-                if (!Directory.Exists(directory))
-                {
-                    Directory.CreateDirectory(directory);
-                }
-                File.WriteAllBytes(path, data.DataToByteArray());
-                data.url = MapURL(path);
-                estacionamento.ImagemURL = data.url;
+                
 
                 db.Entry(estacionamento).State = EntityState.Modified;
 
@@ -117,7 +122,7 @@ namespace ParkingManagerServer.Controllers
             return string.Format("/{0}", path.ToLower().Replace(appPath, "").Replace(@"\", "/"));
         }
         [AcceptVerbs("GET")]
-        [Route("api/EstacionamentoModels/{termo}")]
+        [Route("api/EstacionamentoModels/busca/{termo}")]
         public List<EstacionamentoModel> GetEstacionamentoModel(string termo)
         {
             var estacionamentos = db.EstacionamentoModels.Where(x=>x.Nome.ToLower().Contains(termo.ToLower())).ToList<EstacionamentoModel>();

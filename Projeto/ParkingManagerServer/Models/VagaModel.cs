@@ -10,15 +10,7 @@ namespace ParkingManagerServer.Models
         {
 
         }
-        public VagaModel(long id, long numero, TipoVaga tipo,   PosicaoGeografica localizacao, int pavimento,  UsuarioModel responsavel)
-        {
-            Id = id;
-            Numero = numero;
-            Tipo = tipo;
-            Localizacao = localizacao;
-            Pavimento = pavimento;
-            Responsavel = responsavel;
-        }
+      
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
@@ -28,6 +20,5 @@ namespace ParkingManagerServer.Models
         public PosicaoGeografica Localizacao { get; set; }
         public int Pavimento { get; set; }
         public virtual ReservaModel Reserva { get; set; }
-        public virtual UsuarioModel Responsavel { get; set; }
     }
 }

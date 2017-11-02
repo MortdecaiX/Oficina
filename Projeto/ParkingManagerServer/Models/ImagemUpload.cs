@@ -15,13 +15,13 @@ namespace ParkingManagerServer.Models
             return Convert.FromBase64String(dataFormated);
         }
 
-        public float centerLat { get; set; }
-        public float centerLng { get; set; }
+        public double centerLat { get; set; }
+        public double centerLng { get; set; }
 
-        public float swBoundLat { get; set; }
-        public float swBoundLng { get; set; }
-        public float neBoundLat { get; set; }
-        public float neBoundLng { get; set; }
+        public double swBoundLat { get; set; }
+        public double swBoundLng { get; set; }
+        public double neBoundLat { get; set; }
+        public double neBoundLng { get; set; }
         public string url { get; set; }
     }
 }

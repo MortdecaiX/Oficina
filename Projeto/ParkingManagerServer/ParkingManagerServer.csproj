@@ -329,6 +329,14 @@
     <Compile Include="Migrations\201711011521582_ajustesEstacionamento3.Designer.cs">
       <DependentUpon>201711011521582_ajustesEstacionamento3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711011857543_ajustesEntidades1.cs" />
+    <Compile Include="Migrations\201711011857543_ajustesEntidades1.Designer.cs">
+      <DependentUpon>201711011857543_ajustesEntidades1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711011906084_ajustesEntidades2.cs" />
+    <Compile Include="Migrations\201711011906084_ajustesEntidades2.Designer.cs">
+      <DependentUpon>201711011906084_ajustesEntidades2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -469,6 +477,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711011521582_ajustesEstacionamento3.resx">
       <DependentUpon>201711011521582_ajustesEstacionamento3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711011857543_ajustesEntidades1.resx">
+      <DependentUpon>201711011857543_ajustesEntidades1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711011906084_ajustesEntidades2.resx">
+      <DependentUpon>201711011906084_ajustesEntidades2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -203,6 +203,7 @@ namespace ParkingManagerServer.Controllers
                 return BadRequest(ModelState);
             }
             var ponto = db.PontoModels.Find(idPonto);
+           
             if (ponto.VagasConectadas == null)
             {
                 ponto.VagasConectadas = new List<VagaModel>();

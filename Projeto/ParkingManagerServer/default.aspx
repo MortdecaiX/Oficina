@@ -22,13 +22,143 @@
       }
     </style>
       <script>
-          var idEstacionamento =2;
+          var dadosEstacionamento = new Object();
+          dadosEstacionamento.Id = 2;
           var markers = [];
           var markerAddedEventListener = null;
           var dadosImagemEstacionamento = null;
           var marker1 = null;
           var marker2 = null;
 
+          
+
+          
+
+          function carregarEstacionamento(estacionamento) {
+
+                  dadosEstacionamento = estacionamento;
+                  var latitude = estacionamento.Localizacao.Latitude;
+                  var longitude = estacionamento.Localizacao.Longitude;
+                  var altitude = estacionamento.Localizacao.Altitude;
+
+
+
+                  var latlng = { lat: latitude, lng: longitude };
+
+
+                   addMarker(latlng,estacionamento.Nome);
+              //Carregar Overlay
+                  dadosImagemEstacionamento = new Object();
+                  dadosImagemEstacionamento.url = estacionamento.ImagemURL;
+                 
+                  dadosImagemEstacionamento.swBoundLat = estacionamento.SWBoundImagem.Latitude;
+                  dadosImagemEstacionamento.swBoundLng=estacionamento.SWBoundImagem.Longitude;
+
+                  dadosImagemEstacionamento.neBoundLat = estacionamento.NEBoundImagem.Latitude;
+                  dadosImagemEstacionamento.neBoundLng = estacionamento.NEBoundImagem.Longitude;
+                  
+                  mostrarGroundOverlay(dadosImagemEstacionamento);
+
+                  mostrarPontosDeCaminho(estacionamento.Pontos, true);
+                  
+                   
+          }
+
+          function mostrarPontosDeCaminho(pontos, visivel){
+              pontos.forEach(function (ponto, index) {
+              
+                  
+
+                  var latitude = ponto.Localizacao.Latitude;
+                  var longitude = ponto.Localizacao.Longitude;
+                  var altitude =  ponto.Localizacao.Altitude;
+                  var latlng = {lat: latitude,lng:longitude};
+                  
+                  var marker = addMarker(latlng, ponto.Id.toString());
+                  marker.setVisible(visivel);
+                  
+                      
+                  ponto.Conexoes.forEach(function(conexao, index) {
+                      pontos.forEach(function (_ponto, index) {
+                          
+                          if (_ponto.Id == conexao)
+                          {
+                              var _latitude = _ponto.Localizacao.Latitude;
+                              var _longitude =  _ponto.Localizacao.Longitude;
+                              var _altitude =  _ponto.Localizacao.Altitude;
+
+                              var flightPlanCoordinates = [
+                                                   latlng,
+                                                   { lat: _latitude, lng: _longitude }
+                              ];
+                              var flightPath = new google.maps.Polyline({
+                                  path: flightPlanCoordinates,
+                                  geodesic: true,
+                                  strokeColor: '#357BEA',
+                                  strokeOpacity: 1.0,
+                                  strokeWeight: 2
+                              });
+
+                              flightPath.setMap(map);
+
+                          }
+
+                      });
+                      });
+
+                  
+                  mostrarVagasConectadasNoPonto(ponto);
+
+
+
+                  
+              
+              }
+              
+              );
+              
+
+              
+          }
+
+          function mostrarVagasConectadasNoPonto(ponto) {
+
+              ponto.VagasConectadas.forEach(function (vaga, index) {
+              
+                  var latitude = vaga.Localizacao.Latitude;
+                  var longitude =  vaga.Localizacao.Longitude;
+                  var altitude =  vaga.Localizacao.Altitude;
+                  var latlng = {lat:latitude,lng: longitude};
+                  
+                  var marker = addMarker(latlng,"Vaga: " + vaga.Id);
+
+                  var _latitude = ponto.Localizacao.Latitude;
+                  var _longitude = ponto.Localizacao.Longitude;
+                  var _altitude = ponto.Localizacao.Altitude;
+
+
+                  var flightPlanCoordinates = [
+                                                   latlng,
+                                                   { lat: _latitude, lng: _longitude }
+                  ];
+                  var flightPath = new google.maps.Polyline({
+                      path: flightPlanCoordinates,
+                      geodesic: true,
+                      strokeColor: '#42D7F4',
+                      strokeOpacity: 1.0,
+                      strokeWeight: 2
+                  });
+
+                  flightPath.setMap(map);
+
+              
+              });
+
+             
+                  
+
+              
+          }
 
           // Adds a marker to the map and push to the array.  
           function addMarker(location, id) {
@@ -37,19 +167,24 @@
                   map: map,
                   title: id
               });
-              markers.push(marker);
+              
 
-              google.maps.event.addListener(marker, 'click',  MarkerClicked);
+              google.maps.event.addListener(marker, 'click', MarkerClicked);
+
+              markers.push(marker);
               return marker;
           }
 
           var dadosUltimoPontoColocado = null;
-
+          var runOnMarkerClicked = null;
           function MarkerClicked() {
               var marker = this;
               //alert("Tite for this marker is:" + this.title);
               var evt = new CustomEvent('MarkerClickedEvent', { detail: marker });
               window.dispatchEvent(evt);
+              if (runOnMarkerClicked != null) {
+                  runOnMarkerClicked(evt);
+              }
           }
 
           var originalButtonValue = null;
@@ -57,67 +192,37 @@
               if (!document.getElementById("Button1").disabled) {
                   if (markerAddedEventListener == null) {
                       markerAddedEventListener = google.maps.event.addListener(map, 'click', function MapClickEvent(event) {
-
-                          var tempUltimoPontoColocado = dadosUltimoPontoColocado;
-                          
-
-                          dadosUltimoPontoColocado = new Object();
-                          dadosUltimoPontoColocado.Id = 0;
-                          dadosUltimoPontoColocado.Localizacao = new Object();
-                          dadosUltimoPontoColocado.Localizacao.Latitude = event.latLng.lat();
-                          dadosUltimoPontoColocado.Localizacao.Longitude = event.latLng.lng();
-                          dadosUltimoPontoColocado.Localizacao.Altitude = 0;
-                          dadosUltimoPontoColocado.Conexoes = new Array();
-                          if (tempUltimoPontoColocado != null) {
-                              dadosUltimoPontoColocado.Conexoes.push(tempUltimoPontoColocado.Id);
-                          } 
-                          dadosUltimoPontoColocado.Entrada = false;
-                          dadosUltimoPontoColocado.Saida = false;
-
-                          $.ajax({
-                              contentType: "application/json",
-                              data: JSON.stringify(dadosUltimoPontoColocado),
-                              type: "POST",
-                              url: "api/EstacionamentoModel/" + idEstacionamento + "/AdicionarPonto",
-                              success: function (data, status) {
-                                  if (status == 'success') {
-                                      dadosUltimoPontoColocado.Id = data.Id;
-
-                                      dadosUltimoPontoColocado.Conexoes.forEach(function (item, index) {
+                          registrarPonto(event.latLng);
+                          runOnMarkerClicked = function (evt) {
+                              
+                              if (dadosUltimoPontoColocado!=null) {
+                                  $.ajax({
+                                  contentType: "application/json",
+                                  type: "GET",
+                                  url: "api/PontoModels/ConectarPontos/" + evt.detail.title + "/" + dadosUltimoPontoColocado.Id,
+                                  success: function (data, status) {
+                                      if (status == 'success') {
+                                          //mostrar polylines ligando os dois pontos
                                          
-                                          $.ajax({
-                                              contentType: "application/json",
-                                              type: "GET",
-                                              url: "api/PontoModels/ConectarPontos/" + item + "/" + dadosUltimoPontoColocado.Id,
-                                              success: function (data, status) {
-                                                  if (status == 'success') {
-                                                      //mostrar polylines ligando os dois pontos
-                                                      if (tempUltimoPontoColocado != null) {
-                                                          var flightPlanCoordinates = [
-                                                               { lat: tempUltimoPontoColocado.Localizacao.Latitude, lng: tempUltimoPontoColocado.Localizacao.Longitude },
-                                                               { lat: dadosUltimoPontoColocado.Localizacao.Latitude, lng: dadosUltimoPontoColocado.Localizacao.Longitude }
-                                                          ];
-                                                          var flightPath = new google.maps.Polyline({
-                                                              path: flightPlanCoordinates,
-                                                              geodesic: true,
-                                                              strokeColor: '#FF0000',
-                                                              strokeOpacity: 1.0,
-                                                              strokeWeight: 2
-                                                          });
+                                              var flightPlanCoordinates = [
+                                                   evt.detail.position,
+                                                   { lat: dadosUltimoPontoColocado.Localizacao.Latitude, lng: dadosUltimoPontoColocado.Localizacao.Longitude }
+                                              ];
+                                              var flightPath = new google.maps.Polyline({
+                                                  path: flightPlanCoordinates,
+                                                  geodesic: true,
+                                                  strokeColor: '#FF0000',
+                                                  strokeOpacity: 1.0,
+                                                  strokeWeight: 2
+                                              });
 
-                                                          flightPath.setMap(map);
-                                                      }
-                                                  }
-                                              }
-                                          });
-
-
-                                      })
-                                      addMarker(event.latLng, dadosUltimoPontoColocado.Id.toString());
+                                              flightPath.setMap(map);
+                                              runOnMarkerClicked = null;
+                                      }
                                   }
-                              }
-                          });
-                          
+                              });
+                          }
+                          }
                       });
                       DisableAllButtonsBut('Button1');
                       originalButtonValue = document.getElementById("Button1").value;
@@ -127,20 +232,80 @@
                       markerAddedEventListener.remove();
                       markerAddedEventListener = null;
                       EnableAllButtons();
+                      dadosUltimoPontoColocado = null;
                       document.getElementById("Button1").value = originalButtonValue;
                   }
               }
           }
 
           
+          function registrarPonto(latLng) {
+              var tempUltimoPontoColocado = dadosUltimoPontoColocado;
 
+
+              dadosUltimoPontoColocado = new Object();
+              dadosUltimoPontoColocado.Id = 0;
+              dadosUltimoPontoColocado.Localizacao = new Object();
+              dadosUltimoPontoColocado.Localizacao.Latitude = latLng.lat();
+              dadosUltimoPontoColocado.Localizacao.Longitude = latLng.lng();
+              dadosUltimoPontoColocado.Localizacao.Altitude = 0;
+              dadosUltimoPontoColocado.Conexoes = new Array();
+              if (tempUltimoPontoColocado != null) {
+                  dadosUltimoPontoColocado.Conexoes.push(tempUltimoPontoColocado.Id);
+              }
+              dadosUltimoPontoColocado.Entrada = false;
+              dadosUltimoPontoColocado.Saida = false;
+
+              $.ajax({
+                  contentType: "application/json",
+                  data: JSON.stringify(dadosUltimoPontoColocado),
+                  type: "POST",
+                  url: "api/EstacionamentoModel/" + dadosEstacionamento.Id + "/AdicionarPonto",
+                  success: function (data, status) {
+                      if (status == 'success') {
+                          dadosUltimoPontoColocado.Id = data.Id;
+
+                          dadosUltimoPontoColocado.Conexoes.forEach(function (item, index) {
+
+                              $.ajax({
+                                  contentType: "application/json",
+                                  type: "GET",
+                                  url: "api/PontoModels/ConectarPontos/" + item + "/" + dadosUltimoPontoColocado.Id,
+                                  success: function (data, status) {
+                                      if (status == 'success') {
+                                          //mostrar polylines ligando os dois pontos
+                                          if (tempUltimoPontoColocado != null) {
+                                              var flightPlanCoordinates = [
+                                                   { lat: tempUltimoPontoColocado.Localizacao.Latitude, lng: tempUltimoPontoColocado.Localizacao.Longitude },
+                                                   { lat: dadosUltimoPontoColocado.Localizacao.Latitude, lng: dadosUltimoPontoColocado.Localizacao.Longitude }
+                                              ];
+                                              var flightPath = new google.maps.Polyline({
+                                                  path: flightPlanCoordinates,
+                                                  geodesic: true,
+                                                  strokeColor: '#FF0000',
+                                                  strokeOpacity: 1.0,
+                                                  strokeWeight: 2
+                                              });
+
+                                              flightPath.setMap(map);
+                                          }
+                                      }
+                                  }
+                              });
+
+
+                          })
+                          addMarker(latLng, dadosUltimoPontoColocado.Id.toString());
+                      }
+                  }
+              });
+
+          }
           function DisableAllButtonsBut(butButtonId) {
               document.getElementById("Button1").disabled = true;
               document.getElementById("Button2").disabled = true;
               document.getElementById("upload").disabled = true;
-              document.getElementById("Button4").disabled = true;
-              document.getElementById("Button5").disabled = true;
-              document.getElementById("Button6").disabled = true;
+
               document.getElementById("file").disabled = true;
               document.getElementById(butButtonId).disabled = false;
               
@@ -149,9 +314,7 @@
               document.getElementById("Button1").disabled = false;
               document.getElementById("Button2").disabled = false;
               document.getElementById("upload").disabled = false;
-              document.getElementById("Button4").disabled = false;
-              document.getElementById("Button5").disabled = false;
-              document.getElementById("Button6").disabled = false;
+          
               document.getElementById("file").disabled = false;
               
               
@@ -178,13 +341,57 @@
           }
 
           function MarkedClickedOnExpectVacanceOrigin (e) {
-              alert('Marker Selecionado:' + e.detail.title + ". Agora clique onde ficara as vagas a partir deste marker");
+              alert('Marker Selecionado:' + e.detail.title + ". Agora clique onde ficará as vagas a partir deste marker");
               window.removeEventListener('MarkerClickedEvent', MarkedClickedOnExpectVacanceOrigin);
 
               markerAddedEventListener = google.maps.event.addListener(map, 'click', function MapClickEvent(event) {
 
-                  addMarker(event.latLng);
-                  alert('Vaga colocada a partir de:' + e.detail.title);
+                  var vaga = new Object();
+                  vaga.Id = 0;
+                  vaga.Numero = 0;
+                  vaga.Tipo = 0;
+                  vaga.Ocupacao = null;
+                  vaga.Localizacao = new Object();
+                  vaga.Localizacao.Latitude = event.latLng.lat();
+                  vaga.Localizacao.Longitude = event.latLng.lng();
+                  vaga.Localizacao.Altitude = 0;
+                  vaga.Pavimento = 0;
+                  vaga.Reserva = null;
+
+                  $.ajax({
+                      contentType: "application/json",
+                      data: JSON.stringify(vaga),
+                      type: "POST",
+                      url: "api/VagaModels?idPonto=" + e.detail.title,
+                      success: function (data, status) {
+                          if (status == 'success') {
+                              
+                              addMarker(event.latLng, "Vaga: " + data.Id);
+                              var _latitude = vaga.Localizacao.Latitude;
+                              var _longitude = vaga.Localizacao.Longitude;
+                              var _altitude = vaga.Localizacao.Altitude;
+
+
+                              var flightPlanCoordinates = [
+                                                                e.detail.position,
+                                                               { lat: _latitude, lng: _longitude }
+                              ];
+                              var flightPath = new google.maps.Polyline({
+                                  path: flightPlanCoordinates,
+                                  geodesic: true,
+                                  strokeColor: '#42D7F4',
+                                  strokeOpacity: 1.0,
+                                  strokeWeight: 2
+                              });
+
+                              flightPath.setMap(map);
+
+                          }
+                      }
+                  });
+
+                  
+                  //alert('Vaga colocada a partir de:' + e.detail.title);
                   
               });
           }
@@ -192,16 +399,7 @@
           function Button3ClickEvent() {
               document.getElementById("demo").innerHTML = "Hello World";
           }
-          function Button4ClickEvent() {
-              document.getElementById("demo").innerHTML = "Hello World";
-          }
-          function Button5ClickEvent() {
-              document.getElementById("demo").innerHTML = "Hello World";
-          }
-          function Button6ClickEvent() {
-              document.getElementById("demo").innerHTML = "Hello World";
-          }
-
+          
         
 
           function keyEvent(event) {
@@ -228,9 +426,7 @@
           <input id="file" type="file" />
           <input type="button" id="upload" value="Importar Planta" />
              
-          <input id="Button4" type="button" value="Girar à Esquerda" />
-          <input id="Button5" type="button" value="Girar à Direita" />
-          <input id="Button6" type="button" value="Inverter" />
+
       </div>
       
     <div id="map"></div>
@@ -318,51 +514,13 @@
                         contentType: "application/json",
                         data: JSON.stringify(obj),
                         type: "POST",
-                        url: "http://parkingmanagerserver.azurewebsites.net/api/EstacionamentoModels/" + idEstacionamento + "/Imagem",
+                        url: "api/EstacionamentoModels/" + dadosEstacionamento.Id + "/Imagem",
                         success: function (data, status) {
                             if (status == 'success') {
 
                                 dadosImagemEstacionamento = JSON.parse(data);
-
-                                var returnedDada = dadosImagemEstacionamento.url;
-                                if (historicalOverlay != null) {
-                                    historicalOverlay.setMap(null);
-                                    historicalOverlay = null;
-                                }
-                                var swLat = dadosImagemEstacionamento.swBoundLat;
-                                var swLng = dadosImagemEstacionamento.swBoundLng;
-
-                                var neLat = dadosImagemEstacionamento.neBoundLat;
-                                var neLng = dadosImagemEstacionamento.neBoundLng;
-
-                                var swBound = new google.maps.LatLng(swLat, swLng);
-                                var neBound = new google.maps.LatLng(neLat, neLng);
-                                var bounds = new google.maps.LatLngBounds(swBound, neBound);
+                                mostrarGroundOverlay(dadosImagemEstacionamento);
                                 
-                                if (marker1 != null) {
-                                    marker1.setMap(null);
-                                }
-                                marker1 = new google.maps.Marker({
-                                    position: swBound,
-                                    map: map,
-                                    title: "swBound",
-                                    draggable: true
-                                });
-                                google.maps.event.addListener(marker1, 'dragend', swBoundMarkerLocationChanged);
-                                if (marker2 != null) {
-                                    marker2.setMap(null);
-                                }
-                                marker2 = new google.maps.Marker({
-                                    position: neBound,
-                                    map: map,
-                                    title: "neBound",
-                                    draggable: true
-                                });
-                                google.maps.event.addListener(marker2, 'dragend', neBoundMarkerLocationChanged);
-                                historicalOverlay = new google.maps.GroundOverlay(
-                                            returnedDada,
-                                            bounds);
-                                historicalOverlay.setMap(map);
                             }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -379,21 +537,58 @@
                 
             });
         });
+        function mostrarGroundOverlay(dadosImagemEstacionamento) {
+            
+            if (historicalOverlay != null) {
+                historicalOverlay.setMap(null);
+                historicalOverlay = null;
+            }
+            var swLat = dadosImagemEstacionamento.swBoundLat;
+            var swLng = dadosImagemEstacionamento.swBoundLng;
 
+            var neLat = dadosImagemEstacionamento.neBoundLat;
+            var neLng = dadosImagemEstacionamento.neBoundLng;
+
+            var swBound = new google.maps.LatLng(swLat, swLng);
+            var neBound = new google.maps.LatLng(neLat, neLng);
+            var bounds = new google.maps.LatLngBounds(swBound, neBound);
+                                
+            if (marker1 != null) {
+                marker1.setMap(null);
+            }
+            marker1 = new google.maps.Marker({
+                position: swBound,
+                map: map,
+                title: "swBound",
+                draggable: true
+            });
+            google.maps.event.addListener(marker1, 'dragend', swBoundMarkerLocationChanged);
+            if (marker2 != null) {
+                marker2.setMap(null);
+            }
+            marker2 = new google.maps.Marker({
+                position: neBound,
+                map: map,
+                title: "neBound",
+                draggable: true
+            });
+            google.maps.event.addListener(marker2, 'dragend', neBoundMarkerLocationChanged);
+            historicalOverlay = new google.maps.GroundOverlay(
+                        dadosImagemEstacionamento.url,
+                        bounds);
+            historicalOverlay.setMap(map);
+        
+        
+        }
         function neBoundMarkerLocationChanged(event) {
             var bounds = historicalOverlay.getBounds();
             var swBound = bounds.getSouthWest();
             
-
-         
-            var neBound = bounds.getNorthEast();
-            neBound = event.latLng;
-            if (dadosImagemEstacionamento != null) {
-                dadosImagemEstacionamento.swBoundLat = swBound.lat();
-                dadosImagemEstacionamento.swBoundLng = swBound.lng();
+            var neBound = event.latLng;
+            
                 dadosImagemEstacionamento.neBoundLat = neBound.lat();
-                dadosImagemEstacionamento.neBoundLng = neBound.lat();
-            }
+                dadosImagemEstacionamento.neBoundLng = neBound.lng();
+            
             AtualizarDadosImagemEstacionamento();
             bounds = new google.maps.LatLngBounds(swBound, neBound);
             historicalOverlay.setMap(null);
@@ -407,19 +602,13 @@
         }
         function swBoundMarkerLocationChanged(event) {
             var bounds = historicalOverlay.getBounds();
-            var swBound = bounds.getSouthWest();
-            swBound = event.latLng;
+            var swBound = event.latLng;
 
-           
             var neBound = bounds.getNorthEast();
             
-
-            if (dadosImagemEstacionamento != null) {
-                dadosImagemEstacionamento.swBoundLat = swBound.lat();
-                dadosImagemEstacionamento.swBoundLng = swBound.lng();
-                dadosImagemEstacionamento.neBoundLat = neBound.lat();
-                dadosImagemEstacionamento.neBoundLng = neBound.lat();
-            }
+           dadosImagemEstacionamento.swBoundLat = swBound.lat();
+           dadosImagemEstacionamento.swBoundLng = swBound.lng();
+            
             AtualizarDadosImagemEstacionamento();
             bounds = new google.maps.LatLngBounds(swBound, neBound);
             historicalOverlay.setMap(null);
@@ -437,7 +626,7 @@
                     contentType: "application/json",
                     data: JSON.stringify(dadosImagemEstacionamento),
                     type: "POST",
-                    url: "api/EstacionamentoModels/" + idEstacionamento + "/Imagem",
+                    url: "api/EstacionamentoModels/" + dadosEstacionamento.Id + "/Imagem",
                     success: function (data, status) {
                         if (status == 'success') {
                             dadosImagemEstacionamento = JSON.parse(data);
@@ -446,5 +635,20 @@
                 });
             }
         }
+
+        function exemplo() {
+            $.ajax({
+                contentType: "application/json",
+                type: "GET",
+                url: "api/EstacionamentoModels/2",
+                success: function (data, status) {
+                    if (status == 'success') {
+                        carregarEstacionamento(data);
+                    }
+                }
+            });
+        }
+        exemplo();
+
     </script>
 </html>
