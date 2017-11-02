@@ -143,12 +143,16 @@ namespace ParkingApp
             }
 
         }
-
+        bool alertadoGpsDesligado = false;
         private void DirecoesParaMarcador(Marcador marcador)
         {
             if (ControleMapa.LocalizacaoAtual == null)
             {
-                AlertaServicoLocalizacao();
+                if (!alertadoGpsDesligado)
+                {
+                    AlertaServicoLocalizacao();
+                    alertadoGpsDesligado = true;
+                }
 
             }
             else
@@ -228,17 +232,23 @@ namespace ParkingApp
 
             
             var shortPath = g.shortest_path(c_entrada, c_alvo);
-            
 
-
-            var caminho = pontos.Where(x => shortPath.Contains(x.Value<long>("Id").ToString())).ToList();
+            JArray caminho = new JArray();
+            List<string> demo = new List<string>();
+            foreach (var no in shortPath)
+            {
+                var ponto = pontos.Where(x => no == x.Value<long>("Id").ToString()).FirstOrDefault();
+                demo.Add(no);
+                caminho.Add(ponto);
+            }
 
             PolylineOptions opt = new PolylineOptions();
             double _lat = entrada["Localizacao"].Value<double>("Latitude");
             double _lng = entrada["Localizacao"].Value<double>("Longitude");
-            opt.Add(new LatLng(_lat, _lng));
+            
             opt = opt.InvokeWidth(20);
             opt = opt.InvokeColor( Color.Blue);
+
 
             foreach (var no in caminho)
             {
@@ -246,11 +256,18 @@ namespace ParkingApp
                 double lng = no["Localizacao"].Value<double>("Longitude");
                 opt = opt.Add(new LatLng(lat, lng));
             }
-           ControleMapa.PolylinesCaminhoInterno.Add( GMap.AddPolyline(opt));
+            opt.Add(new LatLng(_lat, _lng));
+
+
+            ControleMapa.PolylinesCaminhoInterno.Add( GMap.AddPolyline(opt));
 
             if (ControleMapa.LocalizacaoAtual == null)
             {
-                AlertaServicoLocalizacao();
+                if (!alertadoGpsDesligado)
+                {
+                    AlertaServicoLocalizacao();
+                    alertadoGpsDesligado = true;
+                }
 
             }
             else

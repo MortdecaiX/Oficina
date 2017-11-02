@@ -141,3 +141,11 @@ C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\P
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.ajustesEstacionamento3.resources
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.ajustesEntidades1.resources
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.Migrations.ajustesEntidades2.resources
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\Assets\Images\placeholder-point.png
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\Assets\Images\parking-sign_new.png
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\Assets\Images\parking-sign_special_2.png
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\Assets\Images\parking-sign.png
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\Assets\Images\parking-sign_special_1.png
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\Assets\Images\parking.png
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\Assets\Images\placeholder-point_new.png
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\Assets\Images\move-pointer.png

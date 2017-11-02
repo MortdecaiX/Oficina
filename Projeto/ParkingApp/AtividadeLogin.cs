@@ -22,7 +22,16 @@ namespace ParkingApp
             var btnLogin = FindViewById<Button>(Resource.Id.buttonLogin);
             btnLogin.Click += capturaClickLogin;
             btnCadastro.Click += capturaClickCadastro;
+            var editLogin = FindViewById<EditText>(Resource.Id.editEmail);
+            editLogin.InputType = Android.Text.InputTypes.TextVariationEmailAddress;
 
+#if DEBUG
+            var editSenha = FindViewById<EditText>(Resource.Id.editSenha);
+            editLogin.Text = "vitor.vinicius.gs@gmail.com";
+            editSenha.Text = "123456";
+#else
+           
+#endif
 
         }
         public static JObject Usuario { get; private set; }
