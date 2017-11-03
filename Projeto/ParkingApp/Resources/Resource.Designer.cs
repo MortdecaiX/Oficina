@@ -373,6 +373,9 @@ namespace ParkingApp
 			// aapt resource value: 0x7f07000a
 			public const int auto = 2131165194;
 			
+			// aapt resource value: 0x7f070022
+			public const int btModoDirecao = 2131165218;
+			
 			// aapt resource value: 0x7f07001a
 			public const int button1 = 2131165210;
 			
@@ -406,8 +409,8 @@ namespace ParkingApp
 			// aapt resource value: 0x7f070018
 			public const int editText4 = 2131165208;
 			
-			// aapt resource value: 0x7f070022
-			public const int gmap = 2131165218;
+			// aapt resource value: 0x7f070024
+			public const int gmap = 2131165220;
 			
 			// aapt resource value: 0x7f07000d
 			public const int gridLayout1 = 2131165197;
@@ -465,6 +468,9 @@ namespace ParkingApp
 			
 			// aapt resource value: 0x7f070017
 			public const int textView5 = 2131165207;
+			
+			// aapt resource value: 0x7f070023
+			public const int txtAngle = 2131165219;
 			
 			// aapt resource value: 0x7f070009
 			public const int wide = 2131165193;

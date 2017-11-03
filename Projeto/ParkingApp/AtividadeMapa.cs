@@ -57,9 +57,7 @@ namespace ParkingApp
             //GMap.MoveCamera(camera);
 
 
-            MarkerOptions options = new MarkerOptions().SetPosition(GMap.CameraPosition.Target).SetTitle("").SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.dot)).Visible(false);
-
-            marcadorPosicao = GMap.AddMarker(options);
+            
 
 
             this.ControleMapa = new ControladorMapa(this, googleMap);
@@ -67,7 +65,30 @@ namespace ParkingApp
             ControleMapa.LocalizacaoAtualAlteradaEvent = MudancaLocalizacao;
             ControleMapa.IniciarControle();
 
-           
+            btnModoDirecao= FindViewById<Button>(Resource.Id.btModoDirecao);
+            
+            txtAngle = FindViewById<TextView>(Resource.Id.txtAngle);
+
+            btnModoDirecao.Click += btnModoDirecao_Click;
+
+        }
+        float Bearing = 0;
+        bool _modoDirecao = true;
+        bool modoDirecao {
+            get { return _modoDirecao; }
+            set
+            {
+                _modoDirecao = value;
+                btnModoDirecao.Text = modoDirecao ? "Modo Normal" : "Modo de Direção";
+                if (value)
+                {
+                    Orientacao();
+                }
+            }
+        }
+        private void btnModoDirecao_Click(object sender, EventArgs e)
+        {
+            modoDirecao = !modoDirecao;
         }
 
         private void VerificadorEstadoVagas_VagaEscolhidaMudouEstadoEvent(object sender, EventArgsMudancaEstadoVaga e)
@@ -100,23 +121,51 @@ namespace ParkingApp
 
         }
 
+        Android.Locations.Location ultimaLocalizacao = null;
         private void MudancaLocalizacao()
         {
             if (ControleMapa.LocalizacaoAtual != null)
             {
+
+                if (marcadorPosicao != null)
+                {
+                    marcadorPosicao.Remove();
+                }
+                MarkerOptions options = new MarkerOptions().SetPosition(GMap.CameraPosition.Target).SetTitle("").SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.dot)).Visible(false);
+
+                marcadorPosicao = GMap.AddMarker(options);
+
                 marcadorPosicao.Position = new LatLng(ControleMapa.LocalizacaoAtual.Latitude, ControleMapa.LocalizacaoAtual.Longitude);
                 marcadorPosicao.Visible = true;
 
-                //            CameraPosition cameraPosition = new CameraPosition.Builder()
-                //.Target(marcadorPosicao.Position)      // Sets the center of the map to Mountain View
-                //.Zoom(17)                   // Sets the zoom
-                //.Bearing(0)                // Sets the orientation of the camera to east
-                //.Tilt(45)                   // Sets the tilt of the camera to 30 degrees
-                //.Build();                   // Creates a CameraPosition from the builder
-                //            this.GMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition));
+                if (ultimaLocalizacao != null)
+                {
+                    Bearing = ultimaLocalizacao.BearingTo(ControleMapa.LocalizacaoAtual);
+                    txtAngle.Text = Bearing.ToString()+"º";
 
+                    if (modoDirecao)
+                    {
+                        Orientacao();
+                    }
+                }
+
+                ultimaLocalizacao = ControleMapa.LocalizacaoAtual;
 
             }
+        }
+
+        private void Orientacao()
+        {
+            try
+            {
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                                        .Target(marcadorPosicao.Position)      // Sets the center of the map to Mountain View
+                                        .Zoom(18)                   // Sets the zoom
+                                        .Bearing(Bearing)                // Sets the orientation of the camera to east
+                                        .Tilt(45)                   // Sets the tilt of the camera to 30 degrees
+                                        .Build();                   // Creates a CameraPosition from the builder
+                this.GMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition));
+            }catch { }
         }
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -152,6 +201,7 @@ namespace ParkingApp
             e.Handled = true;
             search.ClearFocus();
             ControleMapa.Limpar();
+            modoDirecao = false;
             BuscaEstacionamento(e.Query.Trim());
         }
 
@@ -240,6 +290,8 @@ namespace ParkingApp
         }
         bool alertadoGpsDesligado = false;
         private Vaga _vagaEscolhida;
+        private TextView txtAngle;
+        private Button btnModoDirecao;
 
         private void DirecoesParaMarcador(Marcador marcador)
         {

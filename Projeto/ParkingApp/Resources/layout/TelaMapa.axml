@@ -17,6 +17,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/searchView1" />
+    <Button
+        android:text="Modo Normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btModoDirecao" />
+    <TextView
+        android:text="Angulo: 0º"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtAngle"
+        android:visibility="gone"
+        />
     <fragment
         android:id="@+id/gmap"
         android:layout_width="match_parent"
