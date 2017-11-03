@@ -4,6 +4,6 @@
     <SelectedDevice>LGE LG-K430</SelectedDevice>
     <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
     <AndroidDesignerPreferredTheme>Theme.DeviceDefault.DialogWhenLarge.NoActionBar</AndroidDesignerPreferredTheme>
-    <DefaultDevice>VisualStudio_android-23_arm_phone</DefaultDevice>
+    <DefaultDevice>4.5" KitKat %284.4%29 HDPI Phone</DefaultDevice>
   </PropertyGroup>
 </Project>

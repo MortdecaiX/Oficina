@@ -38,9 +38,9 @@ namespace ParkingManagerServer.Controllers
 
 
         // GET: api/VagaModels/{id}
-        [Route("api/VagaModels/{id}/ModificarEstado/{estado}")]
+        [HttpGet,Route("api/VagaModels/{id}/ModificarEstado/{estado}")]
         [ResponseType(typeof(VagaModel))]
-        public IHttpActionResult ModificarEstado(long id, long estado)
+        public IHttpActionResult ModificarEstado(long id, EstadoVaga estado)
         {
             if (!ModelState.IsValid)
             {
@@ -50,7 +50,7 @@ namespace ParkingManagerServer.Controllers
             var vaga = db.VagaModels.Find(id);
 
 
-            if (estado == 1)
+            if (estado == EstadoVaga.Ocupada)
             {
                 if (vaga.Ocupacao == null)
                 {

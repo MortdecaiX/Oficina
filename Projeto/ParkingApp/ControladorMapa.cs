@@ -79,6 +79,15 @@ namespace ParkingApp
         public void DarZoom(double latitude, double longitude, float nivelZoom)
         {
             CameraUpdate camera = CameraUpdateFactory.NewLatLngZoom(new LatLng(latitude, longitude), nivelZoom);
+
+            
+            Mapa.MoveCamera(camera);
+        }
+        public void DarZoom(LatLngBounds bounds, int margem)
+        {
+            CameraUpdate camera = CameraUpdateFactory.NewLatLngBounds(bounds,margem);
+
+
             Mapa.MoveCamera(camera);
         }
 
@@ -110,7 +119,7 @@ namespace ParkingApp
 
         private void ColocarNovoPontoMapa(LatLng latlngOrigem, LatLng latlngDest, JObject estacionamento)
         {
-            MarkerOptions options = new MarkerOptions().SetPosition(latlngOrigem).SetTitle("").SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.dot));
+            MarkerOptions options = new MarkerOptions().SetPosition(latlngOrigem).SetTitle("").SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.placeholder_point));
 
             Marker ponto = Mapa.AddMarker(options);
 
@@ -141,6 +150,16 @@ namespace ParkingApp
             }
         }
 
+        internal void Limpar()
+        {
+            this.Mapa.Clear();
+            MarcadoresColocados.Clear();
+            VagasColocadas.Clear();
+            Polylines.Clear();
+            PolylinesCaminhoParaVaga.Clear();
+
+    }
+
         public JObject ObterDirecoes(string origem, string destino, bool mostrarNoMapa)
         {
 
@@ -170,7 +189,7 @@ namespace ParkingApp
         public void DesenharRota(JObject rotaEscolhida)
         {
 
-            foreach (Polyline linha in this.Polylines)
+            foreach (Polyline linha in this.PolylinesCaminhoParaVaga)
             {
                 try
                 {
@@ -193,7 +212,7 @@ namespace ParkingApp
             opt = opt.InvokeWidth(20);
             opt = opt.InvokeColor(this.CorLinhaEstrada);
 
-            this.Polylines.Add(Mapa.AddPolyline(opt));
+            this.PolylinesCaminhoParaVaga.Add(Mapa.AddPolyline(opt));
 
 
         }
@@ -264,7 +283,7 @@ namespace ParkingApp
                 LatLng latlng = new LatLng(Convert.ToDouble(latitude), Convert.ToDouble(longitude));
 
 
-                var imagemMarcador = BitmapDescriptorFactory.FromResource(Resource.Drawable.parking_sign);
+                var imagemMarcador = BitmapDescriptorFactory.FromResource(Resource.Drawable.parking);
                 MarkerOptions options = new MarkerOptions().SetPosition(latlng).SetTitle("").SetIcon(imagemMarcador);
 
                 Marker ponto = Mapa.AddMarker(options);
@@ -346,15 +365,19 @@ namespace ParkingApp
                     switch (vaga["Tipo"].Value<int>())
                     {
                         default:
-                            icone = Resource.Drawable.dot;//vaga normal;
+                            icone = Resource.Drawable.parking_sign;//vaga normal;
                             break;
                         case 1:
-                            icone = Resource.Drawable.dot;//vaga idoso;
+                            icone = Resource.Drawable.parking_sign_special_1;//vaga idoso;
                             break;
                         case 2:
-                            icone = Resource.Drawable.dot;//vaga especial;
+                            icone = Resource.Drawable.parking_sign_special_2;//vaga especial;
                             break;
                     }
+
+
+                    var ocupacao = vaga["Ocupacao"];
+
 
                     MarkerOptions options = new MarkerOptions().SetPosition(latlng).SetTitle(vaga["Numero"].Value<long>().ToString()).SetIcon(BitmapDescriptorFactory.FromResource(icone));
 
@@ -363,6 +386,7 @@ namespace ParkingApp
                     _vaga.Dados = vaga;
                     _vaga.IdEstacionamento = idEstacionamento;
                     VagasColocadas.Add(_vaga);
+                    ChecarVisibilidadeVaga(_vaga);
 
                     var _latitude = (ponto["Localizacao"])["Latitude"].Value<double>();
                     var _longitude = (ponto["Localizacao"])["Longitude"].Value<double>();
@@ -379,6 +403,17 @@ namespace ParkingApp
             }
         }
 
+        public void ChecarVisibilidadeVaga(Vaga vaga)
+        {
+            if ((vaga.Dados["Reserva"].Type == JTokenType.Null) || ((vaga.Dados["Reserva"])["Usuario"].Value<long>("Id") == MainActivity.Usuario.Value<long>("Id")))
+            {
+                vaga.Marker.Visible = (vaga.Dados["Ocupacao"].Type == JTokenType.Null);
+            }
+            else
+            {
+                vaga.Marker.Visible = (vaga.Dados["Ocupacao"].Type == JTokenType.Null) && (vaga.Dados["Reserva"].Type == JTokenType.Null);
+            }
+        }
         private void AssociarPontos(long id, List<long> conexoes)
         {
             foreach (long conexao in conexoes)
@@ -404,7 +439,7 @@ namespace ParkingApp
                 var longitude = (ponto["Localizacao"])["Longitude"].Value<double>();
                 var altitude = (ponto["Localizacao"])["Altitude"].Value<double>();
                 LatLng latlng = new LatLng(Convert.ToDouble(latitude), Convert.ToDouble(longitude));
-                MarkerOptions options = new MarkerOptions().SetPosition(latlng).SetTitle(ponto["Id"].Value<long>().ToString()).SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.dot));
+                MarkerOptions options = new MarkerOptions().SetPosition(latlng).SetTitle(ponto["Id"].Value<long>().ToString()).SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.placeholder_point));
                 Marker marker = Mapa.AddMarker(options);
                 marker.Visible = false;
                 var vagas = (JArray)ponto["VagasConectadas"];
@@ -558,7 +593,7 @@ namespace ParkingApp
             }
         }
 
-        private readonly string ParkingManagerServerURL = "http://parkingmanagerserver.azurewebsites.net/";
+        public static readonly string ParkingManagerServerURL = "http://parkingmanagerserver.azurewebsites.net/";
 
         private readonly string ObterVagasURL = "api/VagaModels";
 
@@ -568,7 +603,7 @@ namespace ParkingApp
         private List<Marker> Markers = new List<Marker>();
 
         public List<Polyline> Polylines = new List<Polyline>();
-        public List<Polyline> PolylinesCaminhoInterno = new List<Polyline>();
+        public List<Polyline> PolylinesCaminhoParaVaga = new List<Polyline>();
 
         public readonly LocationManager GerenciadorDeLocalizacao = Application.Context.GetSystemService(Context.LocationService) as LocationManager;
 

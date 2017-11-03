@@ -23,8 +23,31 @@ namespace ParkingApp
         GoogleMap GMap;
         private SearchView search;
 
+        VerificadorEstadoVagas VerificadorEstadoVagas = null;
+
         public ControladorMapa ControleMapa { get; private set; }
         public JArray Estacionamentos { get; private set; }
+        public Vaga VagaEscolhida {
+            get { return _vagaEscolhida; }
+            set {
+                _vagaEscolhida = value;
+                VerificadorEstadoVagas.VagaEscolhida = value;
+                VerificadorEstadoVagas.ContinuarVerificacaoVagaEscolhida = true;
+                VerificadorEstadoVagas.VagaEscolhidaMudouEstadoEvent += VerificadorEstadoVagas_VagaEscolhidaMudouEstadoEvent;
+                VerificadorEstadoVagas.VerificacaoVagaEscolhida();
+
+                  
+            }
+        }
+
+        private void VerificadorEstadoVagas_VagaMudouEstadoEvent(object sender, EventArgsMudancaEstadoVaga e)
+        {
+           ControleMapa.ChecarVisibilidadeVaga(e.Vaga);
+
+        }
+
+        
+
         Marker marcadorPosicao = null;
         public void OnMapReady(GoogleMap googleMap)
         {
@@ -44,6 +67,36 @@ namespace ParkingApp
             ControleMapa.LocalizacaoAtualAlteradaEvent = MudancaLocalizacao;
             ControleMapa.IniciarControle();
 
+           
+        }
+
+        private void VerificadorEstadoVagas_VagaEscolhidaMudouEstadoEvent(object sender, EventArgsMudancaEstadoVaga e)
+        {
+
+            VerificadorEstadoVagas.VagaEscolhidaMudouEstadoEvent -= VerificadorEstadoVagas_VagaEscolhidaMudouEstadoEvent;
+
+            Vaga vaga = e.Vaga;
+            vaga.Marker.Visible = false;
+
+            this.ControleMapa.PolylinesCaminhoParaVaga.ForEach(x => x.Remove());
+            VerificadorEstadoVagas.ContinuarVerificacaoVagaEscolhida = false;
+
+            Android.App.AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            AlertDialog alert = dialog.Create();
+            alert.SetTitle("Vaga Ocupada");
+            alert.SetMessage("A vaga que você escolheu foi ocupada. Se foi você que ocupou, clique em 'OK'. Se não, clique em 'Recomendar Vaga' para alternar automaticamente para outra vaga.");
+
+            
+            alert.SetButton("OK", (c, ev) =>
+            {
+                
+            });
+            alert.SetButton2("Recomendar Vaga", (c, ev) =>
+            {
+                
+            });
+
+            alert.Show();
 
         }
 
@@ -53,6 +106,16 @@ namespace ParkingApp
             {
                 marcadorPosicao.Position = new LatLng(ControleMapa.LocalizacaoAtual.Latitude, ControleMapa.LocalizacaoAtual.Longitude);
                 marcadorPosicao.Visible = true;
+
+                //            CameraPosition cameraPosition = new CameraPosition.Builder()
+                //.Target(marcadorPosicao.Position)      // Sets the center of the map to Mountain View
+                //.Zoom(17)                   // Sets the zoom
+                //.Bearing(0)                // Sets the orientation of the camera to east
+                //.Tilt(45)                   // Sets the tilt of the camera to 30 degrees
+                //.Build();                   // Creates a CameraPosition from the builder
+                //            this.GMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition));
+
+
             }
         }
 
@@ -68,6 +131,12 @@ namespace ParkingApp
             // Create your application here
             search = FindViewById<SearchView>(Resource.Id.searchView1);
             search.QueryTextSubmit += capturaTexto;
+
+            VerificadorEstadoVagas =  new VerificadorEstadoVagas(this);
+
+            VerificadorEstadoVagas.VagaMudouEstadoEvent += VerificadorEstadoVagas_VagaMudouEstadoEvent;
+
+
         }
         private void SetUpMap()
         {
@@ -82,6 +151,7 @@ namespace ParkingApp
         {
             e.Handled = true;
             search.ClearFocus();
+            ControleMapa.Limpar();
             BuscaEstacionamento(e.Query.Trim());
         }
 
@@ -97,12 +167,21 @@ namespace ParkingApp
 
                     this.RunOnUiThread(() =>
                     {
+                        
+
+                        VerificadorEstadoVagas.ContinuarVerificacaoVagas = false;
                         ControleMapa.MostrarEstacionamentosNoMap(this.Estacionamentos);
                         if (Estacionamentos != null && Estacionamentos.Count > 0)
                         {
                             double lat = Estacionamentos.First["Localizacao"].Value<double>("Latitude");
                             double lng = Estacionamentos.First["Localizacao"].Value<double>("Longitude");
+
+
                             ControleMapa.DarZoom(lat, lng, ControleMapa.Mapa.MaxZoomLevel);
+                            VerificadorEstadoVagas.VerificacaoVagas();
+                            VerificadorEstadoVagas.ContinuarVerificacaoVagas = true;
+
+
                         }
                     });
 
@@ -127,7 +206,23 @@ namespace ParkingApp
             {
                 if(e.Marker.Id == vaga.Marker.Id)
                 {
-                    MostrarRotaParaVaga(vaga);
+                    if (!MainActivity.Usuario.Value<bool>("VagaEspecial") && vaga.Dados.Value<long>("Tipo") == 0)
+                    {
+                        this.VagaEscolhida = vaga;
+                        MostrarRotaParaVaga(vaga);
+                    }else
+                    {
+                        Android.App.AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                        AlertDialog alert = dialog.Create();
+                        alert.SetTitle("Vaga Incompatível");
+                        alert.SetMessage("Você não pode utilizar esta vaga pois ela é destinada à " + (vaga.Dados.Value<long>("Tipo") == 1 ? "idosos" : "cadeirantes")+"! Escolha outra vaga.");
+                        alert.SetButton("OK", (c, ev) =>
+                        {
+                            //faz alguma coisa se precisar
+                        });
+
+                        alert.Show();
+                    }
                     break;
                 }
             }
@@ -144,6 +239,8 @@ namespace ParkingApp
 
         }
         bool alertadoGpsDesligado = false;
+        private Vaga _vagaEscolhida;
+
         private void DirecoesParaMarcador(Marcador marcador)
         {
             if (ControleMapa.LocalizacaoAtual == null)
@@ -181,7 +278,7 @@ namespace ParkingApp
 
         private void MostrarRotaParaVaga(Vaga vaga)
         {
-            this.ControleMapa.PolylinesCaminhoInterno.ForEach(x => x.Remove());
+            this.ControleMapa.PolylinesCaminhoParaVaga.ForEach(x => x.Remove());
 
                JObject estacionamento = null;
            if(ControleMapa.EstacionamentoSelecionado!=null && ControleMapa.EstacionamentoSelecionado.Value<long>("Id")== vaga.IdEstacionamento)
@@ -245,11 +342,13 @@ namespace ParkingApp
             PolylineOptions opt = new PolylineOptions();
             double _lat = entrada["Localizacao"].Value<double>("Latitude");
             double _lng = entrada["Localizacao"].Value<double>("Longitude");
+
             
+
             opt = opt.InvokeWidth(20);
-            opt = opt.InvokeColor( Color.Blue);
+            opt = opt.InvokeColor( Color.DarkSlateBlue);
 
-
+            opt.Add(vaga.Marker.Position);
             foreach (var no in caminho)
             {
                 double lat = no["Localizacao"].Value<double>("Latitude");
@@ -259,7 +358,7 @@ namespace ParkingApp
             opt.Add(new LatLng(_lat, _lng));
 
 
-            ControleMapa.PolylinesCaminhoInterno.Add( GMap.AddPolyline(opt));
+            
 
             if (ControleMapa.LocalizacaoAtual == null)
             {
@@ -275,8 +374,19 @@ namespace ParkingApp
 
                 string origem_s = ControleMapa.LocalizacaoAtual.Latitude.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) + "," + ControleMapa.LocalizacaoAtual.Longitude.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture);
                 string destino_s = estacionamento["Localizacao"].Value<double>("Latitude").ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) + "," + estacionamento["Localizacao"].Value<double>("Longitude").ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture);
-                JObject direcoes = ControleMapa.ObterDirecoes(origem_s, destino_s, true);
+                JObject direcoes = ControleMapa.ObterDirecoes(origem_s, destino_s, false);
+
+
+                string polylineString = ((JObject)(direcoes["routes"]).First["overview_polyline"])["points"].ToString();
+
+                var polyline = GooglePoints.Decode(polylineString);
+                for (int i = polyline.Count()-1; i>=0; i--)
+                {
+                    opt = opt.Add(polyline.ElementAt(i));
+                }
+                
             }
+            ControleMapa.PolylinesCaminhoParaVaga.Add(GMap.AddPolyline(opt));
 
         }
 
