@@ -7,3 +7,14 @@ C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\obj\De
 C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\obj\Debug\ArduinoComunicacao.csproj.GenerateResource.Cache
 C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\obj\Debug\ArduinoComunicacao.exe
 C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\obj\Debug\ArduinoComunicacao.pdb
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\bin\Debug\ArduinoComunicacao.exe.config
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\obj\Debug\ArduinoComunicacao.exe
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\obj\Debug\ArduinoComunicacao.pdb
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\bin\Debug\ArduinoComunicacao.exe
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\bin\Debug\ArduinoComunicacao.pdb
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\obj\Debug\ArduinoComunicacao.csprojResolveAssemblyReference.cache
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\obj\Debug\ArduinoComunicacao.Form1.resources
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\obj\Debug\ArduinoComunicacao.Properties.Resources.resources
+C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\obj\Debug\ArduinoComunicacao.csproj.GenerateResource.Cache

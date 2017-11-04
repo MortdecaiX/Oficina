@@ -22,19 +22,24 @@ namespace ArduinoComunicacao
         public Form1()
         {
             InitializeComponent();
+            textBox1.Text = Properties.Settings.Default.IdVaga;
+            textBox2.Text = Properties.Settings.Default.PortaCOM;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             if (!sincronizacaoIniciada)
             {
-                //iniciarSincronismo();
-                port = new SerialPort(textBox2.Text, 9600);
-                // iniciarSincronismoSimulado();
-                port.DataReceived += new SerialDataReceivedEventHandler(TratarDados);
+              
+                
                 try
                 {
+                    port = new SerialPort(Properties.Settings.Default.PortaCOM, 9600);
+
+                    port.DataReceived += new SerialDataReceivedEventHandler(TratarDados);
                     port.Open();
+                    sincronizacaoIniciada = true;
+                    button1.Text = "Parar";
                 }
                 catch (Exception ex)
                 {
@@ -44,7 +49,7 @@ namespace ArduinoComunicacao
             else
             {
                 sincronizacaoIniciada = false;
-                button1.Text = "Iniciar Sincronização em Tempo Real";
+                button1.Text = "Iniciar Leitura";
                 try
                 {
                     port.Close();
@@ -58,33 +63,58 @@ namespace ArduinoComunicacao
 
         private void TratarDados(object sender, SerialDataReceivedEventArgs e)
         {
-            string text = ((SerialPort)sender).ReadLine() + "\n";//"<vaga><id>1</id><estado>1</estado></vaga>"
-            XmlDocument xm = new XmlDocument();
-            xm.LoadXml(text);
+            try
+            {
+                string text = ((SerialPort)sender).ReadLine() + "\n";//"<vaga><numero>1</numero><estado>1</estado></vaga>"
+                XmlDocument xm = new XmlDocument();
+                xm.LoadXml(text);
 
-            BeginInvoke(new Action(() => {
-                
-                richTextBox1.Text = text;
-
-                //"http://parkingmanagerserver.azurewebsites.net/Help
-
-
-
-            }));
-
-            
-            
-                using (WebClient wb = new WebClient())
+                BeginInvoke(new Action(() =>
                 {
-                    wb.Headers.Add("Content-Type", "application/json");
-                    string endereco = "http://parkingmanagerserver.azurewebsites.net/api/VagaModels/" + xm.DocumentElement["id"].Value + "/ModificarEstado/"+ xm.DocumentElement["estado"].Value;
-                    
-                    string resultado = wb.DownloadString(endereco);
-                    //faz alguma coisa om o resultado a atualização aqui
 
-                }
-            
+                    richTextBox1.Text += text;
 
+                    //"http://parkingmanagerserver.azurewebsites.net/Help
+                    using (WebClient wb = new WebClient())
+                    {
+                        wb.Headers.Add("Content-Type", "application/json");
+                        wb.Headers.Add(HttpRequestHeader.Accept, "application/json");
+
+                        string endereco = "http://parkingmanagerserver.azurewebsites.net/api/VagaModels/" + textBox1.Text + "/ModificarEstado/" + xm.DocumentElement["estado"].InnerText;
+
+
+                        string resultado = wb.DownloadString(endereco);
+                        //faz alguma coisa om o resultado a atualização aqui
+
+                    }
+
+
+                }));
+
+
+
+            }
+            catch(WebException ex)
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.PortaCOM = textBox2.Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.IdVaga = textBox1.Text;
+            Properties.Settings.Default.Save();
         }
     }
 }
