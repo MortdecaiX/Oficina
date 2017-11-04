@@ -37,13 +37,13 @@ namespace ArduinoComunicacao.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string IdVaga {
+        [global::System.Configuration.DefaultSettingValueAttribute("{}")]
+        public string RelacaoNumeroIdVaga {
             get {
-                return ((string)(this["IdVaga"]));
+                return ((string)(this["RelacaoNumeroIdVaga"]));
             }
             set {
-                this["IdVaga"] = value;
+                this["RelacaoNumeroIdVaga"] = value;
             }
         }
     }

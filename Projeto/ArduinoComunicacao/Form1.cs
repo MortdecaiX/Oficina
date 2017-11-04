@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -22,8 +24,8 @@ namespace ArduinoComunicacao
         public Form1()
         {
             InitializeComponent();
-            textBox1.Text = Properties.Settings.Default.IdVaga;
             textBox2.Text = Properties.Settings.Default.PortaCOM;
+            CarregarRelacaoNumIdVaga();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -69,27 +71,43 @@ namespace ArduinoComunicacao
                 XmlDocument xm = new XmlDocument();
                 xm.LoadXml(text);
 
-                BeginInvoke(new Action(() =>
+                JArray lista = JsonConvert.DeserializeObject<JArray>(Properties.Settings.Default.RelacaoNumeroIdVaga);
+
+                foreach (XmlNode vaga in xm.DocumentElement.ChildNodes)
                 {
-
-                    richTextBox1.Text += text;
-
-                    //"http://parkingmanagerserver.azurewebsites.net/Help
-                    using (WebClient wb = new WebClient())
+                    string numVaga = vaga["numero"].InnerText;
+                    BeginInvoke(new Action(() =>
                     {
-                        wb.Headers.Add("Content-Type", "application/json");
-                        wb.Headers.Add(HttpRequestHeader.Accept, "application/json");
-
-                        string endereco = "http://parkingmanagerserver.azurewebsites.net/api/VagaModels/" + textBox1.Text + "/ModificarEstado/" + xm.DocumentElement["estado"].InnerText;
+                        try
+                        {
 
 
-                        string resultado = wb.DownloadString(endereco);
-                        //faz alguma coisa om o resultado a atualização aqui
+                            string idVaga = lista.Where(x => x.Value<string>("num") == numVaga).FirstOrDefault()["id"].Value<string>();
 
-                    }
+                            
+
+                        //"http://parkingmanagerserver.azurewebsites.net/Help
+                        using (WebClient wb = new WebClient())
+                            {
+                                wb.Headers.Add("Content-Type", "application/json");
+                                wb.Headers.Add(HttpRequestHeader.Accept, "application/json");
+
+                                string endereco = "http://parkingmanagerserver.azurewebsites.net/api/VagaModels/" + idVaga + "/ModificarEstado/" + vaga["estado"].InnerText;
 
 
-                }));
+                                string resultado = wb.DownloadString(endereco);
+                                richTextBox1.Text = "[" + numVaga + "]"+ "[" + vaga["estado"].InnerText + "]" + " Ok\n"+ richTextBox1.Text;
+
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            richTextBox1.Text = "[" + numVaga + "]" + "[" + vaga["estado"].InnerText + "]" + " Falha\n" + richTextBox1.Text;
+                        }
+
+
+                    }));
+                }
 
 
 
@@ -111,10 +129,67 @@ namespace ArduinoComunicacao
             Properties.Settings.Default.Save();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        
+
+        private void button2_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.IdVaga = textBox1.Text;
+            try
+            {
+                string num = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+
+                JArray lista = JsonConvert.DeserializeObject<JArray>(Properties.Settings.Default.RelacaoNumeroIdVaga);
+
+
+                lista.Remove(lista.Where(x => x.Value<string>("num") == num).FirstOrDefault());
+                Properties.Settings.Default.RelacaoNumeroIdVaga = lista.ToString();
+                Properties.Settings.Default.Save();
+                CarregarRelacaoNumIdVaga();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            
+            if (string.IsNullOrEmpty(Properties.Settings.Default.RelacaoNumeroIdVaga))
+            {
+                Properties.Settings.Default.RelacaoNumeroIdVaga =  new JArray().ToString();
+            }
+
+            JArray lista = JsonConvert.DeserializeObject<JArray>(Properties.Settings.Default.RelacaoNumeroIdVaga);
+            JObject item = new JObject();
+            item.Add("num", tbNumVaga.Text);
+            item.Add("id", tbIdVaga.Text);
+            lista.Add(item);
+
+            Properties.Settings.Default.RelacaoNumeroIdVaga = lista.ToString();
             Properties.Settings.Default.Save();
+            CarregarRelacaoNumIdVaga();
+        }
+
+        private void CarregarRelacaoNumIdVaga()
+        {
+
+            
+            if (string.IsNullOrEmpty(Properties.Settings.Default.RelacaoNumeroIdVaga))
+            {
+                Properties.Settings.Default.RelacaoNumeroIdVaga = new JArray().ToString();
+            }
+
+            JArray lista = JsonConvert.DeserializeObject<JArray>(Properties.Settings.Default.RelacaoNumeroIdVaga);
+
+            List<object> listaObj = new List<object>();
+
+            foreach(var item in lista)
+            {
+                listaObj.Add(new { Numero = item.Value<string>("num"), ID = item.Value<string>("id") });
+            }
+            
+            dataGridView1.DataSource = listaObj;
         }
     }
 }

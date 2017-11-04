@@ -5,8 +5,8 @@
     <Setting Name="PortaCOM" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="IdVaga" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="RelacaoNumeroIdVaga" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{}</Value>
     </Setting>
   </Settings>
 </SettingsFile>
