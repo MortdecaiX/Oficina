@@ -1,0 +1,555 @@
+@media screen{
+
+                div.titulo{
+                    width:100%;
+                    height: 34px;
+                    font-size: 30px;
+                    margin: auto;
+                    position: relative;
+                    text-align: center;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: bold;
+                    font-variant: small-caps;
+                }
+
+                /* Cabeçalho da Ficha */
+
+                img.Cabecalho{
+                    float: none;
+                    position: absolute;
+                    z-index: 1;
+                    background: transparent;
+                    opacity: 0.1;
+                    filter: alpha(opacity=50);
+                    margin:  30px 0 0 -5px;
+                    width: 230px;
+                    height: auto;
+                    filter: grayscale(100%);
+                    
+                }
+      
+                div.fundoCabecalho { 
+                    width:96%;
+                    display: block;
+                    height: 190px;
+                    padding:20px 1% 10px; 
+                    border-bottom:4px solid #666; 
+                    border-top:4px solid #666; 
+                    box-shadow: 0 2px 5px 2px #888;
+                    margin: auto; 
+                    background-color:#EEE;
+                    position: relative;
+                } 
+
+                div.blocoCabecalho { 
+                    width:33%;
+                    padding:0px 0px; 
+                    position: relative;
+                    float: left;
+                }
+
+                div.blocoCabecalho.Esquerda{
+                    width:50%;
+                }
+                div.blocoCabecalho.Centro{
+                    width:25%;
+                }
+                div.blocoCabecalho.Direita{
+                    width:25%;
+                }
+
+
+                .Cabecalho{
+                    background: #EEE;
+                }
+
+                div.Cabecalho{
+                    display: block;
+                    padding: 9px;
+                    border:1px solid #666;
+                    margin: 10px;
+                    border-radius: 3px;
+                }
+
+                span.Cabecalho{
+                    display: block;
+                    float: left;
+                    margin-top: -19px;
+                    height: 14px;
+                    padding: 2px 0.5% 2px 0.5%;
+                    border-radius: 6px;
+                    position: relative;
+                    color: #666;
+                    overflow: hidden;
+                    text-align: center;
+                    font-size: 14px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: bold;
+                    font-variant: small-caps;
+                }
+
+                input.Cabecalho{
+                    box-sizing: border-box;
+                    -webkit-box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    width: 100%;
+                    display: block;
+                    outline: none;
+                    border: none;
+                    height: 25px;
+                    line-height: 25px;
+                    padding: 0;
+                    border-radius: 3px;
+                    text-align: left;
+                    font-size: 24px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: bold;
+                    font-variant: small-caps;
+                }
+                input.Cabecalho:hover{
+                    border: solid 1px #707070;
+                    box-shadow: 0 0 5px 1px #969696;
+                }
+                input.Cabecalho:focus{
+                    background-color: #FFF;
+                    border: solid 1px #707070;
+                    box-shadow: 0 0 5px 1px #969696;
+                }
+
+                /* Corpo da Ficha */
+
+                div.fundoCorpo { 
+                    width:96%;
+                    display: block;
+                    min-height: 100px;
+                    overflow: hidden;
+                    padding:20px 1% 10px; 
+                    border-bottom:4px solid #666;
+                    box-shadow: 0 2px 5px 2px #888;
+                    margin: 0px auto; 
+                    background-color:#EEE;
+                    position: relative;
+                } 
+
+                div.blocoCorpo { 
+                    width:31%;
+                    padding:1%; 
+                    position: relative;
+                    float: left;
+                    min-height: 1500px;
+                    overflow: hidden;
+                    border-bottom:4px solid #666;
+                }
+
+                div.blocoCorpo.Esquerda{
+                    width:31%;
+                    border-right:4px solid #666;
+                }
+                div.blocoCorpo.Centro{
+                    width:31%;
+                    border-right:4px solid #666;
+                }
+                div.blocoCorpo.Direita{
+                    width:31%;
+                }
+
+                .Corpo{
+                    background: #EEE;
+                }
+
+                div.Corpo{
+                    display: block;
+                    padding: 9px;
+                    border:1px solid #666;
+                    margin: 10px;
+                    border-radius: 3px;
+                }
+
+                span.Corpo{
+                    display: block;
+                    float: left;
+                    margin-top: -19px;
+                    padding: 2px 0.5% 2px 0.5%;
+                    position: relative;
+                    color: #666;
+                    overflow: hidden;
+                    text-align: center;
+                    font-size: 14px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: bold;
+                    font-variant: small-caps;
+                }
+
+                input.Corpo{
+                    box-sizing: border-box;
+                    -webkit-box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    width: 100%;
+                    display: block;
+                    outline: none;
+                    border: none;
+                    height: 25px;
+                    line-height: 25px;
+                    padding: 0;
+                    border-radius: 3px;
+                    text-align: center;
+                    font-size: 24px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: bold;
+                    font-variant: small-caps;
+                }
+                input.Corpo:hover{
+                    border: solid 1px #707070;
+                    box-shadow: 0 0 5px 1px #969696;
+                }
+                input.Corpo:focus{
+                    background-color: #FFF;
+                    border: solid 1px #707070;
+                    box-shadow: 0 0 5px 1px #969696;
+                }
+
+
+                /*Inputs de Atributo*/
+
+                div.Corpo.Atributo{
+                    height: 90px;
+                    width: 25%;
+                    float: left;
+                    border-radius: 9px;
+                    border:3px solid #666;
+                    margin: 15px 1%;
+                }
+
+                span.Corpo.Atributo{
+                    float: none;
+                    margin: -6px;
+                    background: transparent;
+                    font-size: 14px;
+                }
+
+                input.Atributo{
+                    box-sizing: border-box;
+                    -webkit-box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    width: 85%;
+                    display: block;
+                    outline: none;
+                    border: none;
+                    height: 70px;
+                    line-height: 25px;
+                    padding: -5px;
+                    margin-top: 5px;
+                    margin-left: 10px;
+                    border-radius: 6px;
+                    text-align: center;
+                    font-size: 52px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: bold;
+                    font-variant: small-caps;
+                    background-color: #EEE;
+                    float:left;
+                }
+                input.Atributo:hover{
+                    border: solid 1px #707070;
+                    box-shadow: 0 0 5px 1px #969696;
+                }
+                input.Atributo:focus{
+                    background-color: #FFF;
+                    border: solid 1px #707070;
+                    box-shadow: 0 0 5px 1px #969696;
+                }
+
+                input.Atributo.Modificador{
+                    border:3px solid #666;
+                    border-radius: 30px;
+                    height: 45px;
+                    width: 60px;
+                    padding: -5px;
+                    margin-top: -10px;
+                    margin-left: 15px;
+                    font-size: 24px;
+                    float:right;
+                }
+
+                /*Input de Atributos secundarios*/
+
+                div.Corpo.Secundarios{
+                    position: relative;
+                    width: 70%;
+                    height: 20px;
+                    float: left;
+                    border:3px solid #666;
+                    margin: 20px 4% 10px 70px;
+                }
+
+                span.Corpo.Secundarios{
+                    display: block;
+                    float: none;
+                    margin: 0;
+                    padding: auto;
+                    position: relative;
+                    color: #666;
+                    overflow: hidden;
+                    text-align: center;
+                    font-size: 14px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: bold;
+                    font-variant: small-caps;
+                }
+
+                input.Secundarios{
+                    box-sizing: border-box;
+                    -webkit-box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    float: left;
+                    width: 60px;
+                    height: 60px;
+                    display: block;
+                    border:3px solid #666;
+                    line-height: 25px;
+                    padding: 0;
+                    margin: -20px -65px;
+                    border-radius: 3px;
+                    text-align: center;
+                    font-size: 42px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: bold;
+                    font-variant: small-caps;
+                    background-color: #EEE;
+                }
+                input.Secundarios:hover{
+                    border: solid 1px #707070;
+                    box-shadow: 0 0 5px 1px #969696;
+                }
+                input.Secundarios:focus{
+                    background-color: #FFF;
+                    border: solid 1px #707070;
+                    box-shadow: 0 0 5px 1px #969696;
+                }
+
+                /*Inputs de Valor*/
+
+                div.Corpo.Valor{
+                    height: 90px;
+                    width: 90%;
+                    float: left;
+                    border-radius: 9px;
+                    border:3px solid #666;
+                    margin: 15px 2%;
+                }
+
+                span.Corpo.Valor{
+                    float: none;
+                    margin: 5px 0px;
+                    background: transparent;
+                    font-size: 14px;
+                    width: 100%;
+                }
+
+                input.Valor{
+                    box-sizing: border-box;
+                    -webkit-box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    width: 100%;
+                    display: block;
+                    outline: none;
+                    border: none;
+                    height: 65px;
+                    line-height: 25px;
+                    padding: -5px;
+                    margin-top: 5px;
+                    border-radius: 6px;
+                    text-align: center;
+                    font-size: 52px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: bold;
+                    font-variant: small-caps;
+                    background-color: #EEE;
+                    float:left;
+                }
+                input.Valor:hover{
+                    border: solid 1px #707070;
+                    box-shadow: 0 0 5px 1px #969696;
+                }
+                input.Valor:focus{
+                    background-color: #FFF;
+                    border: solid 1px #707070;
+                    box-shadow: 0 0 5px 1px #969696;
+                }
+
+
+                /*Inputs de Caixa*/
+
+                div.Corpo.Caixa{
+                    min-height: 100px;
+                    overflow: hidden;
+                    width: 90%;
+                    float: left;
+                    border-radius: 0px;
+                    border:3px solid #666;
+                    margin: 15px 2%;
+                }
+
+                span.Corpo.Caixa{
+                    float: none;
+                    margin: 0px;
+                    background: transparent;
+                    font-size: 14px;
+                    width: 100%;
+                }
+
+                textarea.Caixa{
+                    box-sizing: border-box;
+                    -webkit-box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    width: 100%;
+                    resize:vertical;
+                    display: block;
+                    outline: none;
+                    border: none;
+                    min-height: 150px;
+                    line-height: 25px;
+                    padding: 5px;
+                    margin-top: 5px;
+                    border-radius: 0px;
+                    font-size: 16px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: bold;
+                    font-variant: small-caps;
+                    background-color: #EEE;
+                    float:left;
+                }
+                textarea.Caixa:hover{
+                    border: solid 1px #707070;
+                    box-shadow: 0 0 5px 1px #969696;
+                }
+                textarea.Caixa:focus{
+                    background-color: #FFF;
+                    border: solid 1px #707070;
+                    box-shadow: 0 0 5px 1px #969696;
+                }
+
+                textarea.Caixa.Pequena{
+                    min-height: 100px;
+                }
+                textarea.Caixa.Grande{
+                    min-height: 200px;
+                }
+                textarea.Caixa.Enorme{
+                    min-height: 500px;
+                }
+                
+
+            }
+
+
+            @media screen and (max-width: 1330px) {
+
+                div.fundoCabecalho { 
+                    height: 380px;  
+                    padding:20px 1% 5px;
+                }
+
+                div.blocoCabecalho.Esquerda{
+                    width:100%;
+                }
+                div.blocoCabecalho.Centro{
+                    width:50%;
+                }
+                div.blocoCabecalho.Direita{
+                    width:50%;
+                }
+
+                div.Corpo.Atributo{
+                    margin: 15px 2%;
+                    width: 35%;
+                }
+
+                div.Corpo.Secundarios{
+                    width: 65%;
+                    margin: 20px 2% 0 60px;
+                }
+                
+
+            }
+
+            @media screen and (max-width: 930px) {
+
+                div.blocoCorpo.Esquerda{
+                    width:47%;
+                    border-right:4px solid #666;
+                }
+                div.blocoCorpo.Centro{
+                    width:47%;
+                    border-right: 0;
+                }
+                div.blocoCorpo.Direita{
+                    width:100%;
+                }
+
+                
+
+            
+            }
+
+            @media screen and (max-width: 720px) {
+
+                div.fundoCabecalho { 
+                    height: 380px;  
+                }         
+
+                
+            }
+
+            @media screen and (max-width: 620px) {
+                div.blocoCorpo.Esquerda{
+                    width:100%;
+                    border-right:4px solid #666;
+                }
+                div.blocoCorpo.Centro{
+                    width:100%;
+                }
+                div.blocoCorpo.Direita{
+                    width:100%;
+                    border-left: 0;
+                }
+
+                div.Corpo.Atributo{
+                    margin: 15px 3%;
+                    width: 20%;
+                }
+
+                div.Corpo.Secundarios{
+                    width: 80%;
+                    margin: 20px 2% 0 55px;
+                }
+
+            }
+
+            @media screen and (max-width: 480px) {
+
+                div.fundoCabecalho { 
+                    height: 550px;
+                    padding:20px 5px 5px;  
+                }
+
+                div.blocoCabecalho.Esquerda{
+                    width:100%;
+                }
+                div.blocoCabecalho.Centro{
+                    width:100%;
+                }
+                div.blocoCabecalho.Direita{
+                    width:100%;
+                }  
+
+                span.Corpo.Atributo{
+                    font-size: 12px;
+                }
+
+                div.Corpo.Secundarios{
+                    width: 80%;
+                    margin: 20px 2% 0 50px;
+                }
+
+            }
