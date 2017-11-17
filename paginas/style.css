@@ -1,5 +1,35 @@
 @media screen{
-
+				.button {
+					background-color: #4CAF50; /* Green */
+					border: none;
+					color: white;
+					padding: 15px 32px;
+					text-align: center;
+					text-decoration: none;
+					display: inline-block;
+					font-size: 16px;
+					margin: auto;
+					cursor: pointer;
+					margin-top:1px;
+					margin-right:1px;
+					margin-bottom:1px;
+					margin-left:1px;
+					max-width:358px;
+					
+				}
+				
+				
+				.button2 {background-color: #008CBA;} /* Blue */
+				.button3 {background-color: #f44336;} /* Red */ 
+				.button4 {background-color: #e7e7e7; color: black;} /* Gray */ 
+				.button5 {
+					background-color: #555555;
+					width:100%;
+					} /* Black */
+					
+			     .button5:hover {
+    background-color: #666;
+}
                 div.titulo{
                     width:100%;
                     height: 34px;
@@ -30,8 +60,7 @@
       
                 div.fundoCabecalho { 
                     width:96%;
-                    display: block;
-                    height: 190px;
+                    height: auto;
                     padding:20px 1% 10px; 
                     border-bottom:4px solid #666; 
                     border-top:4px solid #666; 
@@ -39,6 +68,14 @@
                     margin: auto; 
                     background-color:#EEE;
                     position: relative;
+					
+					
+					display: flex;
+					flex-direction: row;
+					flex-wrap: wrap;
+					justify-content: center;
+					align-items: center;
+					
                 } 
 
                 div.blocoCabecalho { 
@@ -57,7 +94,13 @@
                 div.blocoCabecalho.Direita{
                     width:25%;
                 }
-
+				div.blocoCabecalho.Preenchido{
+                    margin: auto;
+					width: 50%;
+					border: 3px;
+					padding: 10px;
+					
+                }
 
                 .Cabecalho{
                     background: #EEE;
@@ -120,6 +163,7 @@
 
                 div.fundoCorpo { 
                     width:96%;
+					height:100vh;
                     display: block;
                     min-height: 100px;
                     overflow: hidden;
@@ -443,113 +487,4 @@
             }
 
 
-            @media screen and (max-width: 1330px) {
-
-                div.fundoCabecalho { 
-                    height: 380px;  
-                    padding:20px 1% 5px;
-                }
-
-                div.blocoCabecalho.Esquerda{
-                    width:100%;
-                }
-                div.blocoCabecalho.Centro{
-                    width:50%;
-                }
-                div.blocoCabecalho.Direita{
-                    width:50%;
-                }
-
-                div.Corpo.Atributo{
-                    margin: 15px 2%;
-                    width: 35%;
-                }
-
-                div.Corpo.Secundarios{
-                    width: 65%;
-                    margin: 20px 2% 0 60px;
-                }
-                
-
-            }
-
-            @media screen and (max-width: 930px) {
-
-                div.blocoCorpo.Esquerda{
-                    width:47%;
-                    border-right:4px solid #666;
-                }
-                div.blocoCorpo.Centro{
-                    width:47%;
-                    border-right: 0;
-                }
-                div.blocoCorpo.Direita{
-                    width:100%;
-                }
-
-                
-
-            
-            }
-
-            @media screen and (max-width: 720px) {
-
-                div.fundoCabecalho { 
-                    height: 380px;  
-                }         
-
-                
-            }
-
-            @media screen and (max-width: 620px) {
-                div.blocoCorpo.Esquerda{
-                    width:100%;
-                    border-right:4px solid #666;
-                }
-                div.blocoCorpo.Centro{
-                    width:100%;
-                }
-                div.blocoCorpo.Direita{
-                    width:100%;
-                    border-left: 0;
-                }
-
-                div.Corpo.Atributo{
-                    margin: 15px 3%;
-                    width: 20%;
-                }
-
-                div.Corpo.Secundarios{
-                    width: 80%;
-                    margin: 20px 2% 0 55px;
-                }
-
-            }
-
-            @media screen and (max-width: 480px) {
-
-                div.fundoCabecalho { 
-                    height: 550px;
-                    padding:20px 5px 5px;  
-                }
-
-                div.blocoCabecalho.Esquerda{
-                    width:100%;
-                }
-                div.blocoCabecalho.Centro{
-                    width:100%;
-                }
-                div.blocoCabecalho.Direita{
-                    width:100%;
-                }  
-
-                span.Corpo.Atributo{
-                    font-size: 12px;
-                }
-
-                div.Corpo.Secundarios{
-                    width: 80%;
-                    margin: 20px 2% 0 50px;
-                }
-
-            }
+ 
