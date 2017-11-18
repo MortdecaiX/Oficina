@@ -7,6 +7,6 @@ namespace ParkingManagerServer.Models
 {
     public enum TipoVaga
     {
-        Livre, Idoso, Especial
+        Livre, Idoso, Especial,Moto,Reservada
     }
 }

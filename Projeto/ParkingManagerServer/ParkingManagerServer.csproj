@@ -338,6 +338,10 @@
     <Compile Include="Migrations\201711011906084_ajustesEntidades2.Designer.cs">
       <DependentUpon>201711011906084_ajustesEntidades2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711180107193_3423k4jksdjfasdf.cs" />
+    <Compile Include="Migrations\201711180107193_3423k4jksdjfasdf.Designer.cs">
+      <DependentUpon>201711180107193_3423k4jksdjfasdf.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -431,6 +435,13 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Seguranca.aspx" />
+    <Content Include="style.css" />
+    <Content Include="tela_cadastro_estacionamento.aspx" />
+    <Content Include="tela_cadastro_usuario.aspx" />
+    <Content Include="tela_edicao_estacionamento.aspx" />
+    <Content Include="tela_edicao_vaga.aspx" />
+    <Content Include="tela_login.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -509,6 +520,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711011906084_ajustesEntidades2.resx">
       <DependentUpon>201711011906084_ajustesEntidades2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711180107193_3423k4jksdjfasdf.resx">
+      <DependentUpon>201711180107193_3423k4jksdjfasdf.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

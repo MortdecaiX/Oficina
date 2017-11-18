@@ -121,7 +121,9 @@
                   }
 
                   var marker = addMarker(latlng, "Vaga: " + vaga.Id, tipoVaga, false);
-
+                  marker.addListener('click', function () {
+                      document.location = "/tela_edicao_vaga.aspx?Id=" + vaga.Id + "&tipo=" + vaga.Tipo + "&IdEstacionamento=" + dadosEstacionamento.Id;
+                  });
                   var _latitude = ponto.Localizacao.Latitude;
                   var _longitude = ponto.Localizacao.Longitude;
                   var _altitude = ponto.Localizacao.Altitude;

@@ -140,6 +140,58 @@ namespace ParkingManagerServer.Controllers
             return Ok(vaga);
         }
 
+
+        // GET: api/VagaModels/{id}
+        [HttpGet,Route("api/VagaModels/{id}/ModificarTipo")]
+        public IHttpActionResult ModificarTipo(long id, TipoVaga tipoVaga)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+
+            var vaga = db.VagaModels.Find(id);
+
+
+            if (id != vaga.Id)
+            {
+                return BadRequest();
+            }
+
+            if (vaga != null)
+            {
+                
+                    vaga.Tipo = tipoVaga;
+                    db.Entry(vaga).State = EntityState.Modified;
+
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!VagaModelExists(id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                
+            }
+            else
+            {
+                return BadRequest("A vaga não foi encontrada.");
+            }
+
+            return Ok(vaga);
+        }
+
+
+
         // GET: api/VagaModels/{id}
         [Route("api/VagaModels/{id}/ModificarOcupacao")]
         public IHttpActionResult ModificarOcupacao(long id, OcupacaoModel ocupacao)

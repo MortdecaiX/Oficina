@@ -20,7 +20,7 @@ namespace ParkingManagerServer.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         public string Nome { get; set; }
-        
+        public DateTime DataNascimento { get; set; }
         public string Sobrenome { get; set; }
         public bool VagaEspecial { get; set; }
         public string Email { get; set; }

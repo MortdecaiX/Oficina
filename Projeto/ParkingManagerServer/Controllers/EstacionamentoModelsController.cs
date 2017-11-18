@@ -22,11 +22,17 @@ namespace ParkingManagerServer.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/EstacionamentoModels
-        public IQueryable<EstacionamentoModel> GetEstacionamentoModels()
+        [AcceptVerbs("GET")]
+        [Route("api/EstacionamentoModels/Usuario/{id}")]
+        public IHttpActionResult GetEstacionamentoModelbyUserId(long id)
         {
-            List<EstacionamentoModel> lista = db.EstacionamentoModels.ToList() ;
-            return lista.AsQueryable();
+            var estacionamentos = db.EstacionamentoModels.Where(x => x.Responsavel.Id == id).ToList<EstacionamentoModel>();
+            var lista = new List<Object>();
+            foreach(var est in estacionamentos)
+            {
+                lista.Add(new { Id=est.Id,Localizacao = est.Localizacao,Nome =est.Nome });
+            }
+            return Ok( lista);
         }
 
         [AcceptVerbs("POST")]
@@ -172,7 +178,7 @@ namespace ParkingManagerServer.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            estacionamentoModel.Responsavel = db.UsuarioModels.Find(estacionamentoModel.Responsavel.Id);
             db.EstacionamentoModels.Add(estacionamentoModel);
             db.SaveChanges();
 

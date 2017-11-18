@@ -1,54 +1,58 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="ParkingManagerServer._default" %>
+<% Server.Execute("Seguranca.aspx"); %>
 
-
-
-<!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Simple markers</title>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-      
-  </head>
-  <body onkeydown="keyEvent(event)" onkeyup="metaKeyUp(event)">
-      
-      <div>
-          <asp:Image ID="Image1" runat="server" />
-          <input id="Button1" type="button" onclick="Button1ClickEvent()" value="Demarcar Caminho" />
-          <input id="Button3" type="button" onclick="Button3ClickEvent()" value="Ligar Pontos" />
-          <input id="Button2" type="button" onclick="Button2ClickEvent()" value="Demarcar Vagas" />
-          
-          
-          <input id="file" type="file" />
-          <input type="button" id="upload" value="Importar Planta" />
-             
+    /* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
+    #map {
+      width:auto;
+      min-width:380px;
+      height: 70%;
+    
+    }
 
-      </div>
-      
-    <div id="map"></div>
+    </style>
+    <title>Meus Estacionamentos</title>
+</head>
+<body onkeydown="keyEvent(event)" onkeyup="metaKeyUp(event)">
+
+    <div class="fundoCorpo">
+        <div class="titulo">
+            <span class="titulo">Meus Estacionamentos</span>
+        </div>
+
+        <div class="fundoCabecalho">
+
+
+            <div class="blocoCabecalho PreenchidoTotalmente">
+                <div style="min-width:200px; width: 100%;
+  background-color:#00FF00;">   
+                    <input id="Button1" style="width:23%; float:right; margin-left:1%;" class="button button5" type="button" onclick="btNovoEstClickEvent()" value="Novo" />
+                </div>
+               <div id="map"></div>
+                
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
     <script>
         var map = null;
         var historicalOverlay;
-
+        var clickedMarker = null;
         function initMap() {
-           
-            
+
+
 
             if ((window.location.protocol == "https") && navigator.geolocation) {
-               
+
                     navigator.geolocation.getCurrentPosition(function (position) {
 
                         var myLatLng = { lat: position.coords.latitud, lng: position.coords.longitude };
@@ -62,10 +66,23 @@
 
 
                     });
-                
+
           } else {
               showOnDefaultLocation();
-          }
+            }
+            google.maps.event.addListener(map, 'click', function (event) {
+
+                var marker = new google.maps.Marker({ position: event.latLng, map: map });
+                if (clickedMarker != null) {
+                    clickedMarker.setMap(null);
+                }
+                clickedMarker = marker;
+                marker.addListener('click', function () {
+                    clickedMarker = marker;
+                });
+            });
+            carregarEstacionamentosUsuario();
+           
         }
 
         function showOnDefaultLocation() {
@@ -78,31 +95,53 @@
             });
         }
 
-       
+        function btNovoEstClickEvent() {
+            if (clickedMarker != null) {
+                document.location = "/tela_cadastro_estacionamento.aspx?lat=" + clickedMarker.position.lat()+"&lng="+clickedMarker.position.lng();
+            } else {
+                alert('Clique antes no local onde ficará o novo estacionamento!');
+            }
+        }
 
-        
-
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_VmR84B8dxqCxnDEm5g-zLKcWX2cCOvg&callback=initMap">
-    </script>
-          
-  </body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="Scripts/parking.edit.tool.js"></script>
-    <script>
-        function exemplo() {
+        function carregarEstacionamentosUsuario() {
+            var urlTarget = "api/EstacionamentoModels/Usuario/"+JSON.parse($.cookie("usuario")).Id;
             $.ajax({
                 contentType: "application/json",
                 type: "GET",
-                url: "api/EstacionamentoModels/2",
-                success: function (data, status) {
+                url: urlTarget,
+                success: function (dados, status) {
                     if (status == 'success') {
-                        carregarEstacionamento(data);
+                        dados.forEach(function (element, index, array) {
+                            var marker = new google.maps.Marker({ title: element.Nome, position: { lat: element.Localizacao.Latitude, lng: element.Localizacao.Longitude }, map: map });
+
+                            marker.addListener('click', function () {
+                                clickedMarker = marker;
+                                
+                                document.location = "/tela_edicao_estacionamento.aspx?Id="+element.Id;
+                            });
+                        });
+                        
                     }
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
                 }
             });
+
+
         }
-        exemplo();
+
+
     </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_VmR84B8dxqCxnDEm5g-zLKcWX2cCOvg&callback=initMap">
+    </script>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="http://parkingmanagerserver.azurewebsites.net/Scripts/parking.edit.tool.js"></script>
+
+
 </html>
