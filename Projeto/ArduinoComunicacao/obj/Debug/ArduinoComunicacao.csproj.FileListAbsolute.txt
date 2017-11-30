@@ -18,3 +18,5 @@ C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\obj\Debug\Ard
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\obj\Debug\ArduinoComunicacao.Form1.resources
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\obj\Debug\ArduinoComunicacao.Properties.Resources.resources
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\obj\Debug\ArduinoComunicacao.csproj.GenerateResource.Cache
+C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ArduinoComunicacao\bin\Debug\Newtonsoft.Json.xml

@@ -280,9 +280,12 @@ namespace ParkingApp
                 {
                     if (!MainActivity.Usuario.Value<bool>("VagaEspecial") && vaga.Dados.Value<long>("Tipo") == 0)
                     {
+                        
                         this.VagaEscolhida = vaga;
                         MostrarRotaParaVaga(vaga);
-                    }else
+                        search.SetQuery("", false);
+                    }
+                    else
                     {
                         Android.App.AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                         AlertDialog alert = dialog.Create();
