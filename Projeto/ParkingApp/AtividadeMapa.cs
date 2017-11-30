@@ -114,16 +114,29 @@ namespace ParkingApp
             });
             alert.SetButton2("Recomendar Vaga", (c, ev) =>
             {
-                RecomendarVaga();
+                RecomendarVaga(vaga);
             });
 
             alert.Show();
 
         }
 
-        private void RecomendarVaga()
+        private void RecomendarVaga(Vaga v)
         {
-            
+            int tipoVga= v.Dados.Value<int>("Tipo");
+
+            for(int i = 0; i < ControleMapa.VagasColocadas.Count; i++)
+            {
+                if (ControleMapa.VagasColocadas[i].Dados.Value<JToken>("Ocupacao").Type == Newtonsoft.Json.Linq.JTokenType.Null)
+                {
+                    if(tipoVga == ControleMapa.VagasColocadas[i].Dados.Value<int>("Tipo"))
+                    {
+                        VagaEscolhida = ControleMapa.VagasColocadas[i];
+                        MostrarRotaParaVaga(VagaEscolhida);
+                        break;
+                    }
+                }
+            }
         }
 
         Android.Locations.Location ultimaLocalizacao = null;
@@ -145,15 +158,19 @@ namespace ParkingApp
 
                 if (ultimaLocalizacao != null)
                 {
-                    Bearing = ultimaLocalizacao.BearingTo(ControleMapa.LocalizacaoAtual);
-                    txtAngle.Text = Bearing.ToString()+"º";
+                    var distancia = ultimaLocalizacao.DistanceTo(ControleMapa.LocalizacaoAtual);
 
-                    if (modoDirecao)
+                    if(distancia > 2)
                     {
-                        Orientacao();
+                        Bearing = ultimaLocalizacao.BearingTo(ControleMapa.LocalizacaoAtual);
+                        txtAngle.Text = Bearing.ToString() + "º";
+
+                        if (modoDirecao)
+                        {
+                            Orientacao();
+                        }
                     }
                 }
-
                 ultimaLocalizacao = ControleMapa.LocalizacaoAtual;
 
             }

@@ -73,7 +73,8 @@
         android:inputType="date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editTextDataNascimento" />
+        android:id="@+id/editTextDataNascimento"
+        android:editable="false" />
     <CheckBox
         android:text="Vaga especial?"
         android:layout_width="match_parent"

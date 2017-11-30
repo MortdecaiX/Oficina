@@ -32,13 +32,17 @@ namespace ParkingApp
             btnCadastro.Click += capturaClickLogin;
             editDataNascimento = FindViewById<EditText>(Resource.Id.editTextDataNascimento);
             
-            editDataNascimento.Click += (obj, args) => {
-                DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time) {
-                    dataNascimento = time;
-                    editDataNascimento.Text = time.ToLongDateString();
-                    editDataNascimento.ClearFocus();
-                });
-                frag.Show(FragmentManager, DatePickerFragment.TAG);
+            editDataNascimento.FocusChange += (obj, args) =>
+            {
+                if (args.HasFocus) { 
+                    DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
+                    {
+                        dataNascimento = time;
+                        editDataNascimento.Text = time.ToLongDateString();
+                        //editDataNascimento.ClearFocus();
+                    });
+                    frag.Show(FragmentManager, DatePickerFragment.TAG);
+                }
             };
         }
 
