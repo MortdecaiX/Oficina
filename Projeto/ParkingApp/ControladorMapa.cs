@@ -219,6 +219,7 @@ namespace ParkingApp
 
         internal JObject ObterEstacionamento(long idEstacionamento)
         {
+
             JObject estacionamento = null;
             using (WebClient wc = new WebClient())
             {
@@ -405,9 +406,10 @@ namespace ParkingApp
 
         public void ChecarVisibilidadeVaga(Vaga vaga)
         {
-            if ((vaga.Dados["Reserva"].Type == JTokenType.Null) || ((vaga.Dados["Reserva"])["Usuario"].Value<long>("Id") == MainActivity.Usuario.Value<long>("Id")))
+            
+            if ((vaga.Dados["Reserva"].Type != JTokenType.Null) && ((vaga.Dados["Reserva"])["Usuario"].Value<long>("Id") == MainActivity.Usuario.Value<long>("Id")))
             {
-                vaga.Marker.Visible = (vaga.Dados["Ocupacao"].Type == JTokenType.Null);
+                vaga.Marker.Visible = true;
             }
             else
             {

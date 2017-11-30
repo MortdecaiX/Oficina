@@ -14,6 +14,7 @@ using Android.Gms.Maps;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using Android.Graphics;
+using System.Net;
 
 namespace ParkingApp
 {
@@ -30,14 +31,69 @@ namespace ParkingApp
         public Vaga VagaEscolhida {
             get { return _vagaEscolhida; }
             set {
-                _vagaEscolhida = value;
-                VerificadorEstadoVagas.VagaEscolhida = value;
-                VerificadorEstadoVagas.ContinuarVerificacaoVagaEscolhida = true;
-                VerificadorEstadoVagas.VagaEscolhidaMudouEstadoEvent += VerificadorEstadoVagas_VagaEscolhidaMudouEstadoEvent;
-                VerificadorEstadoVagas.VerificacaoVagaEscolhida();
-
-                  
+                if (VerificaReserva(value))
+                {
+                    _vagaEscolhida = value;
+                    VerificadorEstadoVagas.VagaEscolhida = value;
+                    VerificadorEstadoVagas.ContinuarVerificacaoVagaEscolhida = true;
+                    VerificadorEstadoVagas.VagaEscolhidaMudouEstadoEvent += VerificadorEstadoVagas_VagaEscolhidaMudouEstadoEvent;
+                    VerificadorEstadoVagas.VerificacaoVagaEscolhida();
+                      ReservarVaga(value);
+                }
             }
+        }
+
+        private bool VerificaReserva(Vaga vaga)
+        {
+            try
+            {
+                bool resultado = (vaga.Dados["Reserva"].Type == JTokenType.Null) || ((vaga.Dados["Reserva"])["Usuario"].Value<long>("Id") == MainActivity.Usuario.Value<long>("Id"));
+
+                if (!resultado)
+                {
+
+                    Android.App.AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                    AlertDialog alert = dialog.Create();
+                    alert.SetTitle("Vaga Ocupada");
+                    alert.SetMessage("A vaga que você escolheu já  está reservada.");
+
+
+                    alert.SetButton("OK", (c, ev) =>
+                    {
+
+                    });
+                    alert.SetButton2("Recomendar Vaga", (c, ev) =>
+                    {
+
+                        RecomendarVaga(vaga);
+                    });
+
+                    alert.Show();
+                }
+                return resultado;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private async void ReservarVaga(Vaga value)
+        {
+            await Task.Run(() => {
+                string url = ControladorMapa.ParkingManagerServerURL + string.Format("api/VagaModels/{0}/Reservar/{1}", value.Dados.Value<long>("Id"), MainActivity.Usuario.Value<long>("Id"));
+                Uri uri = new Uri(url);
+                using (WebClient wc = new WebClient())
+                {
+                    try
+                    {
+                        wc.DownloadString(uri);
+                    }catch(Exception ex)
+                    {
+
+                    }
+                }
+            });
         }
 
         private void VerificadorEstadoVagas_VagaMudouEstadoEvent(object sender, EventArgsMudancaEstadoVaga e)
@@ -90,10 +146,11 @@ namespace ParkingApp
         {
             modoDirecao = !modoDirecao;
         }
-
+        bool tratandoOculpacaoVaga = false;
         private void VerificadorEstadoVagas_VagaEscolhidaMudouEstadoEvent(object sender, EventArgsMudancaEstadoVaga e)
         {
-
+            if (tratandoOculpacaoVaga) return;
+            tratandoOculpacaoVaga = true;
             VerificadorEstadoVagas.VagaEscolhidaMudouEstadoEvent -= VerificadorEstadoVagas_VagaEscolhidaMudouEstadoEvent;
 
             Vaga vaga = e.Vaga;
@@ -114,11 +171,12 @@ namespace ParkingApp
             });
             alert.SetButton2("Recomendar Vaga", (c, ev) =>
             {
+
                 RecomendarVaga(vaga);
             });
-
+            
             alert.Show();
-
+            tratandoOculpacaoVaga = false;
         }
 
         private void RecomendarVaga(Vaga v)
@@ -184,7 +242,7 @@ namespace ParkingApp
                                         .Target(marcadorPosicao.Position)      // Sets the center of the map to Mountain View
                                         .Zoom(18)                   // Sets the zoom
                                         .Bearing(Bearing)                // Sets the orientation of the camera to east
-                                        .Tilt(45)                   // Sets the tilt of the camera to 30 degrees
+                                        .Tilt(45)                   // Sets the tilt of the camera to 45 degrees
                                         .Build();                   // Creates a CameraPosition from the builder
                 this.GMap.AnimateCamera(CameraUpdateFactory.NewCameraPosition(cameraPosition));
             }catch { }
@@ -364,7 +422,12 @@ namespace ParkingApp
             }
            else
             {
-                estacionamento = ControleMapa.ObterEstacionamento(vaga.IdEstacionamento);
+                try
+                {
+                    estacionamento = ControleMapa.ObterEstacionamento(vaga.IdEstacionamento);
+                }
+                catch(Exception ex) {
+                    return; }
             }
             if (estacionamento==null) return;
 

@@ -87,13 +87,24 @@ namespace ParkingManagerServer.Controllers
         }
 
         // GET: api/VagaModels/{id}
-        [Route("api/VagaModels/{id}/ModificarReserva")]
-        public IHttpActionResult ModificarReserva(long id, ReservaModel reserva)
+        [HttpGet,Route("api/VagaModels/{id}/Reservar/{idUsuario}")]
+        public IHttpActionResult ModificarReserva(long id, long idUsuario )
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            ReservaModel reserva = new ReservaModel();
+
+            UsuarioModel usuario = db.UsuarioModels.Find(idUsuario);
+            if (usuario == null) return BadRequest("Usuário desconhecido.");
+
+            reserva.Usuario = usuario;
+            reserva.Data = DateTime.Now;
+            reserva.DataEntrada = DateTime.Now.AddMinutes(15);
+            reserva.DataSaida = DateTime.Now.AddHours(2);
+            reserva.DataExpiracao = DateTime.Now.AddHours(3);
+
 
 
             var vaga = db.VagaModels.Find(id);
@@ -106,7 +117,7 @@ namespace ParkingManagerServer.Controllers
 
             if (vaga != null)
             {
-                if (vaga.Reserva != null)
+                if (vaga.Reserva == null)
                 {
                     vaga.Reserva = reserva;
                     db.Entry(vaga).State = EntityState.Modified;
