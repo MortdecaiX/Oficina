@@ -114,11 +114,16 @@ namespace ParkingApp
             });
             alert.SetButton2("Recomendar Vaga", (c, ev) =>
             {
-                
+                RecomendarVaga();
             });
 
             alert.Show();
 
+        }
+
+        private void RecomendarVaga()
+        {
+            
         }
 
         Android.Locations.Location ultimaLocalizacao = null;

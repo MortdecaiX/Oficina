@@ -19,8 +19,8 @@ namespace ParkingApp
     [Activity(Label = "AtividadeCadastro")]
     public class AtividadeCadastro : Activity
     {
-
-
+        EditText editDataNascimento = null;
+        DateTime dataNascimento;
         protected override void OnCreate(Bundle savedInstanceState)
         {
              base.OnCreate(savedInstanceState);
@@ -30,7 +30,16 @@ namespace ParkingApp
 
             var btnCadastro = FindViewById<Button>(Resource.Id.button1);
             btnCadastro.Click += capturaClickLogin;
-
+            editDataNascimento = FindViewById<EditText>(Resource.Id.editTextDataNascimento);
+            
+            editDataNascimento.Click += (obj, args) => {
+                DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time) {
+                    dataNascimento = time;
+                    editDataNascimento.Text = time.ToLongDateString();
+                    editDataNascimento.ClearFocus();
+                });
+                frag.Show(FragmentManager, DatePickerFragment.TAG);
+            };
         }
 
         private void capturaClickLogin(object sender, EventArgs e)
@@ -40,6 +49,7 @@ namespace ParkingApp
             var editEmail = FindViewById<EditText>(Resource.Id.editText3);
             var editSenha = FindViewById<EditText>(Resource.Id.editText4);
             var checkVagaEspecial = FindViewById<CheckBox>(Resource.Id.checkBoxVagaEspecial);
+           
 
             Regex regexNome = new Regex(@"^([A-Za-z]+\s?)+\S$");
             Regex regexSobrenome = new Regex(@"^([A-Za-z]+\s?)+\S$");
@@ -67,6 +77,7 @@ namespace ParkingApp
                         usuario.Add("Sobrenome", editSobrenome.Text);
                         usuario.Add("CPF", null);
                         usuario.Add("Email", editEmail.Text);
+                        usuario.Add("DataNascimento", dataNascimento);
                         if(checkVagaEspecial.Checked == true)
                             usuario.Add("VagaEspecial",true);
                         else

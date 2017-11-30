@@ -63,6 +63,17 @@
         android:layout_height="wrap_content"
         android:id="@+id/editText4"
         android:password="true" />
+    <TextView
+        android:text="Data de Nascimento"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewNascimento" />
+    <EditText
+        android:inputType="date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextDataNascimento" />
     <CheckBox
         android:text="Vaga especial?"
         android:layout_width="match_parent"
