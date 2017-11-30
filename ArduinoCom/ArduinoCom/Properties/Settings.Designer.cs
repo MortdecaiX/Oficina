@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ArduinoComunicacao.Properties {
+namespace ArduinoCom.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -26,24 +26,12 @@ namespace ArduinoComunicacao.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PortaCOM {
+        public string listaOffline {
             get {
-                return ((string)(this["PortaCOM"]));
+                return ((string)(this["listaOffline"]));
             }
             set {
-                this["PortaCOM"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("[]")]
-        public string RelacaoNumeroIdVaga {
-            get {
-                return ((string)(this["RelacaoNumeroIdVaga"]));
-            }
-            set {
-                this["RelacaoNumeroIdVaga"] = value;
+                this["listaOffline"] = value;
             }
         }
     }

@@ -19,6 +19,7 @@
 </head>
 <body onkeydown="keyEvent(event)" onkeyup="metaKeyUp(event)">
 
+    
     <div class="fundoCorpo">
         <div class="titulo">
             <span class="titulo">Meus Estacionamentos</span>
@@ -28,10 +29,15 @@
 
 
             <div class="blocoCabecalho PreenchidoTotalmente">
-                <div style="min-width:200px; width: 100%;
-  background-color:#00FF00;">   
-                    <input id="Button1" style="width:23%; float:right; margin-left:1%;" class="button button5" type="button" onclick="btNovoEstClickEvent()" value="Novo" />
-                </div>
+                <div style="min-width:200px; width: 100%;">   
+                        
+                     <input id="Button1" style="width:23%;  float:right; margin-left:1%;" class="button button5" type="button" onclick="btNovoEstClickEvent()" value="Novo" />
+                    <input id="Button2" style="width:23%; clear:right; float:right; margin-left:1%;" class="button button5" type="button" onclick="sair()" value="Sair" />
+
+                   
+                    </div>
+                
+               
                <div id="map"></div>
                 
 
@@ -44,6 +50,11 @@
 
     </div>
     <script>
+
+        function sair() {
+            document.cookie.split(";").forEach(function (c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+            location.reload();
+        }
         var map = null;
         var historicalOverlay;
         var clickedMarker = null;

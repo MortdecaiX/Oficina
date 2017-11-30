@@ -209,12 +209,25 @@
                   });
               
 
-              google.maps.event.addListener(marker, 'click', MarkerClicked);
+                   google.maps.event.addListener(marker, 'click', MarkerClicked);
 
-              markers.push(marker);
+                   
+
+                   markers.push(marker);
+
+                   if (tipo == 'ponto' || tipo == 'novoPonto') {
+                       google.maps.event.addListener(marker, 'click', cliquePonto);
+
+                   }
               return marker;
           }
 
+          function cliquePonto(marker) {
+              if (!ligandoPontos) {
+                  var url = '/tela_edicao_ponto.aspx?IdEstacionamento=' + dadosEstacionamento.Id + '&Id='+this.title;
+                  window.location.href = url;
+              }
+          }
           var dadosUltimoPontoColocado = null;
           var runOnMarkerClicked = null;
           function MarkerClicked() {

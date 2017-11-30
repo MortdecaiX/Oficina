@@ -150,6 +150,3 @@ C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\P
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.dll
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.pdb
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\obj\Debug\ParkingManagerServer.csprojResolveAssemblyReference.cache
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\FSharp.Data.dll
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\FSharp.Data.pdb
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingManagerServer\bin\FSharp.Data.xml

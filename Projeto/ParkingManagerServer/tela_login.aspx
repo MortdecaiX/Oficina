@@ -16,14 +16,14 @@
             <div class="blocoCabecalho Preenchido">
                 <div class="Cabecalho">
                     <span class="Cabecalho">Email:</span>
-                    <input id="txEmail" name="Email" type="text" class="Cabecalho"/>
+                    <input id="txEmail" onkeypress="return runScript(event)" name="Email" type="text" class="Cabecalho"/>
                 </div>
 				<div class="Cabecalho">
                     <span class="Cabecalho">Senha:</span>
-                    <input id="txSenha" name="Senha" type="text" class="Cabecalho"/>
+                    <input id="txSenha" onkeypress="return runScript(event)" name="Senha" type="password" class="Cabecalho"/>
                 </div>
 				<button id="btLogin" onClick="logon();" class="button button5">Entrar</button>
-                <button onClick="" class="button button5">Cadastrar</button>
+                <button onClick="alert('Cadastre-se pelo aplicativo móvel!')" class="button button5">Cadastrar</button>
             </div>
             
              
@@ -33,6 +33,14 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
         <script>
+
+            function runScript(e) {
+                if (e.keyCode == 13) {
+                    logon();
+                    return false;
+                }
+            }
+
     function logon() {
 
         var dados = {};

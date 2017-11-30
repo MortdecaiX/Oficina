@@ -87,15 +87,25 @@ namespace ParkingManagerServer.Controllers
             return Ok(pontoModel);
         }
 
-        // PUT: api/PontoModels/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutPontoModel(long id, PontoModel pontoModel)
+       
+        [HttpGet, ResponseType(typeof(void)), Route("api/PontoModels/{id}/ModificarTipo/")]
+        public IHttpActionResult ChangePontoModel(long id, bool entrada, bool saida)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+
             }
 
+            if (!PontoModelExists(id))
+            {
+                return NotFound();
+            }
+
+            var pontoModel = db.PontoModels.Find(id);
+
+            pontoModel.Entrada = entrada;
+            pontoModel.Saida = saida;
             if (id != pontoModel.Id)
             {
                 return BadRequest();
@@ -119,7 +129,7 @@ namespace ParkingManagerServer.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok();
         }
 
         // POST: api/PontoModels
@@ -150,7 +160,7 @@ namespace ParkingManagerServer.Controllers
             db.PontoModels.Remove(pontoModel);
             db.SaveChanges();
 
-            return Ok(pontoModel);
+            return Ok();
         }
 
         protected override void Dispose(bool disposing)
