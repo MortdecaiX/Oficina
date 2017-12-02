@@ -23,6 +23,15 @@ C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\Park
 C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\dot.png
 C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\parking_sign.png
 C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\red_dot.png
+C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\move_pointer.png
+C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\parking.png
+C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\placeholder_point.png
+C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\placeholder_point_new.png
+C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\parking_sign_new.png
+C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\parking_sign_special_1.png
+C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\parking_sign_special_2.png
+C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\ParkingApp.dll.mdb
+C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\android\assets\ParkingApp.dll.mdb
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\ParkingApp.dll
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\ParkingApp.pdb
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\ParkingApp.ParkingApp.apk
@@ -54,15 +63,5 @@ C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawabl
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\parking_sign_special_2.png
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\R.cs.flag
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\uploadflags.txt
-C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\ParkingApp.csprojResolveAssemblyReference.cache
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\ParkingApp.dll.mdb
 C:\Users\Vitor\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\android\assets\ParkingApp.dll.mdb
-C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\move_pointer.png
-C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\parking.png
-C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\placeholder_point.png
-C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\placeholder_point_new.png
-C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\parking_sign_new.png
-C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\parking_sign_special_1.png
-C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\res\drawable\parking_sign_special_2.png
-C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\bin\Debug\ParkingApp.dll.mdb
-C:\Users\Luccas Piola\Documents\GitHub\Oficina\Projeto\ParkingApp\obj\Debug\android\assets\ParkingApp.dll.mdb

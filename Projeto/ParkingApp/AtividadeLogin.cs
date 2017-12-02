@@ -8,7 +8,7 @@ using System.Net;
 
 namespace ParkingApp
 {
-    [Activity(Label = "ParkingApp", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "ParkingApp", MainLauncher = true, Icon = "@drawable/Icon")]
     public class MainActivity : Activity
     {
         private static MainActivity ThisActivity { get; set; }

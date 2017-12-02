@@ -163,7 +163,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Leitor do Sensor de Vaga";
+            this.Text = "Monitor de Vagas";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

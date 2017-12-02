@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <SelectedDevice>VisualStudio_android-23_arm_phone</SelectedDevice>
+    <SelectedDevice>4_WVGA_Nexus_S_API_25</SelectedDevice>
     <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
     <AndroidDesignerPreferredTheme>Theme.DeviceDefault.DialogWhenLarge.NoActionBar</AndroidDesignerPreferredTheme>
     <DefaultDevice>4_WVGA_Nexus_S_API_25</DefaultDevice>
